@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head><title>Search Test</title></head>
+<body>
+<h1>Search Test</h1>
+<input id="searchInput" type="text" value="text too hard">
+<button onclick="test()">Test Search</button>
+<div id="results"></div>
+
+<script src="js/search-data.js"></script>
+<script>
+function test() {
+    const query = document.getElementById('searchInput').value;
+    const searchTerm = query.trim().toLowerCase();
+    
+    console.log('Testing search for:', searchTerm);
+    console.log('searchData exists?', typeof searchData !== 'undefined');
+    console.log('searchData length:', searchData ? searchData.length : 'N/A');
+    
+    if (typeof searchData === 'undefined') {
+        document.getElementById('results').innerHTML = '<p style="color: red;">ERROR: searchData not loaded!</p>';
+        return;
+    }
+    
+    const results = searchData.filter(strategy => {
+        // Check title
+        if (strategy.title.toLowerCase().includes(searchTerm)) return true;
+        // Check description
+        if (strategy.description.toLowerCase().includes(searchTerm)) return true;
+        // Check keywords
+        if (strategy.keywords.some(k => k.toLowerCase().includes(searchTerm))) return true;
+        // Check whenToUse
+        if (strategy.whenToUse.toLowerCase().includes(searchTerm)) return true;
+        return false;
+    });
+    
+    document.getElementById('results').innerHTML = 
+        '<p>Found ' + results.length + ' results:</p>' +
+        results.map(r => '<li>' + r.title + '</li>').join('');
+}
+
+// Auto-test on load
+window.onload = function() {
+    setTimeout(test, 500);
+};
+</script>
+</body>
+</html>
