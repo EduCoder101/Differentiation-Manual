@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Differentiation Manual | Roseville College</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/landing-updates.css">
+    <style>
+        /* Soft landing specific styles */
+        body {
+            background: linear-gradient(135deg, #faf8f5 0%, #f0ebe5 100%);
+        }
+
+        .soft-landing {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-section {
+            margin-bottom: 4rem;
+        }
+
+        .hero-section h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.7;
+        }
+
+        .pathway-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .pathway-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(125, 30, 63, 0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            border: 3px solid transparent;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(125, 30, 63, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .pathway-card.primary {
+            background: linear-gradient(135deg, #f4b942 0%, #ffd670 100%);
+            border: 3px solid #f4b942;
+        }
+
+        .pathway-card.primary:hover {
+            border-color: var(--primary-color);
+        }
+
+        .pathway-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .pathway-card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .pathway-card p {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .secondary-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .secondary-links p {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .secondary-links a {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            text-decoration: underline;
+            font-weight: 600;
+            margin: 0 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .secondary-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+            color: var(--text-light);
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-box {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .feature-box:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(125, 30, 63, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .feature-box h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-box p {
+            font-family: 'Nunito Sans', sans-serif;
+            color: var(--text-dark);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="soft-landing">
+        <div class="hero-section">
+            <h1>Welcome to the<br>Differentiation Manual</h1>
+            <p class="hero-subtitle">AI-powered strategies to help every student succeed</p>
+            <p class="hero-description">
+                This manual helps you create learning experiences where every girl is known. 
+                With AI as your partner, differentiation becomes achievable, not overwhelming.
+            </p>
+        </div>
+
+        <div class="pathway-cards">
+            <a href="randomiser.html" class="pathway-card primary">
+                <div class="pathway-icon">⚡</div>
+                <h2>Try a Strategy Now</h2>
+                <p>Jump straight in. See three strategies you can use today, with ready-to-copy AI prompts.</p>
+            </a>
+
+            <a href="main.html" class="pathway-card">
+                <div class="pathway-icon">📖</div>
+                <h2>Explore the Manual</h2>
+                <p>Browse all 45+ strategies organised by the 7-step differentiation framework.</p>
+            </a>
+
+            <a href="principles.html" class="pathway-card">
+                <div class="pathway-icon">💡</div>
+                <h2>Understand the Why</h2>
+                <p>Explore the research-based principles that make differentiation effective.</p>
+            </a>
+        </div>
+
+        <!-- What This Manual Provides -->
+        <section class="features-grid" style="margin-top: 4rem;">
+            <div class="feature-box">
+                <h3>Academic Foundation</h3>
+                <p>A thorough overview of differentiation grounded in research from leading scholars like Tomlinson, Hattie, and others.</p>
+            </div>
+            
+            <div class="feature-box">
+                <h3>Practical Workflows</h3>
+                <p>Research-based workflows and best practices you can implement immediately in your classroom.</p>
+            </div>
+            
+            <div class="feature-box">
+                <h3>AI-Powered Prompts</h3>
+                <p>110+ ready-to-use AI prompts across 38+ strategies to help you differentiate efficiently.</p>
+            </div>
+            
+            <div class="feature-box">
+                <h3>7-Step Framework</h3>
+                <p>A comprehensive process from defining learning goals through to implementation and assessment.</p>
+            </div>
+        </section>
+
+        <div class="secondary-links">
+            <p>Looking for something specific?</p>
+            <a href="search.html">Search Strategies</a>
+            <a href="flowchart.html">View Flowchart</a>
+            <a href="how-to-use.html">How to Use This Manual</a>
+        </div>
+
+        <footer>
+            <p>Roseville College Professional Learning | 2025</p>
+        </footer>
+    </div>
+</body>
+</html>
