@@ -69,6 +69,30 @@
     font-style: italic;
 }
 
+.strategy-when {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    background: #fff9e6;
+    border-radius: 6px;
+    border-left: 3px solid #f4b942;
+    line-height: 1.5;
+}
+
+.strategy-when strong {
+    color: #7d1e3f;
+}
+
+.strategy-desc {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #5a5a5a;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
 .strategy-category-badge {
     display: inline-block;
     background: #6db3c8;

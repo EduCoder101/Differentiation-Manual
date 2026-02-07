@@ -140,7 +140,7 @@ const searchData = [
         step: "Step 3: Process",
         link: "step3-process.html",
         description: "Activities or stations organised around student interests rather than readiness levels.",
-        keywords: ["interest", "interest-based", "choice", "engagement", "motivation", "student-directed", "passion", "topics"],
+        keywords: ["interest", "choice", "engagement", "motivation", "student-directed", "passion", "topics"],
         whenToUse: "When you want to increase engagement by connecting to student interests."
     },
     {

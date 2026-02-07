@@ -3,9 +3,11 @@
 // ==========================================
 
 function copyPrompt(button) {
-    // Find the prompt box that's a sibling of this button
-    const promptCard = button.closest('.prompt-card');
-    const promptBox = promptCard.querySelector('.prompt-box');
+    // Find the prompt container - works with both page structures:
+    // Steps 1-2 use .prompt-card > .prompt-container
+    // Steps 3-7 use .prompt-section > .prompt-container
+    const wrapper = button.closest('.prompt-section') || button.closest('.prompt-card');
+    const promptBox = wrapper.querySelector('.prompt-container');
     
     // Get the text content
     const textToCopy = promptBox.innerText;
@@ -33,7 +35,7 @@ function copyPrompt(button) {
 
 // Alternative: Select text on click for manual copy
 document.addEventListener('DOMContentLoaded', function() {
-    const promptBoxes = document.querySelectorAll('.prompt-box');
+    const promptBoxes = document.querySelectorAll('.prompt-container');
     
     promptBoxes.forEach(box => {
         box.style.cursor = 'pointer';

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .search-hero {
-            text-align: centre;
+            text-align: center;
             margin-bottom: 2rem;
             padding-bottom: 2rem;
             border-bottom: 3px solid var(--accent-color);
@@ -52,7 +52,7 @@
         }
 
         .search-hint {
-            text-align: centre;
+            text-align: center;
             color: var(--text-light);
             font-size: 0.95rem;
             margin-top: 0.5rem;
@@ -62,7 +62,7 @@
         .results-header {
             display: flex;
             justify-content: space-between;
-            align-items: centre;
+            align-items: center;
             margin-bottom: 2rem;
             padding: 1rem;
             background: var(--bg-light);
@@ -148,6 +148,22 @@
             margin-bottom: 1rem;
         }
 
+        .result-when-to-use {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            padding: 0.75rem 1rem;
+            background: #fff9e6;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .result-when-to-use strong {
+            color: var(--primary-color);
+        }
+
         .result-match {
             background: rgba(244, 185, 66, 0.2);
             padding: 0.75rem;
@@ -185,7 +201,7 @@
 
         /* Empty State */
         .empty-state {
-            text-align: centre;
+            text-align: center;
             padding: 3rem 2rem;
             display: none;
         }
@@ -215,7 +231,7 @@
 
         /* No Results */
         .no-results {
-            text-align: centre;
+            text-align: center;
             padding: 3rem 2rem;
             background: var(--bg-light);
             border-radius: 12px;
@@ -242,14 +258,14 @@
         .popular-searches h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
-            text-align: centre;
+            text-align: center;
         }
 
         .search-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
-            justify-content: centre;
+            justify-content: center;
         }
 
         .search-tag {
@@ -291,16 +307,16 @@
         </div>
 
         <div class="popular-searches">
-            <h3>Popular Searches</h3>
+            <h3>Common Challenges</h3>
             <div class="search-tags">
-                <span class="search-tag" onclick="quickSearch('text too hard')">Text too hard</span>
-                <span class="search-tag" onclick="quickSearch('finish early')">Finish early</span>
-                <span class="search-tag" onclick="quickSearch('reading levels')">Reading levels</span>
-                <span class="search-tag" onclick="quickSearch('assessment')">Assessment</span>
-                <span class="search-tag" onclick="quickSearch('scaffolding')">Scaffolding</span>
-                <span class="search-tag" onclick="quickSearch('choice')">Student choice</span>
-                <span class="search-tag" onclick="quickSearch('grouping')">Grouping</span>
-                <span class="search-tag" onclick="quickSearch('interest')">Interest-based</span>
+                <span class="search-tag" onclick="quickSearch('text too hard')">Text is too hard for some</span>
+                <span class="search-tag" onclick="quickSearch('finish early')">Students finish at different times</span>
+                <span class="search-tag" onclick="quickSearch('reading levels')">Mixed reading levels</span>
+                <span class="search-tag" onclick="quickSearch('already know')">Some already know the material</span>
+                <span class="search-tag" onclick="quickSearch('scaffolding')">Need extra support structures</span>
+                <span class="search-tag" onclick="quickSearch('choice')">Want more student choice</span>
+                <span class="search-tag" onclick="quickSearch('grouping')">Better ways to group students</span>
+                <span class="search-tag" onclick="quickSearch('interest')">Students aren't engaged</span>
             </div>
         </div>
 
@@ -321,12 +337,12 @@
 
         <div class="results-container" id="resultsContainer"></div>
 
-        <nav style="text-align: centre; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+        <nav style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
             <a href="main.html" class="btn-primary" style="display: inline-block; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin: 0.5rem;">← Back to Home</a>
             <a href="glossary.html" class="btn-primary" style="display: inline-block; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin: 0.5rem;">Browse All Strategies →</a>
         </nav>
 
-        <footer style="text-align: centre; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color); color: var(--text-light);">
+        <footer style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color); color: var(--text-light);">
             <p>Roseville College Professional Learning | 2025</p>
         </footer>
     </div>

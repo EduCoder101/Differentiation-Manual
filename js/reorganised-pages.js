@@ -2,27 +2,17 @@
 
 // Simple function to jump to and expand a strategy
 function jumpToStrategy(strategyId) {
-    console.log('Jump to strategy:', strategyId);
     const targetCard = document.getElementById(strategyId);
-    console.log('Found card:', targetCard);
     
     if (targetCard) {
-        // Find the strategy header and content
         const header = targetCard.querySelector('.strategy-header');
         const content = targetCard.querySelector('.strategy-content');
         
-        console.log('Found header:', header);
-        console.log('Found content:', content);
-        
         if (header && content) {
-            // Check if it's collapsed
             if (content.style.display === 'none' || !content.style.display) {
-                console.log('Expanding...');
-                // Click the header to expand
                 header.click();
             }
             
-            // Scroll to it
             setTimeout(function() {
                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
@@ -47,17 +37,14 @@ function toggleTheoryBox(header) {
 function expandAndScrollToStrategy(strategyId) {
     const targetCard = document.querySelector(strategyId);
     if (targetCard && targetCard.classList.contains('strategy-card')) {
-        // Find the header and content
         const header = targetCard.querySelector('.strategy-header');
         const content = targetCard.querySelector('.strategy-content');
         
         if (header && content) {
-            // Expand if not already expanded
             if (content.style.display === 'none' || !content.style.display) {
                 header.click();
             }
             
-            // Scroll to the card
             setTimeout(() => {
                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
@@ -65,27 +52,55 @@ function expandAndScrollToStrategy(strategyId) {
     }
 }
 
-// Handle quick nav link clicks
+// Inject "When to use" preview into collapsed strategy headers
+function injectWhenToUsePreviews() {
+    const cards = document.querySelectorAll('.strategy-card');
+    cards.forEach((card, index) => {
+        const whenToUse = card.querySelector('.when-to-use');
+        const header = card.querySelector('.strategy-header');
+        
+        if (whenToUse && header) {
+            // Extract just the text after "When to use:"
+            let text = whenToUse.textContent.replace(/^When to use:\s*/i, '').trim();
+            // Truncate if very long
+            if (text.length > 120) {
+                text = text.substring(0, 117) + '...';
+            }
+            
+            const preview = document.createElement('div');
+            preview.className = 'when-preview';
+            preview.textContent = text;
+            
+            header.querySelector('.strategy-title').appendChild(preview);
+        }
+
+        // Fix strategy numbering: renumber sequentially starting from 1
+        const numEl = card.querySelector('.strategy-number');
+        if (numEl) {
+            numEl.textContent = index + 1;
+        }
+    });
+}
+
+// Handle quick nav link clicks and hash navigation
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Reorganised pages JS loaded');
+    // Inject when-to-use previews
+    injectWhenToUsePreviews();
     
     // Add click handlers to quick nav links
     const quickNavLinks = document.querySelectorAll('.quick-nav-link');
-    console.log('Found quick nav links:', quickNavLinks.length);
     
     quickNavLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Quick nav link clicked:', this.getAttribute('href'));
             const targetId = this.getAttribute('href');
             expandAndScrollToStrategy(targetId);
         });
     });
     
-    // Also handle direct anchor links (from randomiser or external)
+    // Handle direct anchor links (from randomiser or external)
     const hash = window.location.hash;
     if (hash) {
-        console.log('Hash detected:', hash);
         setTimeout(() => {
             expandAndScrollToStrategy(hash);
         }, 300);

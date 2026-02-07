@@ -172,8 +172,12 @@ function createResultCard(strategy, searchTerm) {
         matchContext = `<div class="result-match"><strong>Related keywords:</strong> ${matchedKeywords.slice(0, 5).join(', ')}</div>`;
     }
     
-    // Highlight search term in description
+    // Highlight search term in description and whenToUse
     const highlightedDescription = highlightText(strategy.description, searchTerm);
+    const highlightedWhenToUse = highlightText(strategy.whenToUse, searchTerm);
+    
+    // Deep-link to specific strategy on the page
+    const deepLink = `${strategy.link}#${strategy.id}`;
     
     return `
         <div class="result-card">
@@ -185,16 +189,16 @@ function createResultCard(strategy, searchTerm) {
                 <div class="result-badge">${strategy.category}</div>
             </div>
             
+            <div class="result-when-to-use">
+                <strong>Use when:</strong> ${highlightedWhenToUse}
+            </div>
+            
             <div class="result-description">${highlightedDescription}</div>
             
             ${matchContext}
             
-            <div style="margin-top: 0.75rem; color: var(--text-light); font-size: 0.95rem;">
-                <strong>When to use:</strong> ${strategy.whenToUse}
-            </div>
-            
             <div style="margin-top: 1.5rem;">
-                <a href="${strategy.link}" class="result-link">View Strategy & Prompts →</a>
+                <a href="${deepLink}" class="result-link">View Strategy & Prompts →</a>
             </div>
         </div>
     `;
