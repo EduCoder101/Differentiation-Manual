@@ -9,7 +9,7 @@ const searchData = [
         link: "step3-content.html",
         description: "Provide reading materials at different complexity and readability levels so students can engage with the same overarching theme or concept regardless of their current literacy skills.",
         keywords: ["text", "reading", "complexity", "readability", "tiered", "levels", "literacy", "vocabulary", "too hard", "too easy", "struggling readers", "advanced readers", "EAL", "EALD"],
-        whenToUse: "When the core content involves significant reading, and you have students at varied reading levels."
+        whenToUse: "When the core content involves significant reading, and you have students at varied reading levels. This ensures all students can access the concepts without being blocked by text complexity."
     },
     {
         id: "content-2",
@@ -19,17 +19,17 @@ const searchData = [
         link: "step3-content.html",
         description: "Deliver information through multiple modes—auditory (recordings, discussions), visual (graphic organisers, diagrams, videos), and tactile/kinesthetic (hands-on models, movement).",
         keywords: ["visual", "audio", "video", "kinesthetic", "hands-on", "multiple formats", "learning styles", "graphic organiser", "diagram", "recording", "accessibility"],
-        whenToUse: "When students have varied learning profiles or when content is complex and benefits from multiple representations."
+        whenToUse: "When students have varied learning profiles or when content is complex and benefits from multiple representations. This is especially powerful for EALD students or students with learning differences."
     },
     {
         id: "content-3",
-        title: "Compacting",
+        title: "Curriculum Compacting",
         category: "Content",
         step: "Step 3: Content",
         link: "step3-content.html",
-        description: "Eliminate redundant practice for students who already know the material, replacing it with meaningful curriculum extensions or independent projects.",
+        description: "A three-stage process: (1) identify what students have already mastered through pre-assessment, (2) eliminate redundant practice for those students, (3) replace it with meaningful curriculum extensions or independent projects.",
         keywords: ["advanced", "gifted", "already know", "skip", "pre-assessment", "extension", "enrichment", "mastery", "redundant"],
-        whenToUse: "When pre-assessment reveals that some students have already mastered portions of the content."
+        whenToUse: "When pre-assessment reveals that some students have already mastered portions of the content. This prevents boredom and allows advanced learners to move into deeper exploration."
     },
     {
         id: "content-4",
@@ -37,39 +37,39 @@ const searchData = [
         category: "Content",
         step: "Step 3: Content",
         link: "step3-content.html",
-        description: "Create a one- or two-page capsule of essential questions, vocabulary, and concepts to support students who struggle with heavy print materials or organization.",
+        description: "Create a one- or two-page \"capsule\" of essential questions, vocabulary, and concepts to support students who struggle with heavy print materials or organisation.",
         keywords: ["summary", "overview", "key points", "study guide", "reference", "vocabulary", "organization", "struggling", "overwhelmed"],
-        whenToUse: "When students are overwhelmed by lengthy texts or complex materials."
+        whenToUse: "When students are overwhelmed by lengthy texts or complex materials. This gives them a roadmap and helps them focus on what matters most."
     },
     {
         id: "content-5",
-        title: "Highlight Key Concepts",
+        title: "Highlighted Print Materials",
         category: "Content",
         step: "Step 3: Content",
         link: "step3-content.html",
-        description: "Pre-highlight or mark the most essential information in texts or materials to guide students' attention to what matters most.",
+        description: "Highlight critical passages in a text so that struggling readers can focus energy on essential portions rather than becoming discouraged by an overwhelming amount of print.",
         keywords: ["highlight", "emphasis", "focus", "essential", "key points", "attention", "guide"],
-        whenToUse: "When students struggle to identify what's important in dense text."
+        whenToUse: "When a lengthy text contains essential content, but not every paragraph is equally important. This helps students with reading challenges or executive functioning difficulties know where to focus."
     },
     {
         id: "content-6",
-        title: "Provide Varied Resources",
+        title: "Support Systems (Buddies, Mentors, Technology)",
         category: "Content",
         step: "Step 3: Content",
         link: "step3-content.html",
-        description: "Offer multiple resources on the same topic at different complexity levels or formats.",
+        description: "Use reading buddies, adult mentors, or audio/video recordings to make complex content accessible to all students.",
         keywords: ["resources", "materials", "variety", "options", "different sources", "books", "articles"],
-        whenToUse: "When you want students to explore the same concept through different lenses."
+        whenToUse: "When content is challenging but essential, and students need human or technological support to access it. This is particularly effective for EALD students or students with reading difficulties."
     },
     {
         id: "content-7",
-        title: "Learning Contracts",
+        title: "Visual Supports: Glossaries, Mind Maps, Flashcards",
         category: "Content",
         step: "Step 3: Content",
         link: "step3-content.html",
-        description: "Written agreements between teacher and student about what will be learned and how it will be demonstrated.",
+        description: "Provide visual tools that help students organise, remember, and connect content. These can be pre-made or co-created with students.",
         keywords: ["contract", "agreement", "independence", "self-directed", "goals", "commitment", "accountability"],
-        whenToUse: "When students are ready for more independence in their learning."
+        whenToUse: "When content is vocabulary-heavy, conceptually dense, or requires students to see relationships between ideas. Visual supports are especially helpful for visual learners and students who struggle with working memory."
     },
     {
         id: "content-8",
@@ -77,9 +77,9 @@ const searchData = [
         category: "Content",
         step: "Step 3: Content",
         link: "step3-content.html",
-        description: "Design content that is accessible for neurodivergent learners by reducing cognitive load, providing multimodal formats, using concrete language, and offering strength-based supports.",
+        description: "Design content that is accessible for neurodivergent learners by reducing cognitive load, providing multimodal formats, using concrete language, and offering strength-based supports. This approach benefits all students while specifically supporting those with ADHD, autism spectrum disorder, dyslexia, and executive functioning challenges.",
         keywords: ["neurodiversity", "ADHD", "autism", "dyslexia", "cognitive load", "concrete language", "accessibility", "working memory", "executive function"],
-        whenToUse: "When you have students with diagnosed learning differences or when you want to make content universally accessible."
+        whenToUse: "When you have students with diagnosed learning differences, when content involves complex language or multi-step processes, or when you want to make content universally accessible from the start."
     },
 
     // Step 3: Process Strategies
@@ -89,69 +89,69 @@ const searchData = [
         category: "Process",
         step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Design multiple versions of a task that focus on the same essential understanding but vary in complexity, abstraction, and required support.",
+        description: "Design multiple versions of a task that focus on the same essential understanding but vary in complexity, abstraction, and required support. All students work toward the same learning goals, but the pathway differs based on readiness.",
         keywords: ["tiered", "levels", "challenge", "complexity", "varied difficulty", "ZPD", "readiness", "scaffolding"],
-        whenToUse: "When students have varied readiness levels for a particular skill or concept."
+        whenToUse: "When students have varied readiness levels for a particular skill or concept. Tiering ensures everyone is appropriately challenged—working in their Zone of Proximal Development, not too easy, not impossibly hard."
     },
     {
         id: "process-2",
-        title: "Think-Pair-Share Variations",
+        title: "Flexible Grouping",
         category: "Process",
         step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Strategic partnering where students process ideas individually, then with a partner, then share with the larger group.",
+        description: "Move students between various group configurations based on the task at hand. Sometimes group by readiness (homogeneous), sometimes by interest (mixed), sometimes randomly. The key word is flexible—groups change frequently to prevent tracking.",
         keywords: ["discussion", "collaboration", "partner work", "processing", "verbal", "sharing ideas", "peer learning"],
-        whenToUse: "When you want all students to engage in thinking before class discussion."
+        whenToUse: "Constantly. Flexible grouping is considered the \"heart\" of differentiation. It allows you to target instruction to specific needs while ensuring students don't get stuck in permanent ability groups."
     },
     {
         id: "process-3",
-        title: "Centers/Stations",
+        title: "Learning Centres/Stations",
         category: "Process",
-        step: "Step3-process.html",
+        step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Students rotate through different activities or tasks, each focused on a different skill or aspect of the content.",
+        description: "Designated classroom areas where students rotate through different activities to explore topics or practice skills at their own pace. Centres allow for simultaneous differentiation—different students working on different things at the same time.",
         keywords: ["centers", "stations", "rotation", "small group", "independent work", "variety", "engagement"],
-        whenToUse: "When you want students to practice different skills or explore content from multiple angles."
+        whenToUse: "When you want students to practice skills or explore concepts independently or in small groups. Works well for skill reinforcement, application activities, or exploratory learning."
     },
     {
         id: "process-4",
-        title: "Flexible Pacing",
+        title: "Cubing",
         category: "Process",
         step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Allow students to move through content at different speeds, with checkpoints rather than rigid timelines.",
+        description: "A strategy where students analyse a topic from six different perspectives (like the six sides of a cube): describe it, compare it, associate it, analyse it, apply it, argue for/against it. You can create different cubes for different readiness levels.",
         keywords: ["pacing", "speed", "timing", "fast finishers", "slow workers", "time management", "self-paced"],
-        whenToUse: "When students work at significantly different speeds."
+        whenToUse: "When you want students to explore a concept from multiple angles. Cubing works well for review, application, or deeper exploration of content students have already encountered."
     },
     {
         id: "process-5",
-        title: "Anchor Activities",
+        title: "Jigsaw",
         category: "Process",
         step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Ongoing meaningful work students can do when they finish early or need a break from direct instruction.",
+        description: "A cooperative learning strategy where students become \"experts\" in one aspect of a topic, then teach that aspect to their peers. Students start in \"expert groups,\" then move to \"home groups\" to share their expertise.",
         keywords: ["early finishers", "finish early", "done early", "fast workers", "waiting", "time fillers", "extension", "enrichment"],
-        whenToUse: "When students finish at wildly different times and you need meaningful work for early finishers."
+        whenToUse: "When a topic has multiple distinct parts that can be learned somewhat independently. Jigsaw promotes interdependence—everyone needs everyone else—and gives students practice teaching."
     },
     {
         id: "process-6",
-        title: "Interest Centers",
-        category: "Process",
-        step: "Step 3: Process",
-        link: "step3-process.html",
-        description: "Activities or stations organised around student interests rather than readiness levels.",
-        keywords: ["interest", "choice", "engagement", "motivation", "student-directed", "passion", "topics"],
-        whenToUse: "When you want to increase engagement by connecting to student interests."
-    },
-    {
-        id: "process-7",
         title: "Learning Contracts",
         category: "Process",
         step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Written agreements that specify what a student will learn, how they'll learn it, and how they'll demonstrate mastery.",
+        description: "Formal agreements between teacher and student where the teacher grants freedom in how class time is used in exchange for the student completing individualized skill or content components. Contracts outline what must be done, by when, and to what standard.",
+        keywords: ["interest", "choice", "engagement", "motivation", "student-directed", "passion", "topics"],
+        whenToUse: "When students are ready for more independence and self-direction. Works well for extensions, independent projects, or when students need to work on specific skills at their own pace."
+    },
+    {
+        id: "process-7",
+        title: "Interactive Journals",
+        category: "Process",
+        step: "Step 3: Process",
+        link: "step3-process.html",
+        description: "Journals where students respond to varied writing prompts based on their readiness level. Students reflect on and \"own\" ideas from their reading and learning. Teacher provides feedback, creating a dialogue.",
         keywords: ["contract", "independence", "self-directed", "goals", "agreement", "accountability"],
-        whenToUse: "When students are ready for more independence in their learning process."
+        whenToUse: "When you want students to process and personalise content through writing. Works well for ongoing reflection, connecting new learning to prior knowledge, or exploring concepts more deeply."
     },
     {
         id: "process-8",
@@ -159,9 +159,9 @@ const searchData = [
         category: "Process",
         step: "Step 3: Process",
         link: "step3-process.html",
-        description: "Ongoing meaningful work students can do when they finish assigned tasks.",
+        description: "Self-directed tasks that students move to automatically upon completing assigned work. Anchor activities manage \"ragged time\" in a differentiated classroom where students finish at different rates.",
         keywords: ["anchor", "early finishers", "waiting", "extension", "enrichment", "independent work"],
-        whenToUse: "When you need meaningful work for students who finish early."
+        whenToUse: "Always. In any differentiated classroom, students will finish tasks at different times. Anchor activities prevent the \"I'm done, what do I do now?\" problem and keep learning happening for everyone."
     },
 
     // Step 3: Product Strategies
@@ -171,69 +171,69 @@ const searchData = [
         category: "Product",
         step: "Step 3: Product",
         link: "step3-product.html",
-        description: "Students choose from a menu of product options to demonstrate their learning, with choices varying by interest, learning profile, or challenge level.",
+        description: "Grids or menus of activity options that allow students to select how they will demonstrate learning. Students choose from multiple product options, all of which address the same learning goals but offer different ways to show mastery.",
         keywords: ["choice", "menu", "options", "selection", "variety", "student choice", "interest", "flexibility"],
-        whenToUse: "When you want to honor student voice and increase engagement through choice."
+        whenToUse: "When you want to give students agency in how they demonstrate learning. Choice boards work well for culminating projects, application tasks, or ongoing skill practice. They increase engagement by honoring student preferences."
     },
     {
         id: "product-2",
-        title: "Tiered Products",
-        category: "Product",
-        step: "Step 3: Product",
-        link: "step3-product.html",
-        description: "Multiple versions of the final product with varied levels of complexity, support, or abstraction.",
-        keywords: ["tiered", "levels", "complexity", "varied difficulty", "challenge", "readiness"],
-        whenToUse: "When students are at different readiness levels for demonstrating understanding."
-    },
-    {
-        id: "product-3",
-        title: "Think-Tac-Toe",
-        category: "Product",
-        step: "Step 3: Product",
-        link: "step3-product.html",
-        description: "A tic-tac-toe board of nine product options where students must complete three in a row.",
-        keywords: ["think-tac-toe", "tic-tac-toe", "grid", "choice", "game", "selection"],
-        whenToUse: "When you want structured choice that ensures students engage with multiple aspects of content."
-    },
-    {
-        id: "product-4",
         title: "RAFT (Role, Audience, Format, Topic)",
         category: "Product",
         step: "Step 3: Product",
         link: "step3-product.html",
-        description: "Students create products from different perspectives (roles) for different audiences in different formats.",
+        description: "A technique where students demonstrate learning by taking on a specific Role, writing for a targeted Audience, in a chosen Format, about a specified Topic. RAFT makes learning feel more authentic and engaging.",
+        keywords: ["tiered", "levels", "complexity", "varied difficulty", "challenge", "readiness"],
+        whenToUse: "When you want students to apply content knowledge in creative, authentic ways. RAFT works especially well for content that can be viewed from multiple perspectives or communicated to different audiences."
+    },
+    {
+        id: "product-3",
+        title: "Negotiated Criteria",
+        category: "Product",
+        step: "Step 3: Product",
+        link: "step3-product.html",
+        description: "Collaborate with students to determine the core requirements for a product while allowing them to add personal quality goals. Students have voice in what \"excellent work\" looks like while ensuring essential elements are present.",
+        keywords: ["think-tac-toe", "tic-tac-toe", "grid", "choice", "game", "selection"],
+        whenToUse: "When you want to build student ownership and agency while maintaining rigor. Works well for projects where students have choice in format but you need to ensure certain learning goals are demonstrated."
+    },
+    {
+        id: "product-4",
+        title: "Tiered Assessments",
+        category: "Product",
+        step: "Step 3: Product",
+        link: "step3-product.html",
+        description: "Provide multiple versions of a summative task that assess the same standards but vary in complexity, scaffolding, or mode of expression. All students demonstrate the same learning goals, but the pathway to demonstrating them differs.",
         keywords: ["RAFT", "role", "audience", "format", "perspective", "writing", "creativity"],
-        whenToUse: "When you want students to demonstrate understanding from multiple perspectives."
+        whenToUse: "When students have significantly varied readiness levels and you want to assess their learning accurately without ceiling or floor effects. Tiered assessments ensure you see what students actually know, not what they can't access due to task design."
     },
     {
         id: "product-5",
-        title: "Contracts for Independent Study",
+        title: "Expanding the Product Repertoire with AI",
         category: "Product",
         step: "Step 3: Product",
         link: "step3-product.html",
-        description: "Written agreements about what the final product will be and criteria for success.",
+        description: "AI tools make it possible to support students in creating products that were previously too complex or time-consuming to scaffold. Consider these possibilities:",
         keywords: ["contract", "independent", "project", "agreement", "criteria", "self-directed"],
-        whenToUse: "When students are working on independent projects or studies."
+        whenToUse: ""
     },
     {
         id: "product-6",
-        title: "Rubrics with Student Input",
+        title: "Performance & Presentation Products",
         category: "Product",
         step: "Step 3: Product",
         link: "step3-product.html",
-        description: "Co-create success criteria with students, giving them voice in how quality will be defined.",
+        description: "Some students demonstrate their learning best through performance—presenting, demonstrating, teaching, or performing for an audience.",
         keywords: ["rubric", "criteria", "assessment", "co-create", "student voice", "success criteria"],
-        whenToUse: "When you want to build student ownership and clarity about quality."
+        whenToUse: "When learning involves demonstrable skills, when public speaking is a goal, or when students excel at oral communication over written."
     },
     {
         id: "product-7",
-        title: "Varying Complexity in Products",
+        title: "Creative & Artistic Products",
         category: "Product",
         step: "Step 3: Product",
         link: "step3-product.html",
-        description: "Same product type but with varied levels of sophistication expected.",
+        description: "Creative products allow students to demonstrate understanding through art, design, storytelling, or creative expression.",
         keywords: ["complexity", "levels", "sophistication", "challenge", "depth"],
-        whenToUse: "When all students create the same type of product but at different levels."
+        whenToUse: "When content has emotional, thematic, or interpretive dimensions; when students need alternative ways to show understanding."
     },
     {
         id: "product-8",
@@ -241,9 +241,9 @@ const searchData = [
         category: "Product",
         step: "Step 3: Product",
         link: "step3-product.html",
-        description: "Students work together to create a product, with differentiated roles based on readiness or interest.",
+        description: "Some learning is best demonstrated through collaboration—products that require students to work together and create something no individual could create alone.",
         keywords: ["group work", "collaboration", "teamwork", "roles", "cooperative learning"],
-        whenToUse: "When you want students to learn from each other through collaborative creation."
+        whenToUse: "When learning goals include collaboration skills, when tasks benefit from multiple perspectives, or when product scope requires distributed effort."
     },
 
     // Step 3: Environment Strategies
@@ -253,29 +253,29 @@ const searchData = [
         category: "Environment",
         step: "Step 3: Environment",
         link: "step3-environment.html",
-        description: "Provide varied seating options that allow students to choose workspaces that match their learning needs.",
+        description: "Offer various seating options—traditional desks, floor seating, standing desks, balance balls, cushions—to meet students' physical needs for movement, comfort, and different working positions.",
         keywords: ["seating", "furniture", "workspace", "flexible", "choice", "comfort", "physical space"],
-        whenToUse: "When students have different physical and sensory needs for optimal learning."
+        whenToUse: "Ongoing. Some students focus better when moving, some need quiet stability, some benefit from ergonomic variety. Flexible seating honours these different physical needs."
     },
     {
         id: "environment-2",
-        title: "Flexible Grouping",
+        title: "Learning Zones",
         category: "Environment",
         step: "Step 3: Environment",
         link: "step3-environment.html",
-        description: "Group students in different ways for different purposes—by readiness, interest, learning profile, or random.",
+        description: "Create designated areas for different types of work: quiet individual work, collaboration spaces, technology zones, hands-on activity areas. Students move to the zone that matches their current task and needs.",
         keywords: ["grouping", "groups", "flexible groups", "homogeneous", "heterogeneous", "partners", "teams"],
-        whenToUse: "When you want to ensure students work with different peers for different purposes."
+        whenToUse: "When you want to support students in making choices about where and how they work best. Learning zones help students understand that different tasks require different environments."
     },
     {
         id: "environment-3",
-        title: "Learning Stations/Centers",
+        title: "Growth Mindset Culture",
         category: "Environment",
         step: "Step 3: Environment",
         link: "step3-environment.html",
-        description: "Designate areas of the room for different types of work or different aspects of content.",
+        description: "Foster a classroom atmosphere that celebrates diversity, values effort and growth over \"innate ability,\" and views mistakes as learning opportunities. The psychological environment is as important as the physical one.",
         keywords: ["stations", "centers", "zones", "areas", "rotation", "classroom setup"],
-        whenToUse: "When you want students to move through different activities or skill practices."
+        whenToUse: "Always. Growth mindset isn't a one-time lesson—it's woven into how you respond to student work, how you frame challenges, and how you celebrate progress."
     },
     {
         id: "environment-4",
@@ -283,71 +283,71 @@ const searchData = [
         category: "Environment",
         step: "Step 3: Environment",
         link: "step3-environment.html",
-        description: "Adjust lighting, noise levels, visual stimulation, and emotional tone to support different learners.",
+        description: "Consider sensory needs (lighting, noise level, visual clutter) and emotional safety (predictability, belonging, psychological safety to take risks). These factors significantly impact student ability to learn.",
         keywords: ["sensory", "environment", "noise", "lighting", "calm", "stimulation", "emotional safety", "atmosphere"],
-        whenToUse: "When you have students with sensory sensitivities or different emotional regulation needs."
+        whenToUse: "As part of your overall classroom design. Some students are highly sensitive to sensory input; others need sensory stimulation. Creating options supports diverse needs."
     },
 
     // Step 6: Scaffolding Strategies
     {
         id: "scaffolding-1",
-        title: "Scaffolds Are Temporary",
-        category: "Scaffolding",
-        step: "Step 6: Scaffolding",
-        link: "step6-scaffolding.html",
-        description: "Design supports that can be gradually removed as students develop competence.",
-        keywords: ["temporary", "gradual release", "fading", "independence", "support", "training wheels"],
-        whenToUse: "When planning any scaffold—ensure it has a plan for removal."
-    },
-    {
-        id: "scaffolding-2",
-        title: "Modeling & Think-Alouds",
-        category: "Scaffolding",
-        step: "Step 6: Scaffolding",
-        link: "step6-scaffolding.html",
-        description: "Demonstrate your thinking process explicitly so students see how experts approach tasks.",
-        keywords: ["modeling", "think aloud", "demonstration", "explicit instruction", "showing thinking", "teacher demonstration"],
-        whenToUse: "When introducing new skills or complex thinking processes."
-    },
-    {
-        id: "scaffolding-3",
         title: "Graphic Organizers",
         category: "Scaffolding",
         step: "Step 6: Scaffolding",
         link: "step6-scaffolding.html",
-        description: "Visual frameworks that help students organise information and see relationships between ideas.",
+        description: "Visual frameworks that help students organise thinking, see relationships between ideas, or structure their work. Particularly helpful for students who struggle with working memory or organisation.",
+        keywords: ["temporary", "gradual release", "fading", "independence", "support", "training wheels"],
+        whenToUse: "When students understand concepts but struggle to organise or connect ideas. When tasks require holding multiple pieces of information in mind simultaneously."
+    },
+    {
+        id: "scaffolding-2",
+        title: "Sentence Starters & Thinking Stems",
+        category: "Scaffolding",
+        step: "Step 6: Scaffolding",
+        link: "step6-scaffolding.html",
+        description: "Phrases that help students begin their thinking, writing, or discussion. Particularly helpful for students who know what they want to say but struggle to start, or who need models for academic language.",
+        keywords: ["modeling", "think aloud", "demonstration", "explicit instruction", "showing thinking", "teacher demonstration"],
+        whenToUse: "For writing tasks, class discussions, or any time students need to articulate thinking in academic language. Especially helpful for EALD students."
+    },
+    {
+        id: "scaffolding-3",
+        title: "Chunking & Step-by-Step Instructions",
+        category: "Scaffolding",
+        step: "Step 6: Scaffolding",
+        link: "step6-scaffolding.html",
+        description: "Breaking complex tasks into smaller, manageable steps. Particularly helpful for students who feel overwhelmed by large tasks or have executive functioning challenges.",
         keywords: ["graphic organiser", "visual", "framework", "organiser", "structure", "map", "diagram", "chart"],
-        whenToUse: "When content involves relationships between concepts or multi-step processes."
+        whenToUse: "When students understand the content but struggle with multi-step processes or feel paralyzed by complex assignments."
     },
     {
         id: "scaffolding-4",
-        title: "Chunking Information",
+        title: "Models & Exemplars",
         category: "Scaffolding",
         step: "Step 6: Scaffolding",
         link: "step6-scaffolding.html",
-        description: "Break complex information or tasks into smaller, manageable pieces.",
+        description: "Showing students what quality work looks like. Models provide concrete examples of expectations rather than abstract descriptions.",
         keywords: ["chunking", "breaking down", "steps", "manageable", "small pieces", "simplify", "sequence"],
-        whenToUse: "When tasks or content feel overwhelming to students."
+        whenToUse: "When introducing new formats, genres, or quality standards. When students ask \"What do you mean?\" about expectations."
     },
     {
         id: "scaffolding-5",
-        title: "Worked Examples",
+        title: "Thinking Partners & Collaboration",
         category: "Scaffolding",
         step: "Step 6: Scaffolding",
         link: "step6-scaffolding.html",
-        description: "Provide completed examples that show what success looks like.",
+        description: "Pairing students strategically so they can support each other's thinking. The right partnership can scaffold learning through dialogue and shared problem-solving.",
         keywords: ["example", "model", "sample", "exemplar", "demonstration", "what good looks like"],
-        whenToUse: "When students need to see what quality work looks like before attempting their own."
+        whenToUse: "When students would benefit from talking through ideas, when multiple perspectives would deepen understanding, or when peer explanation could clarify confusion."
     },
     {
         id: "scaffolding-6",
-        title: "Sentence Starters & Frames",
+        title: "Worked Examples & Think-Alouds",
         category: "Scaffolding",
         step: "Step 6: Scaffolding",
         link: "step6-scaffolding.html",
-        description: "Provide language scaffolds that help students express complex thinking.",
+        description: "Demonstrating the thinking process, not just the final answer. Show students how an expert approaches the task, including false starts and self-correction.",
         keywords: ["sentence starters", "sentence frames", "language scaffolds", "writing support", "vocabulary", "academic language"],
-        whenToUse: "When students understand concepts but struggle to express them in writing or speaking."
+        whenToUse: "When introducing new skills or problem types. When students know what to do but not how to think through it."
     },
     {
         id: "scaffolding-7",
@@ -355,101 +355,101 @@ const searchData = [
         category: "Scaffolding",
         step: "Step 6: Scaffolding",
         link: "step6-scaffolding.html",
-        description: "Pre-teach vocabulary and provide ongoing language supports for academic discourse.",
+        description: "Provide explicit support for academic vocabulary through student-friendly definitions, organised word walls, visual supports, and opportunities for practice. These scaffolds help all students—especially EALD learners—access content-heavy material and develop academic language proficiency.",
         keywords: ["vocabulary", "academic language", "word walls", "glossary", "language", "terminology", "EAL", "EALD"],
-        whenToUse: "When academic language is a barrier to accessing content."
+        whenToUse: "When content involves Tier 2 (high-utility academic words) or Tier 3 (domain-specific terminology), when students need to understand and use specific vocabulary, or when supporting EALD students."
     },
 
-    // Step 7: Assessment Strategies
+    // Step 7: Implementation & Assessment Strategies
     {
         id: "assessment-1",
         title: "Exit Cards / Tickets",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Quick written responses at the end of a lesson that reveal student understanding.",
+        description: "Brief written responses students complete at the end of a lesson. These provide you with snapshot data about what students understood (or didn't) that you can use to plan tomorrow's instruction.",
         keywords: ["exit ticket", "exit card", "exit slip", "formative assessment", "check for understanding", "quick assessment"],
-        whenToUse: "At the end of a lesson to quickly gauge who understood and who needs more support."
+        whenToUse: "End of most lessons, particularly after introducing new concepts or completing key activities."
     },
     {
         id: "assessment-2",
-        title: "Think-Pair-Share",
+        title: "QuickWrites",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Students think individually, discuss with a partner, then share with the class—allowing you to circulate and listen.",
+        description: "Brief, timed writing activities (2-3 minutes) that ask students to synthesise learning or respond to a prompt. These reveal student thinking and provide formative data.",
         keywords: ["think-pair-share", "discussion", "partner talk", "peer learning", "formative"],
-        whenToUse: "During or after instruction to check understanding and engage all students."
+        whenToUse: "Mid-lesson to check understanding before moving on, or to help students process what they've just learned."
     },
     {
         id: "assessment-3",
-        title: "Observation & Anecdotal Notes",
+        title: "Think-Pair-Share & Structured Discussion",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Systematic observation of student work and behaviour with brief notes about progress.",
+        description: "Give students a moment to think individually, then discuss with a partner, then share with the class. While students talk, you circulate and listen—gathering formative data about understanding.",
         keywords: ["observation", "notes", "watching", "monitoring", "informal assessment", "anecdotal"],
-        whenToUse: "During independent or group work to track progress and identify needs."
+        whenToUse: "Throughout lessons to check understanding, activate prior knowledge, or process new information."
     },
     {
         id: "assessment-4",
-        title: "Student Self-Assessment",
+        title: "Dry Erase Boards / Immediate Response",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Students reflect on and evaluate their own learning progress against clear criteria.",
+        description: "Students show their answers simultaneously on whiteboards (or digital equivalents). You can immediately see who gets it and who doesn't.",
         keywords: ["self-assessment", "reflection", "self-evaluation", "metacognition", "student ownership"],
-        whenToUse: "Regularly throughout learning to build student ownership and awareness."
+        whenToUse: "For quick checks during instruction, practicing skills, or gauging readiness before moving on."
     },
     {
         id: "assessment-5",
-        title: "3-2-1",
+        title: "Varying Questions by Readiness",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Students identify 3 things they learned, 2 things they found interesting, 1 question they still have.",
+        description: "During class discussion, target different questions to different students based on their readiness. This ensures all students are held accountable and appropriately challenged.",
         keywords: ["3-2-1", "reflection", "formative assessment", "check for understanding", "questioning"],
-        whenToUse: "End of lesson or unit to check understanding and identify remaining questions."
+        whenToUse: "During whole-class discussions and questioning."
     },
     {
         id: "assessment-6",
-        title: "Four Corners",
+        title: "S-O-S Summary (Statement-Opinion-Support)",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Students move to corners of the room to indicate their response or level of understanding.",
+        description: "Students write a brief response: State an opinion on a statement (agree/disagree), then support it with evidence. Provides practice for critical thinking without requiring a full essay.",
         keywords: ["four corners", "movement", "kinesthetic", "visible thinking", "agreement", "understanding check"],
-        whenToUse: "Quick physical check of understanding or opinions."
+        whenToUse: "When you want students to practice argumentation and evidence-based thinking in a low-stakes, quick format."
     },
     {
         id: "assessment-7",
-        title: "Whiteboards / Response Cards",
+        title: "Observation Protocols with Rubrics",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "All students respond simultaneously on individual whiteboards, allowing you to see all responses at once.",
+        description: "Use a simple observation rubric to systematically note student progress during activities. A 4-point scale with clear descriptors helps you quickly identify understanding levels without disrupting the flow of teaching.",
         keywords: ["whiteboard", "response cards", "individual responses", "whole class", "quick check"],
-        whenToUse: "During instruction when you need to quickly check if everyone understands."
+        whenToUse: "During independent work, group activities, or discussions when you want to systematically track who understands and who needs support."
     },
     {
         id: "assessment-8",
-        title: "Entrance Tickets",
+        title: "Quick Feedback Based on Common Responses",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Brief assessment at the start of class to check prior knowledge or recall from previous lesson.",
+        description: "Anticipate typical student responses and prepare targeted feedback ahead of time. This allows you to give specific, actionable feedback quickly when you're circulating or reviewing student work.",
         keywords: ["entrance ticket", "entry ticket", "pre-assessment", "prior knowledge", "warm-up"],
-        whenToUse: "At the start of class to check retention or activate prior knowledge."
+        whenToUse: "When planning a task or question where you can predict common correct, partially correct, and incorrect responses."
     },
     {
         id: "assessment-9",
-        title: "One-Minute Essays",
+        title: "Peer Assessment Checklists",
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Students write for one minute in response to a prompt, revealing their understanding.",
+        description: "Scaffold peer feedback with simple \"Got it / Need help\" checklists focused on success criteria. This builds students' assessment literacy while providing you with multiple data points on student work.",
         keywords: ["one-minute essay", "quick write", "writing", "formative", "brief response"],
-        whenToUse: "Quick check of understanding or to start/end a lesson."
+        whenToUse: "When students can meaningfully assess each other's work against clear criteria, particularly for drafts or work-in-progress."
     },
     {
         id: "assessment-10",
@@ -457,8 +457,8 @@ const searchData = [
         category: "Assessment",
         step: "Step 7: Implementation & Assessment",
         link: "step7-implement.html",
-        description: "Use digital tools to collect exit ticket responses and generate instant data.",
+        description: "Use Google Forms for quick digital exit tickets that automatically compile student responses into a spreadsheet, making data analysis faster and more efficient.",
         keywords: ["digital", "google forms", "technology", "online", "data collection", "exit ticket"],
-        whenToUse: "When you want instant data aggregation and analysis."
+        whenToUse: "When you want to quickly gather and analyse exit ticket data, particularly if students have devices available."
     }
 ];
