@@ -41,6 +41,7 @@
                     <a href="#process-6" class="quick-nav-link" onclick="jumpToStrategy('process-6'); return false;">Interest Centers</a>
                     <a href="#process-7" class="quick-nav-link" onclick="jumpToStrategy('process-7'); return false;">Learning Contracts</a>
                     <a href="#process-8" class="quick-nav-link" onclick="jumpToStrategy('process-8'); return false;">Anchor Activities 2</a>
+                    <a href="#process-9" class="quick-nav-link" onclick="jumpToStrategy('process-9'); return false;">Misconception Mapping</a>
                 </div>
             </div>
 
@@ -513,6 +514,100 @@
                             <li>Be sustainable (can be used repeatedly throughout the year)</li>
                         </ul>
                         <p>For each activity, explain how it works and what students gain from it.</p>
+                                </div>
+                                <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="strategy-card" id="process-9">
+                    <div class="strategy-header" onclick="toggleStrategy(this)">
+                        <div class="strategy-title">
+                            <span class="strategy-number">18</span>
+                            <h3>Predictive Misconception Mapping</h3>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    
+                    <div class="strategy-content">
+                        <div class="strategy-inner">
+                            <p class="description">Before teaching a differentiated lesson, use AI to predict which parts of each tiered task will cause the most confusion, what specific misconceptions students are likely to develop, and then pre-write a short, targeted reteaching script for each. This shifts misconception response from reactive (assess → discover → improvise) to proactive (predict → prepare → deploy).</p>
+                            
+                            <div class="when-to-use">
+                                <strong>When to use:</strong> After creating tiered activities, scaffolded tasks, or any differentiated resource — before teaching. Especially valuable when teaching conceptually tricky content, when you're new to a topic or year level, or when you want to feel more prepared for the "what if they don't get it?" moments.
+                            </div>
+
+                            <div class="example-box">
+                                <strong>Example in practice:</strong> A Year 5 maths lesson on equivalent fractions has three tiered tasks. The teacher asks AI to predict confusion points for each tier. The AI identifies that the support group will likely think ½ and 2/4 are <em>different</em> fractions because "the numbers are different," while the extension group may incorrectly generalise that "multiplying both numbers always works" without understanding <em>why</em>. The teacher receives a 2-minute reteach script for each, ready to deploy at the moment of confusion.
+                            </div>
+
+                            <h4 class="ai-prompts-header">AI Prompts:</h4>
+                            
+                            <div class="prompt-section">
+                                <div class="prompt-title">
+                                    <h4>Predict Confusion Points Across Tiers</h4>
+                                </div>
+                                <div class="prompt-container">
+                                    <p>Context: I've created differentiated tasks and I want to anticipate where students will struggle so I'm not caught off guard during the lesson.</p>
+                        <p>Objective: Identify the most likely confusion points, misconceptions, or sticking points for each tier of a differentiated task — before teaching.</p>
+                        <p>Instructional nuance: Different tiers produce different misconceptions. The support group's struggles are often procedural or vocabulary-based; the extension group's are often about overgeneralisation or incomplete conceptual understanding. Anticipating both makes your differentiation more responsive.</p>
+                        <p><br><strong>Prompt:</strong></p>
+                        <p>I'm teaching [topic] to [Year Level]. Here are my differentiated tasks:</p>
+                        <p><strong>Support tier:</strong> [paste]</p>
+                        <p><strong>Core tier:</strong> [paste]</p>
+                        <p><strong>Extension tier:</strong> [paste]</p>
+                        <p>For each tier, please:</p>
+                        <ul>
+                            <li>Predict the single most likely point of confusion or misconception</li>
+                            <li>Explain <em>why</em> students at that level are likely to make this error (what's the underlying thinking?)</li>
+                            <li>Suggest one quick diagnostic question I can ask to check whether this misconception is present (something I can ask verbally during the lesson)</li>
+                        </ul>
+                        <p>Be specific to this content — I don't want generic advice. I want to know exactly where <em>these</em> tasks will cause problems for <em>this</em> age group.</p>
+                                </div>
+                                <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
+                            </div>
+                            
+                            <div class="prompt-section">
+                                <div class="prompt-title">
+                                    <h4>Write a 2-Minute Reteach Script</h4>
+                                </div>
+                                <div class="prompt-container">
+                                    <p>Context: I know where students are likely to get confused (from the prediction above or from my own experience). I want a short, targeted reteaching script ready to deploy at the moment of confusion.</p>
+                        <p>Objective: Create a brief, teacher-facing reteach script that addresses a specific misconception in 2 minutes or less.</p>
+                        <p>Instructional nuance: A reteach is not "say it again louder." It's a different angle — a new representation, a concrete example, or a targeted question sequence that helps students see their own error. The best reteaches make students think, not just listen.</p>
+                        <p><br><strong>Prompt:</strong></p>
+                        <p>My [Year Level] students are working on [topic]. The likely misconception is: [describe the specific misconception]</p>
+                        <p>Please write a 2-minute reteaching script I can use at the point of confusion. The script should:</p>
+                        <ul>
+                            <li>Start with a question that surfaces the misconception (don't tell them they're wrong — help them discover it)</li>
+                            <li>Use a concrete example, visual representation, or analogy that addresses the root cause</li>
+                            <li>End with a "check for understanding" question I can ask to confirm the misconception has been addressed</li>
+                            <li>Be written as teacher dialogue — what I actually say and do, step by step</li>
+                        </ul>
+                        <p>Keep it under 2 minutes of speaking time. This needs to be a quick, surgical intervention, not a mini-lesson.</p>
+                                </div>
+                                <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
+                            </div>
+                            
+                            <div class="prompt-section">
+                                <div class="prompt-title">
+                                    <h4>Create a Misconception Anticipation Map</h4>
+                                </div>
+                                <div class="prompt-container">
+                                    <p>Context: I'm planning a unit and want to map out common misconceptions across the whole sequence so I can build in prevention strategies, not just responses.</p>
+                        <p>Objective: Create a visual overview of likely misconceptions at each stage of a unit, with prevention and response strategies.</p>
+                        <p>Instructional nuance: Some misconceptions can be <em>prevented</em> through careful sequencing and language choices. Others will emerge no matter what. Knowing the difference helps you plan more strategically.</p>
+                        <p><br><strong>Prompt:</strong></p>
+                        <p>I'm planning a unit on [topic] for [Year Level]. The key concepts are: [list main concepts in teaching order]</p>
+                        <p>Please create a misconception anticipation map that includes:</p>
+                        <ul>
+                            <li>For each key concept: the 2-3 most common misconceptions students at this level develop</li>
+                            <li>Whether each misconception is <strong>preventable</strong> (through careful teaching) or <strong>predictable</strong> (likely to emerge regardless)</li>
+                            <li>For preventable misconceptions: what specific language, sequencing, or representation choices reduce the risk</li>
+                            <li>For predictable misconceptions: a brief reteach approach</li>
+                        </ul>
+                        <p>Format as a table with columns: Concept | Common Misconception | Preventable or Predictable | Prevention/Response Strategy</p>
                                 </div>
                                 <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
                             </div>

@@ -31,6 +31,7 @@
                     <a href="#scaffolding-5" class="quick-nav-link" onclick="jumpToStrategy('scaffolding-5'); return false;">Worked Examples</a>
                     <a href="#scaffolding-6" class="quick-nav-link" onclick="jumpToStrategy('scaffolding-6'); return false;">Sentence Starters</a>
                     <a href="#scaffolding-7" class="quick-nav-link" onclick="jumpToStrategy('scaffolding-7'); return false;">Academic Language</a>
+                    <a href="#scaffolding-8" class="quick-nav-link" onclick="jumpToStrategy('scaffolding-8'); return false;">EALD Translation</a>
                 </div>
             </div>
 
@@ -531,6 +532,104 @@
                             <li><strong>Who needs which scaffolds?</strong> Not everyone needs every scaffold.</li>
                             <li><strong>How will I fade these scaffolds?</strong> What's the plan for removing them as students gain skill?</li>
                         </ul>
+                                </div>
+                                <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="strategy-card" id="scaffolding-8">
+                    <div class="strategy-header" onclick="toggleStrategy(this)">
+                        <div class="strategy-title">
+                            <span class="strategy-number">9</span>
+                            <h3>EALD Translation Bridge</h3>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    
+                    <div class="strategy-content">
+                        <div class="strategy-inner">
+                            <p class="description">Use AI to translate key instructions, vocabulary, or concept summaries into a student's home language, creating a bilingual bridge that supports comprehension while students develop English proficiency. This leverages translanguaging research — the principle that students learn most effectively when they can draw on their full linguistic repertoire.</p>
+                            
+                            <div class="when-to-use">
+                                <strong>When to use:</strong> When EALD students are struggling to access content because of language demands rather than conceptual difficulty. Particularly effective for newly arrived students, students in the Beginning or Emerging phases of the EAL/D Learning Progression, or when introducing vocabulary-heavy or conceptually dense content. Also useful for parent communication and homework support.
+                            </div>
+
+                            <div class="example-box">
+                                <strong>Example in practice:</strong> A Year 5 Science unit on Earth's resources includes 8 key vocabulary terms. For a student whose home language is Mandarin, the teacher generates a bilingual glossary with each term in English and Simplified Chinese, along with a brief concept explanation in both languages. The student uses this as a reference during the lesson, gradually relying less on the translated column as familiarity grows.
+                            </div>
+
+                            <h4 class="ai-prompts-header">AI Prompts:</h4>
+                            
+                            <div class="prompt-section">
+                                <div class="prompt-title">
+                                    <h4>Create a Bilingual Glossary</h4>
+                                </div>
+                                <div class="prompt-container">
+                                    <p>Context: I have EALD students who need vocabulary support in their home language to access content-heavy material.</p>
+                        <p>Objective: Generate a bilingual glossary that pairs English academic vocabulary with home-language translations and explanations.</p>
+                        <p>Instructional nuance: This is a scaffold, not a replacement for English instruction. The home-language column provides a cognitive anchor so students can focus on concept learning rather than decoding every term. Include student-friendly definitions in both languages — not just direct word translations, which often miss nuance.</p>
+                        <p><br><strong>Prompt:</strong></p>
+                        <p>I'm teaching [topic] to [Year Level] students. I have [number] EALD students whose home language is [language].</p>
+                        <p>Here are the key vocabulary terms for this unit: [list terms]</p>
+                        <p>Please create a bilingual glossary with:</p>
+                        <ul>
+                            <li>Each term in English with a student-friendly definition (appropriate for [Year Level])</li>
+                            <li>The same term translated into [language] with an equivalent student-friendly explanation</li>
+                            <li>A simple example sentence in English showing the word in context</li>
+                        </ul>
+                        <p>Format as a two-column table that I can print for students. Keep definitions concise — no more than one sentence each.</p>
+                        <p>Important: If a direct translation doesn't capture the meaning well, note this and provide a brief explanation rather than a misleading literal translation.</p>
+                                </div>
+                                <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
+                            </div>
+                            
+                            <div class="prompt-section">
+                                <div class="prompt-title">
+                                    <h4>Translate Key Task Instructions</h4>
+                                </div>
+                                <div class="prompt-container">
+                                    <p>Context: I have a task or activity with instructions that are linguistically complex, and I need my EALD students to understand what they need to do — not just the content, but the procedural language.</p>
+                        <p>Objective: Provide a translated version of task instructions so EALD students can understand what is expected before engaging with the task in English.</p>
+                        <p>Instructional nuance: This targets the <em>instructions</em>, not the learning content itself. Often, EALD students can do the thinking required but get stuck on phrases like "justify your reasoning" or "compare and contrast." Translating the procedural language removes that barrier.</p>
+                        <p><br><strong>Prompt:</strong></p>
+                        <p>Here are the instructions for a task I'm giving my [Year Level] class: [paste instructions]</p>
+                        <p>I have EALD students whose home language is [language].</p>
+                        <p>Please:</p>
+                        <ul>
+                            <li>Translate these instructions into [language], keeping the same structure and sequence</li>
+                            <li>Highlight any English phrases that are likely to cause confusion for EALD students (e.g., academic verbs like "evaluate," "synthesise," idiomatic phrases)</li>
+                            <li>For each highlighted phrase, provide the [language] equivalent and a plain-English alternative I could use with all students</li>
+                        </ul>
+                        <p>Format with English on the left and [language] on the right so students can reference both.</p>
+                                </div>
+                                <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
+                            </div>
+                            
+                            <div class="prompt-section">
+                                <div class="prompt-title">
+                                    <h4>Create a Dual-Language Concept Summary</h4>
+                                </div>
+                                <div class="prompt-container">
+                                    <p>Context: I'm about to teach a conceptually dense lesson and I want my EALD students to have a brief overview in their home language so they can follow along more effectively in English.</p>
+                        <p>Objective: Create a short concept summary in the student's home language that previews the key ideas, so the student arrives at the English-language lesson with a cognitive framework already in place.</p>
+                        <p>Instructional nuance: This is a pre-teaching scaffold. The summary should be brief (half a page maximum) and focus on the <em>big ideas</em> — not a full translation of the lesson. Think of it as giving the student a map before the journey, not driving them to the destination.</p>
+                        <p><br><strong>Prompt:</strong></p>
+                        <p>I'm teaching a lesson on [topic] to [Year Level]. The key ideas are:</p>
+                        <ul>
+                            <li>[Key idea 1]</li>
+                            <li>[Key idea 2]</li>
+                            <li>[Key idea 3]</li>
+                        </ul>
+                        <p>The Learning Intention is: [paste LI]</p>
+                        <p>Please create a half-page concept summary in [language] that:</p>
+                        <ul>
+                            <li>Explains the 2-3 main ideas in simple, age-appropriate [language]</li>
+                            <li>Includes the English key terms in brackets after each [language] explanation so students can connect the two languages</li>
+                            <li>Ends with 2 questions in [language] that the student could think about before the lesson begins</li>
+                        </ul>
+                        <p>This is a pre-teaching tool — keep it brief and conceptual, not a full lesson translation.</p>
                                 </div>
                                 <button class="copy-btn" onclick="copyPrompt(this)">Copy Full Prompt</button>
                             </div>
