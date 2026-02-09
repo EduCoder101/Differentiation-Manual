@@ -1,5 +1,5 @@
 // Search data - all strategies indexed with keywords
-// Updated with continuum fields, keyword fixes, and 7 new strategies
+// Includes continuum fields, adjustment codes, and HP adjustment tags
 const searchData = [
     {
         id: "kuds-1",
@@ -13,7 +13,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Planning: defines the centre of the continuum"
+        continuumNote: "Planning: defines the centre of the continuum",
+        adjustmentCodes: ["M1"],
+        hpAdjustments: ["HP-LE2"]
     },
     {
         id: "kuds-2",
@@ -27,7 +29,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Planning: stress-tests the learning intention"
+        continuumNote: "Planning: stress-tests the learning intention",
+        adjustmentCodes: ["M1"],
+        hpAdjustments: ["HP-LE2"]
     },
     {
         id: "kuds-3",
@@ -41,7 +45,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Planning: creates the learning intention from curriculum documents"
+        continuumNote: "Planning: creates the learning intention from curriculum documents",
+        adjustmentCodes: ["M1"],
+        hpAdjustments: []
     },
     {
         id: "kuds-4",
@@ -55,7 +61,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Planning: anticipates where different learners will need support"
+        continuumNote: "Planning: anticipates where different learners will need support",
+        adjustmentCodes: ["M1","C2"],
+        hpAdjustments: []
     },
     {
         id: "learners-1",
@@ -69,7 +77,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Diagnostic: reveals where each student sits relative to the core"
+        continuumNote: "Diagnostic: reveals where each student sits relative to the core",
+        adjustmentCodes: ["M9"],
+        hpAdjustments: ["HP-CH1"]
     },
     {
         id: "learners-2",
@@ -83,7 +93,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Diagnostic: organises student data to inform continuum decisions"
+        continuumNote: "Diagnostic: organises student data to inform continuum decisions",
+        adjustmentCodes: [],
+        hpAdjustments: []
     },
     {
         id: "learners-3",
@@ -97,7 +109,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Diagnostic: gathers interest data for engagement-based differentiation"
+        continuumNote: "Diagnostic: gathers interest data for engagement-based differentiation",
+        adjustmentCodes: [],
+        hpAdjustments: ["HP-CO2"]
     },
     {
         id: "learners-4",
@@ -111,7 +125,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Diagnostic: predicts foundations-level barriers students may face"
+        continuumNote: "Diagnostic: predicts foundations-level barriers students may face",
+        adjustmentCodes: ["C2"],
+        hpAdjustments: []
     },
     {
         id: "learners-5",
@@ -125,7 +141,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Diagnostic: maps learning preferences to inform content access"
+        continuumNote: "Diagnostic: maps learning preferences to inform content access",
+        adjustmentCodes: ["C6","E6"],
+        hpAdjustments: []
     },
     {
         id: "learners-6",
@@ -139,7 +157,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Diagnostic: turns raw data into actionable groupings along the continuum"
+        continuumNote: "Diagnostic: turns raw data into actionable groupings along the continuum",
+        adjustmentCodes: ["M9","M17"],
+        hpAdjustments: ["HP-CH1"]
     },
     {
         id: "content-1",
@@ -153,7 +173,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "Creates three text versions at different complexity levels — foundations, core, and extension — all conveying the same concepts"
+        continuumNote: "Creates three text versions at different complexity levels — foundations, core, and extension — all conveying the same concepts",
+        adjustmentCodes: ["C3","C6","C9"],
+        hpAdjustments: ["HP-CH4"]
     },
     {
         id: "content-2",
@@ -167,7 +189,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core"],
         continuumPrimary: "core",
-        continuumNote: "Delivering content through multiple modes — primarily a core-level access strategy, but serves as foundations support for students who need alternative entry points"
+        continuumNote: "Delivering content through multiple modes — primarily a core-level access strategy, but serves as foundations support for students who need alternative entry points",
+        adjustmentCodes: ["C6"],
+        hpAdjustments: ["HP-CH4"]
     },
     {
         id: "content-3",
@@ -181,7 +205,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["extension"],
         continuumPrimary: "extension",
-        continuumNote: "Eliminates redundant practice for students who have mastered the core, replacing it with meaningful extension"
+        continuumNote: "Eliminates redundant practice for students who have mastered the core, replacing it with meaningful extension",
+        adjustmentCodes: ["C11"],
+        hpAdjustments: ["HP-PA1","HP-PA2"]
     },
     {
         id: "content-4",
@@ -195,7 +221,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Distils essential content into a focused summary, reducing overwhelm for students who need a clearer path to the core learning intention"
+        continuumNote: "Distils essential content into a focused summary, reducing overwhelm for students who need a clearer path to the core learning intention",
+        adjustmentCodes: ["C3","C9"],
+        hpAdjustments: []
     },
     {
         id: "content-5",
@@ -209,7 +237,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Directs attention to critical passages, reducing cognitive load so students can focus energy on accessing the core concepts"
+        continuumNote: "Directs attention to critical passages, reducing cognitive load so students can focus energy on accessing the core concepts",
+        adjustmentCodes: ["C3"],
+        hpAdjustments: []
     },
     {
         id: "content-6",
@@ -223,7 +253,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Provides human or technological support to help students access content that would otherwise be beyond their independent reach"
+        continuumNote: "Provides human or technological support to help students access content that would otherwise be beyond their independent reach",
+        adjustmentCodes: ["C12","E3","E8"],
+        hpAdjustments: []
     },
     {
         id: "content-7",
@@ -237,7 +269,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core"],
         continuumPrimary: "foundations",
-        continuumNote: "Visual tools for organising and connecting content — primarily foundations scaffolding, but mind maps are also used as core-level thinking tools"
+        continuumNote: "Visual tools for organising and connecting content — primarily foundations scaffolding, but mind maps are also used as core-level thinking tools",
+        adjustmentCodes: ["C1","C3","C10","P11"],
+        hpAdjustments: []
     },
     {
         id: "content-8",
@@ -251,7 +285,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Redesigns content to reduce barriers for neurodivergent learners — building the bridge to core content"
+        continuumNote: "Redesigns content to reduce barriers for neurodivergent learners — building the bridge to core content",
+        adjustmentCodes: ["C4","C6","C8","M4"],
+        hpAdjustments: []
     },
     {
         id: "process-1",
@@ -265,7 +301,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "The archetypal full-span strategy — creates multiple task versions at different complexity levels, all targeting the same learning intention"
+        continuumNote: "The archetypal full-span strategy — creates multiple task versions at different complexity levels, all targeting the same learning intention",
+        adjustmentCodes: ["C4","M3"],
+        hpAdjustments: ["HP-CX2","HP-CH4"]
     },
     {
         id: "process-2",
@@ -279,7 +317,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "The grouping structure itself operates at core level, but strategic grouping enables foundations support and extension challenge"
+        continuumNote: "The grouping structure itself operates at core level, but strategic grouping enables foundations support and extension challenge",
+        adjustmentCodes: ["E7","M11"],
+        hpAdjustments: []
     },
     {
         id: "process-3",
@@ -293,7 +333,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "Stations can be designed at different levels — some scaffold, some operate at core, some extend — running simultaneously"
+        continuumNote: "Stations can be designed at different levels — some scaffold, some operate at core, some extend — running simultaneously",
+        adjustmentCodes: ["C6","M6","M14"],
+        hpAdjustments: []
     },
     {
         id: "process-4",
@@ -307,7 +349,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "Different cubes can be created at foundations, core, and extension levels — the six-perspective structure applies at any point on the continuum"
+        continuumNote: "Different cubes can be created at foundations, core, and extension levels — the six-perspective structure applies at any point on the continuum",
+        adjustmentCodes: [],
+        hpAdjustments: ["HP-CX1","HP-CX2"]
     },
     {
         id: "process-5",
@@ -321,7 +365,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Primarily a core collaborative strategy where all students contribute, but topic assignment can be differentiated by readiness"
+        continuumNote: "Primarily a core collaborative strategy where all students contribute, but topic assignment can be differentiated by readiness",
+        adjustmentCodes: ["M11","E7"],
+        hpAdjustments: []
     },
     {
         id: "process-6",
@@ -335,7 +381,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "extension",
-        continuumNote: "Formal agreements granting independence — most commonly used for extension students who can self-direct"
+        continuumNote: "Formal agreements granting independence — most commonly used for extension students who can self-direct",
+        adjustmentCodes: ["M6","P6"],
+        hpAdjustments: ["HP-CO1","HP-CO2"]
     },
     {
         id: "process-7",
@@ -349,7 +397,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Journal prompts can be pitched at any level — structured at foundations, reflective at core, analytical at extension"
+        continuumNote: "Journal prompts can be pitched at any level — structured at foundations, reflective at core, analytical at extension",
+        adjustmentCodes: ["M13","M14"],
+        hpAdjustments: ["HP-CX3"]
     },
     {
         id: "process-8",
@@ -363,7 +413,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "extension",
-        continuumNote: "Self-directed tasks for students who finish early — typically pitched at core consolidation or extension"
+        continuumNote: "Self-directed tasks for students who finish early — typically pitched at core consolidation or extension",
+        adjustmentCodes: ["M6","M14"],
+        hpAdjustments: ["HP-CO1"]
     },
     {
         id: "product-1",
@@ -377,7 +429,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "extension",
-        continuumNote: "Gives students agency in demonstration format — primarily core/extension, but tiered versions can include scaffolded options"
+        continuumNote: "Gives students agency in demonstration format — primarily core/extension, but tiered versions can include scaffolded options",
+        adjustmentCodes: ["P2","P6","P7"],
+        hpAdjustments: ["HP-CO2","HP-CO3"]
     },
     {
         id: "product-2",
@@ -391,7 +445,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "RAFT assignments can be tiered by readiness — simpler roles for foundations, complex perspectives for extension"
+        continuumNote: "RAFT assignments can be tiered by readiness — simpler roles for foundations, complex perspectives for extension",
+        adjustmentCodes: ["P2","P6"],
+        hpAdjustments: ["HP-CO2"]
     },
     {
         id: "product-3",
@@ -405,7 +461,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Co-creating success criteria operates at core level, but personal quality goals extend into extension territory"
+        continuumNote: "Co-creating success criteria operates at core level, but personal quality goals extend into extension territory",
+        adjustmentCodes: ["P5","P10"],
+        hpAdjustments: ["HP-LE2"]
     },
     {
         id: "product-4",
@@ -419,7 +477,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "Creates multiple assessment versions at different complexity levels — the product equivalent of Tiered Activities"
+        continuumNote: "Creates multiple assessment versions at different complexity levels — the product equivalent of Tiered Activities",
+        adjustmentCodes: ["C4","P2","P3","D7"],
+        hpAdjustments: ["HP-CH4"]
     },
     {
         id: "product-5",
@@ -433,7 +493,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "AI enables non-traditional products — these typically operate at core or extension level, with AI providing the technical scaffolding"
+        continuumNote: "AI enables non-traditional products — these typically operate at core or extension level, with AI providing the technical scaffolding",
+        adjustmentCodes: ["P7","P9"],
+        hpAdjustments: ["HP-CO3"]
     },
     {
         id: "product-6",
@@ -447,7 +509,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Performance tasks can be pitched at any level — a simple demonstration at core, a persuasive presentation at extension"
+        continuumNote: "Performance tasks can be pitched at any level — a simple demonstration at core, a persuasive presentation at extension",
+        adjustmentCodes: ["P2"],
+        hpAdjustments: ["HP-CO3"]
     },
     {
         id: "product-7",
@@ -461,7 +525,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Creative expression as demonstration — primarily core level, with extension when students interpret or create for specific audiences"
+        continuumNote: "Creative expression as demonstration — primarily core level, with extension when students interpret or create for specific audiences",
+        adjustmentCodes: ["P2","P7"],
+        hpAdjustments: ["HP-CO3"]
     },
     {
         id: "product-8",
@@ -475,7 +541,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core"],
         continuumPrimary: "core",
-        continuumNote: "Group products primarily operate at core level — the collaboration IS the learning"
+        continuumNote: "Group products primarily operate at core level — the collaboration IS the learning",
+        adjustmentCodes: ["E7","M11"],
+        hpAdjustments: []
     },
     {
         id: "environment-1",
@@ -489,7 +557,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Enabling: creates physical conditions that support all positions on the continuum"
+        continuumNote: "Enabling: creates physical conditions that support all positions on the continuum",
+        adjustmentCodes: ["E1","E2"],
+        hpAdjustments: ["HP-LE4"]
     },
     {
         id: "environment-2",
@@ -503,7 +573,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Enabling: designates spaces for different types of work"
+        continuumNote: "Enabling: designates spaces for different types of work",
+        adjustmentCodes: ["E2","E6"],
+        hpAdjustments: ["HP-LE4"]
     },
     {
         id: "environment-3",
@@ -517,7 +589,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Enabling: builds the psychological safety that makes movement along the continuum possible"
+        continuumNote: "Enabling: builds the psychological safety that makes movement along the continuum possible",
+        adjustmentCodes: ["E9","E12"],
+        hpAdjustments: ["HP-LE1"]
     },
     {
         id: "environment-4",
@@ -531,7 +605,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Enabling: addresses sensory and emotional needs that prevent access to any point on the continuum"
+        continuumNote: "Enabling: addresses sensory and emotional needs that prevent access to any point on the continuum",
+        adjustmentCodes: ["E4","E6","E9"],
+        hpAdjustments: ["HP-LE4"]
     },
     {
         id: "align-1",
@@ -545,7 +621,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Meta-framework: the rationale for placing students at different continuum positions"
+        continuumNote: "Meta-framework: the rationale for placing students at different continuum positions",
+        adjustmentCodes: ["C4","M3"],
+        hpAdjustments: []
     },
     {
         id: "align-2",
@@ -559,7 +637,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Meta-framework: connects content to student interests — operates across all continuum positions"
+        continuumNote: "Meta-framework: connects content to student interests — operates across all continuum positions",
+        adjustmentCodes: ["P6"],
+        hpAdjustments: ["HP-CO2"]
     },
     {
         id: "align-3",
@@ -573,7 +653,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Meta-framework: adjusts modality and cultural responsiveness"
+        continuumNote: "Meta-framework: adjusts modality and cultural responsiveness",
+        adjustmentCodes: ["C6","E6"],
+        hpAdjustments: []
     },
     {
         id: "align-4",
@@ -587,7 +669,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Meta-framework: combines readiness + interest + profile simultaneously"
+        continuumNote: "Meta-framework: combines readiness + interest + profile simultaneously",
+        adjustmentCodes: ["C4","C6","P6"],
+        hpAdjustments: []
     },
     {
         id: "equalizer-1",
@@ -601,7 +685,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts whether students apply ideas in straightforward ways (foundations) or in new, unfamiliar ways (extension)"
+        continuumNote: "Adjusts whether students apply ideas in straightforward ways (foundations) or in new, unfamiliar ways (extension)",
+        adjustmentCodes: ["C4","M3"],
+        hpAdjustments: ["HP-CX2","HP-CH3"]
     },
     {
         id: "equalizer-2",
@@ -615,7 +701,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts whether students work with tangible examples (foundations) or underlying principles (extension)"
+        continuumNote: "Adjusts whether students work with tangible examples (foundations) or underlying principles (extension)",
+        adjustmentCodes: ["C4","M4"],
+        hpAdjustments: ["HP-CX2"]
     },
     {
         id: "equalizer-3",
@@ -629,7 +717,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts the number of variables, steps, and interconnections — fewer for foundations, more for extension"
+        continuumNote: "Adjusts the number of variables, steps, and interconnections — fewer for foundations, more for extension",
+        adjustmentCodes: ["C4","C8"],
+        hpAdjustments: []
     },
     {
         id: "equalizer-4",
@@ -643,7 +733,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts whether students focus on one perspective or integrate across multiple perspectives"
+        continuumNote: "Adjusts whether students focus on one perspective or integrate across multiple perspectives",
+        adjustmentCodes: [],
+        hpAdjustments: []
     },
     {
         id: "equalizer-5",
@@ -657,7 +749,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts transfer distance — familiar contexts (foundations) vs very different situations (extension)"
+        continuumNote: "Adjusts transfer distance — familiar contexts (foundations) vs very different situations (extension)",
+        adjustmentCodes: [],
+        hpAdjustments: ["HP-CH3"]
     },
     {
         id: "equalizer-6",
@@ -671,7 +765,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts structure — clear step-by-step guidance (foundations) vs open-ended decision-making (extension)"
+        continuumNote: "Adjusts structure — clear step-by-step guidance (foundations) vs open-ended decision-making (extension)",
+        adjustmentCodes: ["C4","C5","M2"],
+        hpAdjustments: ["HP-CX1","HP-CO1"]
     },
     {
         id: "equalizer-7",
@@ -685,7 +781,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts the level of support — guided work (foundations) vs fully autonomous work (extension)"
+        continuumNote: "Adjusts the level of support — guided work (foundations) vs fully autonomous work (extension)",
+        adjustmentCodes: ["E8","M6"],
+        hpAdjustments: []
     },
     {
         id: "equalizer-8",
@@ -699,7 +797,9 @@ const searchData = [
         continuumType: "equaliser",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Adjusts pacing — more processing time (foundations) vs accelerated pace (extension)"
+        continuumNote: "Adjusts pacing — more processing time (foundations) vs accelerated pace (extension)",
+        adjustmentCodes: ["M6","M12","D3"],
+        hpAdjustments: ["HP-PA2"]
     },
     {
         id: "scaffolding-1",
@@ -713,7 +813,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core"],
         continuumPrimary: "foundations",
-        continuumNote: "Provides visual structure for organising thinking — primarily a foundations scaffold, but also used at core level as a thinking tool"
+        continuumNote: "Provides visual structure for organising thinking — primarily a foundations scaffold, but also used at core level as a thinking tool",
+        adjustmentCodes: ["C10","M4","M13"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-2",
@@ -727,7 +829,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Provides language scaffolds that help students begin articulating thinking"
+        continuumNote: "Provides language scaffolds that help students begin articulating thinking",
+        adjustmentCodes: ["C1","P3","M16"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-3",
@@ -741,7 +845,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Breaks complex tasks into manageable steps, reducing cognitive overload"
+        continuumNote: "Breaks complex tasks into manageable steps, reducing cognitive overload",
+        adjustmentCodes: ["C5","C8","M2","M5"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-4",
@@ -755,7 +861,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core"],
         continuumPrimary: "foundations",
-        continuumNote: "Shows students what quality work looks like — primarily foundations, but exemplars also serve core-level learners"
+        continuumNote: "Shows students what quality work looks like — primarily foundations, but exemplars also serve core-level learners",
+        adjustmentCodes: ["P1","M4"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-5",
@@ -769,7 +877,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Strategic pairing supports learning at any level depending on how partners are matched"
+        continuumNote: "Strategic pairing supports learning at any level depending on how partners are matched",
+        adjustmentCodes: ["E3","E7","M11"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-6",
@@ -783,7 +893,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Demonstrates expert thinking processes, making invisible reasoning visible"
+        continuumNote: "Demonstrates expert thinking processes, making invisible reasoning visible",
+        adjustmentCodes: ["C5","M5","P1"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-7",
@@ -797,7 +909,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Provides explicit vocabulary support so academic language does not become a barrier"
+        continuumNote: "Provides explicit vocabulary support so academic language does not become a barrier",
+        adjustmentCodes: ["C1","C3","P11"],
+        hpAdjustments: []
     },
     {
         id: "assessment-1",
@@ -811,7 +925,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Assessment: gathers data on where students sit relative to the core learning intention"
+        continuumNote: "Assessment: gathers data on where students sit relative to the core learning intention",
+        adjustmentCodes: ["M9","M17"],
+        hpAdjustments: ["HP-CH1","HP-LE3"]
     },
     {
         id: "assessment-2",
@@ -825,7 +941,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Primarily a core-level processing strategy, but prompts can push toward extension"
+        continuumNote: "Primarily a core-level processing strategy, but prompts can push toward extension",
+        adjustmentCodes: ["M9","M13"],
+        hpAdjustments: ["HP-CX3"]
     },
     {
         id: "assessment-3",
@@ -839,7 +957,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core"],
         continuumPrimary: "core",
-        continuumNote: "A core-level processing strategy that gives all students a structured way to engage"
+        continuumNote: "A core-level processing strategy that gives all students a structured way to engage",
+        adjustmentCodes: ["M10","M11","M12"],
+        hpAdjustments: []
     },
     {
         id: "assessment-4",
@@ -853,7 +973,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Assessment: quick check tool for gauging understanding"
+        continuumNote: "Assessment: quick check tool for gauging understanding",
+        adjustmentCodes: ["M9","M17"],
+        hpAdjustments: ["HP-LE3"]
     },
     {
         id: "assessment-5",
@@ -867,7 +989,9 @@ const searchData = [
         continuumType: "full-span",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: null,
-        continuumNote: "Targets different questions to different students — foundations, core, and extension simultaneously"
+        continuumNote: "Targets different questions to different students — foundations, core, and extension simultaneously",
+        adjustmentCodes: ["M3","M9","M10"],
+        hpAdjustments: ["HP-CX1"]
     },
     {
         id: "assessment-6",
@@ -881,7 +1005,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "extension",
-        continuumNote: "A thinking routine that practises argumentation — core as base, extension for complex statements"
+        continuumNote: "A thinking routine that practises argumentation — core as base, extension for complex statements",
+        adjustmentCodes: ["M13"],
+        hpAdjustments: ["HP-CX1","HP-CX3","HP-CH2"]
     },
     {
         id: "assessment-7",
@@ -895,7 +1021,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Assessment: systematic teacher observation tool"
+        continuumNote: "Assessment: systematic teacher observation tool",
+        adjustmentCodes: ["M17","E13"],
+        hpAdjustments: ["HP-LE3"]
     },
     {
         id: "assessment-8",
@@ -909,7 +1037,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Assessment: prepares differentiated feedback — teacher planning tool"
+        continuumNote: "Assessment: prepares differentiated feedback — teacher planning tool",
+        adjustmentCodes: ["P5"],
+        hpAdjustments: []
     },
     {
         id: "assessment-9",
@@ -923,7 +1053,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["core","extension"],
         continuumPrimary: "core",
-        continuumNote: "Primarily core-level, with extension potential for evaluating quality"
+        continuumNote: "Primarily core-level, with extension potential for evaluating quality",
+        adjustmentCodes: ["M11","P5","P10"],
+        hpAdjustments: []
     },
     {
         id: "assessment-10",
@@ -937,7 +1069,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Assessment: digital data-gathering tool"
+        continuumNote: "Assessment: digital data-gathering tool",
+        adjustmentCodes: ["M9","M17","P9"],
+        hpAdjustments: ["HP-LE3"]
     },
     {
         id: "content-9",
@@ -951,7 +1085,9 @@ const searchData = [
         continuumType: "flexible",
         continuumPosition: ["foundations","core","extension"],
         continuumPrimary: "extension",
-        continuumNote: "Generates analogies to make abstract concepts concrete — serves as foundations support but extends when analogies build deeper conceptual connections across domains"
+        continuumNote: "Generates analogies to make abstract concepts concrete — serves as foundations support but extends when analogies build deeper conceptual connections across domains",
+        adjustmentCodes: ["C6","M4"],
+        hpAdjustments: ["HP-CH3"]
     },
     {
         id: "process-9",
@@ -965,7 +1101,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Teacher planning: anticipates where students will struggle — informs what foundations support to prepare"
+        continuumNote: "Teacher planning: anticipates where students will struggle — informs what foundations support to prepare",
+        adjustmentCodes: ["C2","M9"],
+        hpAdjustments: []
     },
     {
         id: "scaffolding-8",
@@ -979,7 +1117,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Creates bilingual bridges so students can access content through their home language"
+        continuumNote: "Creates bilingual bridges so students can access content through their home language",
+        adjustmentCodes: ["C1","C6","M10","M16"],
+        hpAdjustments: []
     },
     {
         id: "assessment-11",
@@ -993,7 +1133,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Quality assurance: reviews differentiated materials for bias"
+        continuumNote: "Quality assurance: reviews differentiated materials for bias",
+        adjustmentCodes: [],
+        hpAdjustments: []
     },
     {
         id: "assessment-12",
@@ -1007,7 +1149,9 @@ const searchData = [
         continuumType: "excluded",
         continuumPosition: [],
         continuumPrimary: null,
-        continuumNote: "Quality assurance: critiques AI-generated materials"
+        continuumNote: "Quality assurance: critiques AI-generated materials",
+        adjustmentCodes: [],
+        hpAdjustments: []
     },
     {
         id: "content-10",
@@ -1021,7 +1165,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["extension"],
         continuumPrimary: "extension",
-        continuumNote: "Extends understanding by connecting the core concept to other subject areas — building transfer that signals deep, flexible knowledge"
+        continuumNote: "Extends understanding by connecting the core concept to other subject areas — building transfer that signals deep, flexible knowledge",
+        adjustmentCodes: [],
+        hpAdjustments: ["HP-CH3"]
     },
     {
         id: "process-10",
@@ -1035,7 +1181,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["extension"],
         continuumPrimary: "extension",
-        continuumNote: "Students who've grasped the core learning intention pursue self-directed inquiry — applying understanding in new contexts"
+        continuumNote: "Students who've grasped the core learning intention pursue self-directed inquiry — applying understanding in new contexts",
+        adjustmentCodes: ["C11","P6"],
+        hpAdjustments: ["HP-CX2","HP-CH3","HP-CO1"]
     },
     {
         id: "process-11",
@@ -1049,7 +1197,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["extension"],
         continuumPrimary: "extension",
-        continuumNote: "Challenges students to examine the core concept from multiple perspectives — building capacity for complexity and ambiguity"
+        continuumNote: "Challenges students to examine the core concept from multiple perspectives — building capacity for complexity and ambiguity",
+        adjustmentCodes: [],
+        hpAdjustments: ["HP-CX1","HP-CX2"]
     },
     {
         id: "process-12",
@@ -1063,7 +1213,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["extension"],
         continuumPrimary: "extension",
-        continuumNote: "Students who've mastered the core concept deepen understanding by teaching it to others"
+        continuumNote: "Students who've mastered the core concept deepen understanding by teaching it to others",
+        adjustmentCodes: ["C12","E3"],
+        hpAdjustments: ["HP-CX2"]
     },
     {
         id: "process-13",
@@ -1077,7 +1229,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["core"],
         continuumPrimary: "core",
-        continuumNote: "A structured discussion that deepens engagement with the core learning intention through evidence-based argumentation"
+        continuumNote: "A structured discussion that deepens engagement with the core learning intention through evidence-based argumentation",
+        adjustmentCodes: ["M11"],
+        hpAdjustments: ["HP-CX1","HP-CX3","HP-CH2"]
     },
     {
         id: "product-9",
@@ -1091,7 +1245,9 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Provides structured templates for demonstrating learning — reducing the organisational barrier so students can show what they know"
+        continuumNote: "Provides structured templates for demonstrating learning — reducing the organisational barrier so students can show what they know",
+        adjustmentCodes: ["C10","P3","P10"],
+        hpAdjustments: []
     },
     {
         id: "product-10",
@@ -1105,6 +1261,8 @@ const searchData = [
         continuumType: "fixed",
         continuumPosition: ["foundations"],
         continuumPrimary: "foundations",
-        continuumNote: "Offers non-written demonstration options with structured support — ensuring writing ability doesn't mask conceptual understanding"
+        continuumNote: "Offers non-written demonstration options with structured support — ensuring writing ability doesn't mask conceptual understanding",
+        adjustmentCodes: ["P2","P4","P9"],
+        hpAdjustments: ["HP-CO3"]
     }
 ];

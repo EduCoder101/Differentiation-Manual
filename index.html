@@ -72,26 +72,64 @@
             text-decoration: none;
             display: block;
             border: 3px solid transparent;
+            border-top: 5px solid transparent;
+            color: inherit;
         }
 
         .pathway-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 12px 24px rgba(125, 30, 63, 0.15);
-            border-color: var(--accent-color);
         }
 
-        .pathway-card.primary {
-            background: linear-gradient(135deg, #f4b942 0%, #ffd670 100%);
-            border: 3px solid #f4b942;
+        /* Per-tile colours */
+        .pathway-card.tile-continuum { border-top-color: #6db3c8; }
+        .pathway-card.tile-continuum:hover { border-color: #6db3c8; }
+        .pathway-card.tile-continuum .pathway-icon svg { stroke: #6db3c8; }
+
+        .pathway-card.tile-framework { border-top-color: #7d1e3f; }
+        .pathway-card.tile-framework:hover { border-color: #7d1e3f; }
+        .pathway-card.tile-framework .pathway-icon svg { stroke: #7d1e3f; }
+
+        .pathway-card.tile-codes { border-top-color: #e07a3a; }
+        .pathway-card.tile-codes:hover { border-color: #e07a3a; }
+        .pathway-card.tile-codes .pathway-icon svg { stroke: #e07a3a; }
+
+        .pathway-card.tile-random { border-top-color: #f4b942; }
+        .pathway-card.tile-random:hover { border-color: #f4b942; }
+        .pathway-card.tile-random .pathway-icon svg { stroke: #c99520; }
+
+        .pathway-card.tile-principles { border-top-color: #a52a52; }
+        .pathway-card.tile-principles:hover { border-color: #a52a52; }
+        .pathway-card.tile-principles .pathway-icon svg { stroke: #a52a52; }
+
+        /* Featured tile */
+        .pathway-card.featured {
+            background: linear-gradient(135deg, rgba(109, 179, 200, 0.08) 0%, rgba(244, 185, 66, 0.08) 50%, rgba(224, 122, 58, 0.08) 100%);
+            border: 3px solid #6db3c8;
+            border-top: 5px solid #6db3c8;
+            grid-column: 1 / -1;
         }
 
-        .pathway-card.primary:hover {
+        .pathway-card.featured:hover {
             border-color: var(--primary-color);
+            border-top-color: var(--primary-color);
         }
 
         .pathway-icon {
-            font-size: 3rem;
             margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .pathway-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .pathway-card.featured .pathway-icon svg {
+            width: 40px;
+            height: 40px;
         }
 
         .pathway-card h2 {
@@ -209,26 +247,32 @@
         </div>
 
         <div class="pathway-cards">
-            <a href="randomiser.html" class="pathway-card primary">
-                <div class="pathway-icon">⚡</div>
-                <h2>Try a Strategy Now</h2>
-                <p>Jump straight in. See three strategies you can use today, with ready-to-copy AI prompts.</p>
-            </a>
-
-            <a href="main.html" class="pathway-card">
-                <div class="pathway-icon">📖</div>
-                <h2>Explore the Manual</h2>
-                <p>Browse all 79 strategies organised by the 7-step differentiation framework.</p>
-            </a>
-
-            <a href="continuum.html" class="pathway-card">
-                <div class="pathway-icon">↔️</div>
+            <a href="continuum.html" class="pathway-card featured tile-continuum">
+                <div class="pathway-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l3-6 4 4 5-8"/></svg></div>
                 <h2>View the Continuum</h2>
-                <p>See where each strategy helps most — foundations, core, or extension.</p>
+                <p>See where each strategy helps most — foundations, core, or extension — and find what your students need right now.</p>
             </a>
 
-            <a href="principles.html" class="pathway-card">
-                <div class="pathway-icon">💡</div>
+            <a href="main.html" class="pathway-card tile-framework">
+                <div class="pathway-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+                <h2>The 7-Step Framework</h2>
+                <p>Plan differentiation from the ground up — work through all 7 steps from learning intentions to assessment.</p>
+            </a>
+
+            <a href="code-lookup.html" class="pathway-card tile-codes">
+                <div class="pathway-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+                <h2>Adjustment Code Lookup</h2>
+                <p>Enter codes from a student's learning profile and see which strategies support those adjustments.</p>
+            </a>
+
+            <a href="randomiser.html" class="pathway-card tile-random">
+                <div class="pathway-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <h2>Try a Strategy Now</h2>
+                <p>See three strategies you can use today, with ready-to-copy AI prompts.</p>
+            </a>
+
+            <a href="principles.html" class="pathway-card tile-principles">
+                <div class="pathway-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
                 <h2>The Thinking Behind It</h2>
                 <p>Explore the research-based principles that make differentiation effective.</p>
             </a>
@@ -260,6 +304,7 @@
         <div class="secondary-links">
             <p>Looking for something specific?</p>
             <a href="search.html">Search Strategies</a>
+            <a href="code-lookup.html">Adjustment Code Lookup</a>
             <a href="flowchart.html">View Flowchart</a>
             <a href="how-to-use.html">How to Use This Manual</a>
         </div>
