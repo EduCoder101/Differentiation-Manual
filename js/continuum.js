@@ -8,6 +8,7 @@
     // ---- State ----
     let activePosition = 'all';
     let activeCategories = new Set();
+    let activeTaskTypes = new Set();
 
     // ---- Data helpers ----
     function getColumnStrategies(position) {
@@ -160,7 +161,11 @@
             const matchesCategory = activeCategories.size === 0 ||
                 activeCategories.has(strategy.category);
 
-            const shouldDim = !(matchesPosition && matchesCategory);
+            // Check task type match (if strategy has taskTypes field)
+            const matchesTaskType = activeTaskTypes.size === 0 ||
+                (strategy.taskTypes && strategy.taskTypes.some(t => activeTaskTypes.has(t)));
+
+            const shouldDim = !(matchesPosition && matchesCategory && matchesTaskType);
             card.classList.toggle('dimmed', shouldDim);
         });
 
@@ -175,7 +180,7 @@
         const total = document.querySelectorAll('.continuum-card');
         const showing = visible.length;
 
-        if (activePosition === 'all' && activeCategories.size === 0) {
+        if (activePosition === 'all' && activeCategories.size === 0 && activeTaskTypes.size === 0) {
             el.innerHTML = `Showing all <span class="count-number">${total.length}</span> strategies on the continuum`;
         } else {
             el.innerHTML = `Showing <span class="count-number">${showing}</span> of ${total.length} strategies`;
@@ -203,6 +208,21 @@
                     pill.classList.remove('active');
                 } else {
                     activeCategories.add(cat);
+                    pill.classList.add('active');
+                }
+                applyFilters();
+            });
+        });
+
+        // Task type filter pills
+        document.querySelectorAll('.filter-pill.task-type-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const taskType = pill.dataset.tasktype;
+                if (activeTaskTypes.has(taskType)) {
+                    activeTaskTypes.delete(taskType);
+                    pill.classList.remove('active');
+                } else {
+                    activeTaskTypes.add(taskType);
                     pill.classList.add('active');
                 }
                 applyFilters();
