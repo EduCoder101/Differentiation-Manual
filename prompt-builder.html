@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder | Differentiation Manual</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ==========================================
+           PROMPT BUILDER - SPECIFIC STYLES
+           ========================================== */
+
+        body {
+            background: linear-gradient(135deg, #faf8f5 0%, #f0ebe5 100%);
+            min-height: 100vh;
+        }
+
+        .pb-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+
+        /* Header */
+        .pb-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .pb-header .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .pb-header .back-link:hover { opacity: 1; }
+
+        .pb-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.6rem;
+        }
+
+        .pb-header .tagline {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Progress Bar */
+        .progress-bar-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .progress-label {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        /* Question Panels */
+        .question-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem 2rem 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .question-panel.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-panel .q-label {
+            font-family: var(--font-heading);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 0.4rem;
+        }
+
+        .question-panel h2 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.4rem;
+            line-height: 1.3;
+        }
+
+        .question-panel .q-hint {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Theory Toggle */
+        .theory-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: none;
+            border: 1.5px solid var(--accent-blue);
+            color: var(--accent-blue);
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .theory-toggle:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .theory-toggle .arrow {
+            transition: transform 0.2s;
+            font-size: 0.75rem;
+        }
+
+        .theory-toggle.open .arrow { transform: rotate(180deg); }
+
+        .theory-box {
+            display: none;
+            background: linear-gradient(135deg, rgba(109,179,200,0.08) 0%, rgba(109,179,200,0.04) 100%);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 0 10px 10px 0;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.4rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+        }
+
+        .theory-box.open { display: block; }
+
+        /* Option Cards (single select) */
+        .option-cards {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .option-cards.cols-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .option-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background: white;
+        }
+
+        .option-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(125,30,63,0.1);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(125,30,63,0.04) 0%, rgba(125,30,63,0.02) 100%);
+            box-shadow: 0 2px 12px rgba(125,30,63,0.12);
+        }
+
+        .option-card .card-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            line-height: 1;
+            margin-top: 0.15rem;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .option-card .card-text strong {
+            display: block;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.15rem;
+        }
+
+        .option-card .card-text span {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .option-card .check {
+            margin-left: auto;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 0.1rem;
+        }
+
+        .option-card.selected .check {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .option-card.selected .check::after {
+            content: '';
+            width: 6px;
+            height: 10px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg) translate(-1px, -1px);
+        }
+
+        /* Checkbox Cards (multi-select) */
+        .checkbox-cards {
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .checkbox-card {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.85rem 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: white;
+        }
+
+        .checkbox-card:hover {
+            border-color: var(--primary-color);
+            background: rgba(125,30,63,0.02);
+        }
+
+        .checkbox-card.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(125,30,63,0.05) 0%, rgba(125,30,63,0.02) 100%);
+        }
+
+        .checkbox-card .cb-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .checkbox-card.selected .cb-box {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .checkbox-card.selected .cb-box::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg) translate(-1px, -1px);
+        }
+
+        .checkbox-card .cb-label {
+            font-size: 0.97rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Sub-section header inside a panel */
+        .sub-q {
+            margin-top: 1.8rem;
+            padding-top: 1.6rem;
+            border-top: 1.5px dashed var(--border-color);
+        }
+
+        .sub-q h3 {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .sub-q .sub-hint {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* Conditional Checklist (EAL/D, Neurodiversity) */
+        .conditional-list {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 1.2rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+            border: 1.5px solid var(--border-color);
+        }
+
+        .conditional-list.open { display: block; }
+
+        .conditional-list .cl-title {
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .cl-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 0.4rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .cl-item:hover { background: rgba(125,30,63,0.04); }
+
+        .cl-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .cl-item label {
+            font-size: 0.93rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .cl-item.lang-other input[type="text"] {
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.3rem 0.6rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            outline: none;
+            width: 180px;
+            transition: border-color 0.2s;
+        }
+
+        .cl-item.lang-other input[type="text"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Context fill-in */
+        .context-fields {
+            display: grid;
+            gap: 1.1rem;
+        }
+
+        .field-group label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.35rem;
+        }
+
+        .field-group input,
+        .field-group textarea {
+            width: 100%;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.7rem 0.9rem;
+            font-family: var(--font-body);
+            font-size: 0.97rem;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.2s;
+            background: white;
+            resize: vertical;
+        }
+
+        .field-group input:focus,
+        .field-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(125,30,63,0.08);
+        }
+
+        .field-group textarea {
+            min-height: 120px;
+        }
+
+        .field-group .field-hint {
+            font-size: 0.83rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        /* Validation message */
+        .validation-msg {
+            display: none;
+            background: #fff3cd;
+            border: 1.5px solid #ffc107;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            color: #856404;
+            margin-top: 1rem;
+        }
+
+        .validation-msg.show { display: block; }
+
+        /* Navigation Buttons */
+        .panel-nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-back {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.65rem 1.5rem;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            border-color: var(--text-light);
+            color: var(--text-dark);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            color: white;
+            padding: 0.65rem 1.75rem;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(125,30,63,0.25);
+        }
+
+        .btn-next:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(125,30,63,0.3);
+        }
+
+        /* Output Stage */
+        #panel-output {
+            display: none;
+        }
+
+        #panel-output.active { display: block; }
+
+        .output-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .output-option-card {
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.5rem 1.25rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .output-option-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .output-option-card.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(125,30,63,0.05) 0%, rgba(125,30,63,0.02) 100%);
+        }
+
+        .output-option-card .oo-icon { font-size: 1.4rem; margin-bottom: 0.6rem; color: var(--primary-color); font-weight: 700; }
+        .output-option-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 0.4rem;
+        }
+        .output-option-card p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Delivery format (master / chain) */
+        .delivery-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .delivery-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.1rem 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .delivery-card:hover { border-color: var(--accent-color); }
+
+        .delivery-card.selected {
+            border-color: var(--accent-color);
+            background: rgba(244,185,66,0.06);
+        }
+
+        .delivery-card h4 {
+            font-family: var(--font-heading);
+            font-size: 0.97rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .delivery-card p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Curate component cards */
+        .component-cards {
+            display: grid;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .component-card {
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.85rem 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .component-card:hover { border-color: var(--primary-color); }
+
+        .component-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(125,30,63,0.04);
+        }
+
+        .component-card .cb-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .component-card.selected .cb-box {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .component-card.selected .cb-box::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg) translate(-1px, -1px);
+        }
+
+        .component-card .comp-label strong {
+            display: block;
+            font-size: 0.97rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .component-card .comp-label span {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Final prompt output */
+        .prompt-output-area {
+            display: none;
+        }
+
+        .prompt-output-area.active { display: block; }
+
+        .prompt-box {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-box .prompt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-box .prompt-title {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .copy-btn {
+            background: var(--accent-color);
+            border: none;
+            color: #1a1a2e;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover { opacity: 0.85; }
+        .copy-btn.copied { background: #4caf50; color: white; }
+
+        .prompt-text {
+            color: #e8e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* Chain step */
+        .chain-step {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            overflow: hidden;
+        }
+
+        .chain-step-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 0.85rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chain-step-header span {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: white;
+            font-size: 0.95rem;
+        }
+
+        .chain-step-body { padding: 1.2rem; background: white; }
+
+        .chain-reflection {
+            background: rgba(244,185,66,0.1);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+            padding: 0.8rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .chain-reflection strong {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #b8860b;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Response checklist */
+        .response-checklist {
+            background: linear-gradient(135deg, rgba(109,179,200,0.1) 0%, rgba(109,179,200,0.05) 100%);
+            border: 1.5px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .response-checklist h4 {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #2a7a95;
+            margin-bottom: 0.9rem;
+        }
+
+        .response-checklist ul {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .response-checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .response-checklist li::before {
+            content: '✓';
+            color: var(--accent-blue);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+        }
+
+        /* Start over */
+        .start-over-wrap {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-start-over {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-start-over:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .option-cards.cols-2,
+            .output-options,
+            .delivery-options {
+                grid-template-columns: 1fr;
+            }
+            .pb-header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="pb-container">
+
+    <!-- Header -->
+    <div class="pb-header">
+        <a href="index.html" class="back-link">← Back to Manual</a>
+        <h1>Prompt Builder</h1>
+        <p class="tagline">Answer a few questions and we'll build you a ready-to-use differentiation prompt.</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-wrap">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">Step 1 of 6</div>
+    </div>
+
+    <!-- =====================
+         Q1: TASK TYPE
+         ===================== -->
+    <div class="question-panel active" id="panel-q1">
+        <div class="q-label">Step 1</div>
+        <h2>What kind of task are you working on?</h2>
+        <p class="q-hint">Select one to get started.</p>
+
+        <div class="option-cards cols-2">
+            <div class="option-card" data-value="resource" onclick="selectOption(this, 'q1')">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Differentiate a Resource</strong>
+                    <span>Adapt a text, worksheet, task or visual</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Differentiate a Lesson</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Ideate Support Strategies</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Ideate Extension Strategies</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Plan a Lesson Sequence</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Plan a Unit</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Create Assessment</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Set Up Classroom Systems</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-next" onclick="goToPanel('q1a')">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         Q1a: RESOURCE TYPE
+         ===================== -->
+    <div class="question-panel" id="panel-q1a">
+        <div class="q-label">Step 1b</div>
+        <h2>What kind of resource is it?</h2>
+        <p class="q-hint">Select one. If you have a hybrid resource, run it through twice.</p>
+
+        <div class="option-cards">
+            <div class="option-card" data-value="r1-text-questions" onclick="selectOption(this, 'q1a')">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Text + questions</strong>
+                    <span>A text students read, followed by questions</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="r1-text-only" onclick="selectOption(this, 'q1a')">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Text only</strong>
+                    <span>A passage, article, source, or extract — no accompanying questions</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="r1-questions-only" onclick="selectOption(this, 'q1a')">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Questions only</strong>
+                    <span>A set of questions or tasks with no extended reading component</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Worksheet / structured task</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Explanation or instructional text</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Research or inquiry task</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Visual resource</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Maths problem set or numeracy task</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Assessment task or rubric</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
+                <div class="card-icon">&#9632;</div>
+                <div class="card-text">
+                    <strong>Something else</strong>
+                    <span>Coming soon</span>
+                </div>
+                <div class="check"></div>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel('q1')">← Back</button>
+            <button class="btn-next" onclick="goToPanel('q2')">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         Q2: WHO FOR
+         ===================== -->
+    <div class="question-panel" id="panel-q2">
+        <div class="q-label">Step 2</div>
+        <h2>Who are you differentiating for?</h2>
+        <p class="q-hint">This shapes the direction of everything we build.</p>
+
+        <button class="theory-toggle" onclick="toggleTheory('theory-q2', this)">
+            <span>Why does this matter?</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="theory-box" id="theory-q2">
+            Support and extension are different in kind, not just degree. Support is about access — reducing barriers, providing scaffolds, making content reachable. Extension is about depth — increasing abstraction, complexity, and autonomy. Knowing which you're designing for changes which levers to pull, and changes what a successful outcome looks like.
+        </div>
+
+        <div class="option-cards">
+            <div class="option-card" data-value="support" onclick="selectOption(this, 'q2')">
+                <div class="card-icon">&#8595;</div>
+                <div class="card-text">
+                    <strong>Students who need more support</strong>
+                    <span>Focus on access, scaffolding, and reducing barriers</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="extension" onclick="selectOption(this, 'q2')">
+                <div class="card-icon">&#8593;</div>
+                <div class="card-text">
+                    <strong>Students who need more extension</strong>
+                    <span>Focus on depth, complexity, and autonomy</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="both" onclick="selectOption(this, 'q2')">
+                <div class="card-icon">&#8597;</div>
+                <div class="card-text">
+                    <strong>Both — I need two versions</strong>
+                    <span>Produce a support and an extension version</span>
+                </div>
+                <div class="check"></div>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel('q1a')">← Back</button>
+            <button class="btn-next" onclick="goToPanel('q3')">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         Q3: WHAT TO CHANGE (R1)
+         ===================== -->
+    <div class="question-panel" id="panel-q3">
+        <div class="q-label">Step 3</div>
+        <h2>What do you want to change?</h2>
+        <p class="q-hint">Select all that apply. You need at least one selection.</p>
+
+        <!-- 3a: Text (hidden if questions-only) -->
+        <div id="q3a-section">
+        <p style="font-family:var(--font-heading);font-weight:700;font-size:1rem;color:var(--text-dark);margin-bottom:0.5rem;">The text</p>
+
+        <button class="theory-toggle" onclick="toggleTheory('theory-q3a', this)">
+            <span>What's the difference between readability and concept complexity?</span>
+            <span class="arrow">&#9660;</span>
+        </button>
+        <div class="theory-box" id="theory-q3a">
+            Surface readability — word choice, sentence length, lexile level — and conceptual complexity are different levers. Simplifying vocabulary doesn't automatically make a concept more accessible. Sometimes a concrete example or a well-chosen analogy does more work than a rewritten sentence. Both matter, but they need different approaches.
+        </div>
+
+        <div class="checkbox-cards" id="q3a-cards">
+            <div class="checkbox-card" data-value="readability" onclick="toggleCheckbox(this)">
+                <div class="cb-box"></div>
+                <div class="cb-label">Readability / language complexity</div>
+            </div>
+            <div class="checkbox-card" data-value="concept" onclick="toggleCheckbox(this)">
+                <div class="cb-box"></div>
+                <div class="cb-label">Concept complexity (more concrete or more abstract)</div>
+            </div>
+            <div class="checkbox-card" data-value="length" onclick="toggleCheckbox(this)">
+                <div class="cb-box"></div>
+                <div class="cb-label">Length / amount of content</div>
+            </div>
+            <div class="checkbox-card" data-value="background" onclick="toggleCheckbox(this)">
+                <div class="cb-box"></div>
+                <div class="cb-label">Background knowledge scaffolding</div>
+            </div>
+            <div class="checkbox-card" data-value="visual-passage" onclick="toggleCheckbox(this)">
+                <div class="cb-box"></div>
+                <div class="cb-label">Visual supports (layout, whitespace, diagrams)</div>
+            </div>
+        </div>
+        </div>
+
+        <!-- 3b: Questions (hidden if text-only) -->
+        <div id="q3b-section" class="sub-q">
+            <h3>The questions</h3>
+            <p class="sub-hint">Select all that apply — or none if you only want to change the text.</p>
+
+            <button class="theory-toggle" onclick="toggleTheory('theory-q3b', this)">
+                <span>What does cognitive demand mean in questions?</span>
+                <span class="arrow">&#9660;</span>
+            </button>
+            <div class="theory-box" id="theory-q3b">
+                Cognitive demand in questions follows Bloom's Taxonomy. Lower-order questions ask students to recall and describe. Higher-order questions ask students to analyse, evaluate, and create. Adjusting demand doesn't mean removing rigour — it means meeting students where they are and stretching from there.
+            </div>
+
+            <div class="checkbox-cards" id="q3b-cards">
+                <div class="checkbox-card" data-value="demand" onclick="toggleCheckbox(this)">
+                    <div class="cb-box"></div>
+                    <div class="cb-label">Cognitive demand (e.g. recall → analysis → evaluation)</div>
+                </div>
+                <div class="checkbox-card" data-value="scaffolding-q" onclick="toggleCheckbox(this)">
+                    <div class="cb-box"></div>
+                    <div class="cb-label">Level of scaffolding within questions (sentence starters, sub-questions)</div>
+                </div>
+                <div class="checkbox-card" data-value="choice" onclick="toggleCheckbox(this)">
+                    <div class="cb-box"></div>
+                    <div class="cb-label">Degree of student choice or autonomy</div>
+                </div>
+                <div class="checkbox-card" data-value="chunking-q" onclick="toggleCheckbox(this)">
+                    <div class="cb-box"></div>
+                    <div class="cb-label">Number of questions / chunking</div>
+                </div>
+                <div class="checkbox-card" data-value="mode" onclick="toggleCheckbox(this)">
+                    <div class="cb-box"></div>
+                    <div class="cb-label">Mode of response (e.g. written → visual → oral)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="validation-msg" id="val-q3">Please select at least one thing you'd like to change to continue.</div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel('q2')">← Back</button>
+            <button class="btn-next" onclick="validateQ3()">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         Q4: LEARNING NEEDS
+         ===================== -->
+    <div class="question-panel" id="panel-q4">
+        <div class="q-label">Step 4</div>
+        <h2>Do any of your students have specific learning needs to address?</h2>
+        <p class="q-hint">Select all that apply, or choose Neither to move on.</p>
+
+        <div class="option-cards">
+            <div class="option-card" data-value="eald" onclick="toggleNeedsCard(this, 'eald-list')">
+                <div class="card-icon">E</div>
+                <div class="card-text">
+                    <strong>EAL/D support needed</strong>
+                    <span>English as an Additional Language or Dialect</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="neuro" onclick="toggleNeedsCard(this, 'neuro-list')">
+                <div class="card-icon">L</div>
+                <div class="card-text">
+                    <strong>Neurodiversity / learning differences</strong>
+                    <span>Strategy-based — what students need, not what they have</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" id="neither-card" data-value="neither" onclick="selectNeither(this)">
+                <div class="card-icon">&#8212;</div>
+                <div class="card-text">
+                    <strong>Neither</strong>
+                    <span>No specific learning needs to address for this resource</span>
+                </div>
+                <div class="check"></div>
+            </div>
+        </div>
+
+        <!-- EAL/D checklist -->
+        <div class="conditional-list" id="eald-list">
+            <div class="cl-title">EAL/D — select all that apply</div>
+            <div class="cl-item"><input type="checkbox" id="eald-glossary" value="eald-glossary"><label for="eald-glossary">Key vocabulary glossary</label></div>
+            <div class="cl-item"><input type="checkbox" id="eald-subjectvocab" value="eald-subjectvocab"><label for="eald-subjectvocab">Subject-specific vocabulary support</label></div>
+            <div class="cl-item"><input type="checkbox" id="eald-frames" value="eald-frames"><label for="eald-frames">Sentence starters / frames</label></div>
+            <div class="cl-item"><input type="checkbox" id="eald-visual" value="eald-visual"><label for="eald-visual">Visual supports / labelled diagrams</label></div>
+            <div class="cl-item"><input type="checkbox" id="eald-syntax" value="eald-syntax"><label for="eald-syntax">Simplified syntax version of the text</label></div>
+            <div class="cl-item"><input type="checkbox" id="eald-mandarin" value="eald-mandarin"><label for="eald-mandarin">Mandarin translation of key vocabulary</label></div>
+            <div class="cl-item lang-other">
+                <input type="checkbox" id="eald-other" value="eald-other">
+                <label for="eald-other">Other language:</label>
+                <input type="text" id="eald-other-lang" placeholder="e.g. Korean">
+            </div>
+        </div>
+
+        <!-- Neurodiversity checklist -->
+        <div class="conditional-list" id="neuro-list">
+            <div class="cl-title">Learning needs — select all that apply</div>
+            <div class="cl-item"><input type="checkbox" id="neuro-chunk" value="neuro-chunk"><label for="neuro-chunk">Chunked instructions (one step at a time)</label></div>
+            <div class="cl-item"><input type="checkbox" id="neuro-memory" value="neuro-memory"><label for="neuro-memory">Reduced working memory load (word banks, partially completed examples)</label></div>
+            <div class="cl-item"><input type="checkbox" id="neuro-space" value="neuro-space"><label for="neuro-space">Increased white space / reduced visual clutter</label></div>
+            <div class="cl-item"><input type="checkbox" id="neuro-process" value="neuro-process"><label for="neuro-process">Explicit process steps / procedure guide</label></div>
+            <div class="cl-item"><input type="checkbox" id="neuro-output" value="neuro-output"><label for="neuro-output">Reduced written output options (oral, visual, dot points accepted)</label></div>
+            <div class="cl-item"><input type="checkbox" id="neuro-tts" value="neuro-tts"><label for="neuro-tts">Text-to-speech friendly formatting</label></div>
+            <div class="cl-item"><input type="checkbox" id="neuro-anchor" value="neuro-anchor"><label for="neuro-anchor">Anchor activity for early finishers</label></div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel('q3')">← Back</button>
+            <button class="btn-next" onclick="goToPanel('q5')">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         Q5: CONTEXT
+         ===================== -->
+    <div class="question-panel" id="panel-q5">
+        <div class="q-label">Step 5</div>
+        <h2>Tell us about your resource</h2>
+        <p class="q-hint">This context gets woven directly into your prompt. The more detail, the better.</p>
+
+        <div class="context-fields">
+            <div class="field-group">
+                <label for="ctx-year">Year group</label>
+                <input type="text" id="ctx-year" placeholder="e.g. Year 7">
+            </div>
+            <div class="field-group">
+                <label for="ctx-subject">Subject / topic</label>
+                <input type="text" id="ctx-subject" placeholder="e.g. Geography — Ecosystems">
+            </div>
+            <div class="field-group">
+                <label for="ctx-intention">Learning intention</label>
+                <input type="text" id="ctx-intention" placeholder="e.g. Students will understand how human activity affects biodiversity">
+                <p class="field-hint">Or paste your syllabus outcome</p>
+            </div>
+            <div class="field-group">
+                <label for="ctx-resource">Your resource</label>
+                <textarea id="ctx-resource" placeholder="Paste your text and/or questions here, or describe them briefly."></textarea>
+                <p class="field-hint">You can paste the full resource, just the text, or a description. The more detail, the better the output.</p>
+                <div style="margin-top:0.75rem;">
+                    <input type="file" id="file-upload" accept=".txt,.pdf,.doc,.docx" style="display:none;" onchange="handleFileUpload(this)">
+                    <button type="button" onclick="document.getElementById('file-upload').click()" style="background:none;border:1.5px solid var(--border-color);color:var(--text-light);padding:0.4rem 1rem;border-radius:8px;font-family:var(--font-heading);font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--primary-color)';this.style.color='var(--primary-color)'" onmouseout="this.style.borderColor='var(--border-color)';this.style.color='var(--text-light)'">Upload a file (.txt, .pdf, .docx)</button>
+                    <span id="upload-status" style="font-size:0.83rem;color:var(--text-light);margin-left:0.75rem;"></span>
+                    <p style="font-size:0.78rem;color:var(--text-light);margin-top:0.4rem;">Plain text and .txt files are read automatically. PDF and .docx text extraction is basic — paste directly for best results. Full document AI reading coming when Gemini API access is available.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel('q4')">← Back</button>
+            <button class="btn-next" onclick="goToPanel('output')">Build my prompt →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         OUTPUT STAGE
+         ===================== -->
+    <div class="question-panel" id="panel-output">
+        <div class="q-label">Step 6 — Output</div>
+        <h2>How would you like your prompt?</h2>
+        <p class="q-hint">Choose how to get your prompt, then choose how it's delivered.</p>
+
+        <!-- Build vs Curate -->
+        <div class="output-options">
+            <div class="output-option-card selected" id="oo-build" onclick="selectOutputMode('build')">
+                <div class="oo-icon">&#9654;</div>
+                <h3>Build it for me</h3>
+                <p>We assemble everything into a complete, ready-to-use prompt</p>
+            </div>
+            <div class="output-option-card" id="oo-curate" onclick="selectOutputMode('curate')">
+                <div class="oo-icon">&#9776;</div>
+                <h3>I'll curate</h3>
+                <p>Choose which elements to include from your selections</p>
+            </div>
+        </div>
+
+        <!-- Curate component picker (hidden by default) -->
+        <div id="curate-section" style="display:none;">
+            <p style="font-family:var(--font-heading);font-weight:700;font-size:0.9rem;color:var(--text-dark);margin-bottom:0.75rem;">Select the elements you want in your prompt:</p>
+            <div class="component-cards" id="component-cards-container"></div>
+        </div>
+
+        <!-- Delivery format -->
+        <p style="font-family:var(--font-heading);font-weight:700;font-size:0.9rem;color:var(--text-dark);margin-bottom:0.75rem;margin-top:1rem;">How would you like it delivered?</p>
+        <div class="delivery-options">
+            <div class="delivery-card selected" id="del-master" onclick="selectDelivery('master')">
+                <h4>Master prompt</h4>
+                <p>One complete prompt to paste into your LLM, plus a response checklist</p>
+            </div>
+            <div class="delivery-card" id="del-chain" onclick="selectDelivery('chain')">
+                <h4>Chain prompt guide</h4>
+                <p>2–3 sequential prompts with reflection questions between steps</p>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel('q5')">← Back</button>
+            <button class="btn-next" onclick="generatePrompt()">Generate prompt →</button>
+        </div>
+
+        <!-- Generated prompt area -->
+        <div class="prompt-output-area" id="prompt-output-area"></div>
+
+        <div class="start-over-wrap" id="start-over-wrap" style="display:none;">
+            <button class="btn-start-over" onclick="startOver()">&#8617; Start over</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/prompt-blocks.js"></script>
+<script>
+// ==========================================
+// STATE
+// ==========================================
+const state = {
+    q1: null,
+    q1a: null,
+    q2: null,
+    q3a: [],
+    q3b: [],
+    q4: [],
+    eald: [],
+    neuro: [],
+    ealdOtherLang: '',
+    ctx: { year: '', subject: '', intention: '', resource: '' },
+    outputMode: 'build',
+    delivery: 'master',
+    curateSelected: []
+};
+
+const PANELS = ['q1', 'q1a', 'q2', 'q3', 'q4', 'q5', 'output'];
+const PANEL_LABELS = {
+    q1: 'Step 1 of 6',
+    q1a: 'Step 1b of 6',
+    q2: 'Step 2 of 6',
+    q3: 'Step 3 of 6',
+    q4: 'Step 4 of 6',
+    q5: 'Step 5 of 6',
+    output: 'Step 6 of 6'
+};
+const PANEL_PROGRESS = {
+    q1: 5, q1a: 18, q2: 33, q3: 50, q4: 67, q5: 83, output: 100
+};
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+function goToPanel(id) {
+    // Validate required selections before advancing
+    if (id === 'q1a' && !state.q1) { highlightRequired('panel-q1'); return; }
+    if (id === 'q2' && !state.q1a) { highlightRequired('panel-q1a'); return; }
+    if (id === 'q3' && !state.q2) { highlightRequired('panel-q2'); return; }
+
+    // When entering Q3, show/hide sections based on resource sub-type
+    if (id === 'q3') {
+        const q3aSection = document.getElementById('q3a-section');
+        const q3bSection = document.getElementById('q3b-section');
+        if (state.q1a === 'r1-text-only') {
+            q3aSection.style.display = 'block';
+            q3bSection.style.display = 'none';
+            // Clear any Q3b selections
+            state.q3b = [];
+            document.querySelectorAll('#q3b-cards .checkbox-card').forEach(c => c.classList.remove('selected'));
+        } else if (state.q1a === 'r1-questions-only') {
+            q3aSection.style.display = 'none';
+            q3bSection.style.display = 'block';
+            // Clear any Q3a selections
+            state.q3a = [];
+            document.querySelectorAll('#q3a-cards .checkbox-card').forEach(c => c.classList.remove('selected'));
+            // Remove the top border/margin from q3b since q3a is hidden
+            q3bSection.style.marginTop = '0';
+            q3bSection.style.paddingTop = '0';
+            q3bSection.style.borderTop = 'none';
+        } else {
+            // text-questions: show both
+            q3aSection.style.display = 'block';
+            q3bSection.style.display = 'block';
+            q3bSection.style.marginTop = '';
+            q3bSection.style.paddingTop = '';
+            q3bSection.style.borderTop = '';
+        }
+    }
+
+    document.querySelectorAll('.question-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('panel-' + id);
+    if (panel) {
+        panel.classList.add('active');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.getElementById('progressFill').style.width = (PANEL_PROGRESS[id] || 0) + '%';
+    document.getElementById('progressLabel').textContent = PANEL_LABELS[id] || '';
+}
+
+function highlightRequired(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.style.boxShadow = '0 0 0 3px rgba(244,185,66,0.5)';
+    setTimeout(() => { panel.style.boxShadow = ''; }, 1200);
+}
+
+// ==========================================
+// OPTION SELECTION (single)
+// ==========================================
+function selectOption(el, key) {
+    if (el.classList.contains('disabled-task')) return;
+    const group = el.closest('.option-cards');
+    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    state[key] = el.dataset.value;
+}
+
+// ==========================================
+// CHECKBOX TOGGLE (multi)
+// ==========================================
+function toggleCheckbox(el) {
+    el.classList.toggle('selected');
+    const key = el.closest('#q3a-cards') ? 'q3a' : 'q3b';
+    const val = el.dataset.value;
+    const arr = state[key];
+    const idx = arr.indexOf(val);
+    if (idx === -1) arr.push(val);
+    else arr.splice(idx, 1);
+}
+
+// ==========================================
+// LEARNING NEEDS (multi-select + expand)
+// ==========================================
+function toggleNeedsCard(el, listId) {
+    if (el.classList.contains('disabled-task')) return;
+    // Deselect "Neither" if active
+    const neither = document.getElementById('neither-card');
+    if (neither && neither.classList.contains('selected')) {
+        neither.classList.remove('selected');
+        const idx = state.q4.indexOf('neither');
+        if (idx !== -1) state.q4.splice(idx, 1);
+    }
+    el.classList.toggle('selected');
+    const list = document.getElementById(listId);
+    list.classList.toggle('open', el.classList.contains('selected'));
+    const val = el.dataset.value;
+    const idx = state.q4.indexOf(val);
+    if (idx === -1) state.q4.push(val);
+    else state.q4.splice(idx, 1);
+}
+
+// ==========================================
+// NEITHER OPTION (Q4)
+// ==========================================
+function selectNeither(el) {
+    // Deselect EAL/D and Neuro if active
+    document.querySelectorAll('#panel-q4 .option-card:not(#neither-card)').forEach(card => {
+        card.classList.remove('selected');
+        const listId = card.dataset.value === 'eald' ? 'eald-list' : 'neuro-list';
+        document.getElementById(listId).classList.remove('open');
+    });
+    state.q4 = [];
+    el.classList.toggle('selected');
+    if (el.classList.contains('selected')) state.q4 = ['neither'];
+}
+
+// ==========================================
+// FILE UPLOAD
+// ==========================================
+function handleFileUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const status = document.getElementById('upload-status');
+    status.textContent = 'Reading file...';
+
+    if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            document.getElementById('ctx-resource').value = e.target.result;
+            status.textContent = file.name + ' — loaded';
+        };
+        reader.readAsText(file);
+    } else if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+        // Basic PDF: extract raw text via FileReader, acknowledge limitations
+        const reader = new FileReader();
+        reader.onload = e => {
+            const text = extractTextFromBinary(e.target.result);
+            if (text.length > 50) {
+                document.getElementById('ctx-resource').value = text;
+                status.textContent = file.name + ' — partial text extracted. Review and edit if needed.';
+            } else {
+                status.textContent = file.name + ' — PDF text extraction limited. Please paste content manually.';
+            }
+        };
+        reader.readAsBinaryString(file);
+    } else {
+        // .docx and others — acknowledge limitation
+        status.textContent = file.name + ' — this file type requires manual pasting for now. Full document reading coming with Gemini API access.';
+    }
+    // Reset input so same file can be re-uploaded if needed
+    input.value = '';
+}
+
+function extractTextFromBinary(binary) {
+    // Very basic PDF text extraction — pulls readable ASCII strings
+    let text = '';
+    const pattern = /[\x20-\x7E]{4,}/g;
+    const matches = binary.match(pattern);
+    if (matches) {
+        text = matches
+            .filter(s => s.trim().length > 3 && !/^[<>\/\[\]{}\\]/.test(s))
+            .join(' ');
+    }
+    return text.substring(0, 8000);
+}
+
+// ==========================================
+// THEORY TOGGLE
+// ==========================================
+function toggleTheory(id, btn) {
+    const box = document.getElementById(id);
+    box.classList.toggle('open');
+    btn.classList.toggle('open');
+}
+
+// ==========================================
+// Q3 VALIDATION
+// ==========================================
+function validateQ3() {
+    const total = state.q3a.length + state.q3b.length;
+    const msg = document.getElementById('val-q3');
+    if (total === 0) {
+        msg.classList.add('show');
+        return;
+    }
+    msg.classList.remove('show');
+    goToPanel('q4');
+}
+
+// ==========================================
+// OUTPUT MODE
+// ==========================================
+function selectOutputMode(mode) {
+    state.outputMode = mode;
+    document.getElementById('oo-build').classList.toggle('selected', mode === 'build');
+    document.getElementById('oo-curate').classList.toggle('selected', mode === 'curate');
+    const curateSection = document.getElementById('curate-section');
+    if (mode === 'curate') {
+        buildComponentCards();
+        curateSection.style.display = 'block';
+    } else {
+        curateSection.style.display = 'none';
+    }
+}
+
+function selectDelivery(mode) {
+    state.delivery = mode;
+    document.getElementById('del-master').classList.toggle('selected', mode === 'master');
+    document.getElementById('del-chain').classList.toggle('selected', mode === 'chain');
+}
+
+// ==========================================
+// COMPONENT CARDS (curate mode)
+// ==========================================
+function buildComponentCards() {
+    const container = document.getElementById('component-cards-container');
+    const components = getComponentList();
+    container.innerHTML = '';
+    state.curateSelected = components.map(c => c.id); // all selected by default
+
+    components.forEach(comp => {
+        const card = document.createElement('div');
+        card.className = 'component-card selected';
+        card.dataset.id = comp.id;
+        card.innerHTML = `
+            <div class="cb-box"></div>
+            <div class="comp-label">
+                <strong>${comp.label}</strong>
+                <span>${comp.desc}</span>
+            </div>`;
+        card.onclick = () => {
+            card.classList.toggle('selected');
+            const idx = state.curateSelected.indexOf(comp.id);
+            if (idx === -1) state.curateSelected.push(comp.id);
+            else state.curateSelected.splice(idx, 1);
+        };
+        container.appendChild(card);
+    });
+}
+
+function getComponentList() {
+    const comps = [];
+    if (state.q2 === 'support')  comps.push({ id:'dir-support', label:'Direction: Support', desc:'Frame the prompt for students needing access and scaffolding' });
+    if (state.q2 === 'extension') comps.push({ id:'dir-extension', label:'Direction: Extension', desc:'Frame the prompt for students ready for greater depth' });
+    if (state.q2 === 'both')     comps.push({ id:'dir-both', label:'Direction: Both versions', desc:'Produce a support and an extension version' });
+
+    const passageMap = {
+        readability: { label:'Adjust readability', desc:'Simplify language complexity of the passage' },
+        concept:     { label:'Adjust concept complexity', desc:'Move toward more concrete or abstract ideas' },
+        length:      { label:'Adjust length', desc:'Shorten or restructure passage content' },
+        background:  { label:'Add background scaffolds', desc:'Context-setting sentences for prior knowledge' },
+        'visual-passage': { label:'Improve visual layout', desc:'White space, subheadings, diagram suggestions' }
+    };
+    state.q3a.forEach(v => { if (passageMap[v]) comps.push({ id:'p-'+v, ...passageMap[v] }); });
+
+    const qMap = {
+        demand:       { label:'Adjust cognitive demand', desc:'Shift questions up or down Bloom\'s Taxonomy' },
+        'scaffolding-q': { label:'Add question scaffolds', desc:'Sentence starters, sub-questions' },
+        choice:       { label:'Add student choice', desc:'Introduce autonomy into the question set' },
+        'chunking-q': { label:'Chunk the questions', desc:'Reduce number or break into smaller steps' },
+        mode:         { label:'Vary response modes', desc:'Offer written, visual, or oral alternatives' }
+    };
+    state.q3b.forEach(v => { if (qMap[v]) comps.push({ id:'q-'+v, ...qMap[v] }); });
+
+    // EAL/D
+    const ealdChecked = Array.from(document.querySelectorAll('#eald-list input[type=checkbox]:checked')).map(i => i.value);
+    const ealdLabels = {
+        'eald-glossary': 'EAL/D: Key vocabulary glossary',
+        'eald-subjectvocab': 'EAL/D: Subject-specific vocabulary',
+        'eald-frames': 'EAL/D: Sentence starters / frames',
+        'eald-visual': 'EAL/D: Visual supports',
+        'eald-syntax': 'EAL/D: Simplified syntax version',
+        'eald-mandarin': 'EAL/D: Mandarin translation',
+        'eald-other': 'EAL/D: Other language translation'
+    };
+    ealdChecked.forEach(v => { if (ealdLabels[v]) comps.push({ id: v, label: ealdLabels[v], desc: '' }); });
+
+    // Neurodiversity
+    const neuroChecked = Array.from(document.querySelectorAll('#neuro-list input[type=checkbox]:checked')).map(i => i.value);
+    const neuroLabels = {
+        'neuro-chunk': 'Learning needs: Chunked instructions',
+        'neuro-memory': 'Learning needs: Reduce working memory load',
+        'neuro-space': 'Learning needs: Increased white space',
+        'neuro-process': 'Learning needs: Explicit process steps',
+        'neuro-output': 'Learning needs: Alternative output options',
+        'neuro-tts': 'Learning needs: Text-to-speech formatting',
+        'neuro-anchor': 'Learning needs: Anchor activity'
+    };
+    neuroChecked.forEach(v => { if (neuroLabels[v]) comps.push({ id: v, label: neuroLabels[v], desc: '' }); });
+
+    return comps;
+}
+
+// ==========================================
+// COLLECT CONTEXT
+// ==========================================
+function collectContext() {
+    state.ctx.year = document.getElementById('ctx-year').value.trim();
+    state.ctx.subject = document.getElementById('ctx-subject').value.trim();
+    state.ctx.intention = document.getElementById('ctx-intention').value.trim();
+    state.ctx.resource = document.getElementById('ctx-resource').value.trim();
+}
+
+// ==========================================
+// PROMPT ASSEMBLY — powered by prompt-blocks.js
+// ==========================================
+
+function getExtras() {
+    // Collect EAL/D language field for injection
+    const lang = document.getElementById('eald-other-lang')
+        ? document.getElementById('eald-other-lang').value.trim()
+        : '';
+    return { language: lang || '[home language]' };
+}
+
+function assemblePromptBlocks(selectedIds) {
+    collectContext();
+    const s = state;
+    const ctx = s.ctx;
+    const direction = s.q2;
+    const extras = getExtras();
+    const use = id => !selectedIds || selectedIds.includes(id);
+
+    // Each entry: { id, block }
+    // id is used for curate filtering and chain step grouping
+    const entries = [];
+
+    // ── TEXT ADJUSTMENTS ──────────────────────────────────────────────────
+    if (use('p-readability') && s.q3a.includes('readability'))
+        entries.push({ id: 'p-readability', group: 'text',
+            block: PB.buildBlock('readability', ctx, direction, extras) });
+
+    if (use('p-concept') && s.q3a.includes('concept'))
+        entries.push({ id: 'p-concept', group: 'text',
+            block: PB.buildBlock('conceptComplexity', ctx, direction, extras) });
+
+    if (use('p-length') && s.q3a.includes('length'))
+        entries.push({ id: 'p-length', group: 'text',
+            block: PB.buildBlock('length', ctx, direction, extras) });
+
+    if (use('p-background') && s.q3a.includes('background'))
+        entries.push({ id: 'p-background', group: 'text',
+            block: PB.buildBlock('backgroundKnowledge', ctx, direction, extras) });
+
+    if (use('p-visual-passage') && s.q3a.includes('visual-passage'))
+        entries.push({ id: 'p-visual-passage', group: 'text',
+            block: PB.buildBlock('visualSupports', ctx, direction, extras) });
+
+    // ── QUESTION ADJUSTMENTS ──────────────────────────────────────────────
+    if (use('q-demand') && s.q3b.includes('demand'))
+        entries.push({ id: 'q-demand', group: 'questions',
+            block: PB.buildBlock('cognitiveDemand', ctx, direction, extras) });
+
+    if (use('q-scaffolding-q') && s.q3b.includes('scaffolding-q'))
+        entries.push({ id: 'q-scaffolding-q', group: 'questions',
+            block: PB.buildBlock('questionScaffolding', ctx, direction, extras) });
+
+    if (use('q-choice') && s.q3b.includes('choice'))
+        entries.push({ id: 'q-choice', group: 'questions',
+            block: PB.buildBlock('studentChoice', ctx, direction, extras) });
+
+    if (use('q-chunking-q') && s.q3b.includes('chunking-q'))
+        entries.push({ id: 'q-chunking-q', group: 'questions',
+            block: PB.buildBlock('chunking', ctx, direction, extras) });
+
+    if (use('q-mode') && s.q3b.includes('mode'))
+        entries.push({ id: 'q-mode', group: 'questions',
+            block: PB.buildBlock('responseMode', ctx, direction, extras) });
+
+    // ── EAL/D ADJUSTMENTS ─────────────────────────────────────────────────
+    const ealdChecked = Array.from(
+        document.querySelectorAll('#eald-list input[type=checkbox]:checked')
+    ).map(i => i.value);
+
+    if (use('eald-glossary') && ealdChecked.includes('eald-glossary'))
+        entries.push({ id: 'eald-glossary', group: 'eald',
+            block: PB.buildBlock('ealdGlossary', ctx, direction, extras) });
+
+    if (use('eald-subjectvocab') && ealdChecked.includes('eald-subjectvocab'))
+        entries.push({ id: 'eald-subjectvocab', group: 'eald',
+            block: PB.buildBlock('ealdSubjectVocab', ctx, direction, extras) });
+
+    if (use('eald-frames') && ealdChecked.includes('eald-frames'))
+        entries.push({ id: 'eald-frames', group: 'eald',
+            block: PB.buildBlock('ealdSentenceFrames', ctx, direction, extras) });
+
+    if (use('eald-visual') && ealdChecked.includes('eald-visual'))
+        entries.push({ id: 'eald-visual', group: 'eald',
+            block: PB.buildBlock('ealdVisualSupports', ctx, direction, extras) });
+
+    if (use('eald-syntax') && ealdChecked.includes('eald-syntax'))
+        entries.push({ id: 'eald-syntax', group: 'eald',
+            block: PB.buildBlock('ealdSyntax', ctx, direction, extras) });
+
+    if (use('eald-mandarin') && ealdChecked.includes('eald-mandarin'))
+        entries.push({ id: 'eald-mandarin', group: 'eald',
+            block: PB.buildBlock('ealdMandarin', ctx, direction, extras) });
+
+    if (use('eald-other') && ealdChecked.includes('eald-other'))
+        entries.push({ id: 'eald-other', group: 'eald',
+            block: PB.buildBlock('ealdOtherLanguage', ctx, direction, extras) });
+
+    // ── NEURODIVERSITY ADJUSTMENTS ────────────────────────────────────────
+    const neuroChecked = Array.from(
+        document.querySelectorAll('#neuro-list input[type=checkbox]:checked')
+    ).map(i => i.value);
+
+    if (use('neuro-chunk') && neuroChecked.includes('neuro-chunk'))
+        entries.push({ id: 'neuro-chunk', group: 'neuro',
+            block: PB.buildBlock('neuroChunked', ctx, direction, extras) });
+
+    if (use('neuro-memory') && neuroChecked.includes('neuro-memory'))
+        entries.push({ id: 'neuro-memory', group: 'neuro',
+            block: PB.buildBlock('neuroWorkingMemory', ctx, direction, extras) });
+
+    if (use('neuro-space') && neuroChecked.includes('neuro-space'))
+        entries.push({ id: 'neuro-space', group: 'neuro',
+            block: PB.buildBlock('neuroWhiteSpace', ctx, direction, extras) });
+
+    if (use('neuro-process') && neuroChecked.includes('neuro-process'))
+        entries.push({ id: 'neuro-process', group: 'neuro',
+            block: PB.buildBlock('neuroExplicitProcess', ctx, direction, extras) });
+
+    if (use('neuro-output') && neuroChecked.includes('neuro-output'))
+        entries.push({ id: 'neuro-output', group: 'neuro',
+            block: PB.buildBlock('neuroReducedOutput', ctx, direction, extras) });
+
+    if (use('neuro-tts') && neuroChecked.includes('neuro-tts'))
+        entries.push({ id: 'neuro-tts', group: 'neuro',
+            block: PB.buildBlock('neuroTTS', ctx, direction, extras) });
+
+    if (use('neuro-anchor') && neuroChecked.includes('neuro-anchor'))
+        entries.push({ id: 'neuro-anchor', group: 'neuro',
+            block: PB.buildBlock('neuroAnchor', ctx, direction, extras) });
+
+    return entries;
+}
+
+// ── MASTER PROMPT ──────────────────────────────────────────────────────────
+// All blocks concatenated with a clear separator.
+// Each block is self-contained (context injected), so the master prompt
+// reads as one coherent set of instructions.
+
+function buildMasterPrompt(selectedIds) {
+    const entries = assemblePromptBlocks(selectedIds);
+    if (entries.length === 0) return '[No differentiation options selected.]';
+
+    const blocks = entries.map(e => e.block);
+
+    // Preamble: tells the LLM what it's about to receive
+    const s = state;
+    const ctx = s.ctx;
+    let preamble = `You are helping a teacher differentiate a classroom resource.`;
+    const ctxLines = [
+        ctx.year      ? `Year group: ${ctx.year}` : null,
+        ctx.subject   ? `Subject / topic: ${ctx.subject}` : null,
+        ctx.intention ? `Learning intention: ${ctx.intention}` : null,
+    ].filter(Boolean);
+    if (ctxLines.length) preamble += `\n\n${ctxLines.join('\n')}`;
+    preamble += `\n\nBelow are ${blocks.length} differentiation task${blocks.length > 1 ? 's' : ''} to apply to the resource. Complete all of them. Where a task produces multiple versions, label them clearly.`;
+
+    return [preamble, ...blocks].join('\n\n---\n\n');
+}
+
+// ── CHAIN PROMPTS ──────────────────────────────────────────────────────────
+// Split into up to 3 sequential prompts:
+//   Step 1: Text adjustments
+//   Step 2: Question adjustments
+//   Step 3: Learning needs (EAL/D + neurodiversity)
+// Each step is fully self-contained — context is re-injected at each stage.
+
+function buildChainPrompts(selectedIds) {
+    const entries = assemblePromptBlocks(selectedIds);
+    const s = state;
+    const ctx = s.ctx;
+
+    const textEntries  = entries.filter(e => e.group === 'text');
+    const qEntries     = entries.filter(e => e.group === 'questions');
+    const needsEntries = entries.filter(e => e.group === 'eald' || e.group === 'neuro');
+
+    function buildStep(stepEntries, note) {
+        if (!stepEntries.length) return null;
+        const ctxBlock = `You are helping a teacher differentiate a classroom resource.\n` +
+            [ctx.year ? `Year group: ${ctx.year}` : null,
+             ctx.subject ? `Subject / topic: ${ctx.subject}` : null,
+             ctx.intention ? `Learning intention: ${ctx.intention}` : null]
+            .filter(Boolean).join('\n');
+        const blocks = [ctxBlock, ...stepEntries.map(e => e.block)];
+        if (note) blocks.push(note);
+        return blocks.join('\n\n---\n\n');
+    }
+
+    // Determine step labels based on what's actually included
+    const hasText  = textEntries.length > 0;
+    const hasQ     = qEntries.length > 0;
+    const hasNeeds = needsEntries.length > 0;
+
+    // If only one section selected, don't artificially split
+    const singleSection = [hasText, hasQ, hasNeeds].filter(Boolean).length === 1;
+
+    if (singleSection) {
+        const all = [...textEntries, ...qEntries, ...needsEntries];
+        const step1 = buildStep(all, null);
+        return { step1, step2: null, step3: null };
+    }
+
+    const step1Note = hasQ
+        ? 'Complete the text differentiation only at this stage. Do not include questions yet — those come in the next step.'
+        : null;
+
+    const step2Note = hasNeeds
+        ? 'Use the differentiated text from Step 1. Complete the question differentiation now. Learning needs adjustments come in the next step.'
+        : null;
+
+    const step1 = hasText  ? buildStep(textEntries,  step1Note) : null;
+    const step2 = hasQ     ? buildStep(qEntries,     step2Note) : null;
+    const step3 = hasNeeds ? buildStep(needsEntries, null)      : null;
+
+    // If text-only was selected but we have questions too, rearrange gracefully
+    if (!step1 && step2) return { step1: step2, step2: step3, step3: null };
+    return { step1, step2, step3 };
+}
+
+// ==========================================
+// RESPONSE CHECKLIST
+// ==========================================
+function buildResponseChecklist() {
+    const s = state;
+    const items = [];
+
+    if (s.q2 === 'support' || s.q2 === 'both')
+        items.push('Read the support version aloud as if you are the student it\'s for. Does the language genuinely open the door, or does it just add words?');
+    if (s.q2 === 'extension' || s.q2 === 'both')
+        items.push('Check the extension version demands higher-order thinking — analysis, evaluation, synthesis — not simply more volume or harder vocabulary.');
+    if (s.q3a.includes('readability'))
+        items.push('Verify the simplified version preserves the conceptual integrity of the original. Simpler language should not mean simpler ideas.');
+    if (s.q3a.includes('concept'))
+        items.push('Check that analogies used to make concepts concrete are structurally sound — the relationships in the analogy should mirror the concept, not just sound similar.');
+    if (s.q3a.includes('length'))
+        items.push('Confirm the shortened version still contains everything students need to achieve the learning intention. Nothing essential should have been cut.');
+    if (s.q3b.includes('demand'))
+        items.push('Review each question against Bloom\'s Taxonomy — does its cognitive demand match your stated intention for this group?');
+    if (s.q3b.includes('scaffolding-q'))
+        items.push('Check that sentence frames are academically appropriate, not just simple. Frames should model the language of the discipline, not replace it with casual language.');
+    if (document.querySelector('#eald-list input:checked'))
+        items.push('Review all vocabulary definitions for accuracy and age-appropriateness. Check that bilingual translations convey nuance, not just literal word equivalents.');
+    if (document.querySelector('#neuro-list input:checked'))
+        items.push('Check that layout and process adjustments are applied consistently throughout the resource, not just in some sections.');
+    items.push('Read the final resource as a student encountering it for the first time. Is anything ambiguous, unexplained, or assumed?');
+    return items;
+}
+
+// ==========================================
+// GENERATE PROMPT
+// ==========================================
+function generatePrompt() {
+    const selectedIds = state.outputMode === 'curate' ? state.curateSelected : null;
+    const area = document.getElementById('prompt-output-area');
+    area.innerHTML = '';
+
+    if (state.delivery === 'master') {
+        const promptText = buildMasterPrompt(selectedIds);
+        const checklist = buildResponseChecklist();
+
+        area.innerHTML = `
+            <div style="margin-top:2rem;padding-top:1.5rem;border-top:2px solid var(--border-color);">
+                <h3 style="font-family:var(--font-heading);font-size:1.1rem;color:var(--text-dark);margin-bottom:0.4rem;">Your prompt is ready</h3>
+                <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:1rem;">Copy and paste into Gemini, Claude, or ChatGPT. Your resource and context are already included.</p>
+                <div class="prompt-box">
+                    <div class="prompt-header">
+                        <span class="prompt-title">Master Prompt</span>
+                        <button class="copy-btn" onclick="copyPrompt(this, 'master-prompt-text')">Copy prompt</button>
+                    </div>
+                    <div class="prompt-text" id="master-prompt-text">${escapeHtml(promptText)}</div>
+                </div>
+                <div class="response-checklist">
+                    <h4>Before you use this — check:</h4>
+                    <ul>${checklist.map(i => `<li>${i}</li>`).join('')}</ul>
+                </div>
+            </div>`;
+
+    } else {
+        const { step1, step2, step3 } = buildChainPrompts(selectedIds);
+        const s = state;
+        const hasText  = s.q3a.length > 0;
+        const hasQ     = s.q3b.length > 0;
+        const hasNeeds = document.querySelector('#eald-list input:checked') || document.querySelector('#neuro-list input:checked');
+
+        // Build step label sequence based on what's actually present
+        const stepLabels = [];
+        if (hasText)  stepLabels.push('Differentiate the text');
+        if (hasQ)     stepLabels.push('Differentiate the questions');
+        if (hasNeeds) stepLabels.push('Apply learning needs adjustments');
+        if (stepLabels.length <= 1 && step1) {
+            stepLabels.length = 0;
+            stepLabels.push('Differentiate this resource');
+        }
+
+        const reflections = [
+            'Is the reading level appropriate for your intended group? Are there phrases that still feel inaccessible? Note anything to adjust before moving on.',
+            'Do the questions feel genuinely aligned with the differentiated text? Does the cognitive demand match your intention for this group?',
+            'Check that all learning needs adjustments are integrated naturally — not bolted on as afterthoughts to an otherwise unchanged resource.'
+        ];
+
+        let html = `<div style="margin-top:2rem;padding-top:1.5rem;border-top:2px solid var(--border-color);">
+            <h3 style="font-family:var(--font-heading);font-size:1.1rem;color:var(--text-dark);margin-bottom:0.4rem;">Your chain prompt guide</h3>
+            <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:1.25rem;">Run each step in sequence. Review the output before moving to the next step — each builds on the last.</p>`;
+
+        let stepNum = 0;
+        if (step1) html += renderChainStep(++stepNum, stepLabels[stepNum-1] || 'Step 1', step1, reflections[0]);
+        if (step2) html += renderChainStep(++stepNum, stepLabels[stepNum-1] || 'Step 2', step2, reflections[1]);
+        if (step3) html += renderChainStep(++stepNum, stepLabels[stepNum-1] || 'Step 3', step3, reflections[2]);
+
+        const checklist = buildResponseChecklist();
+        html += `<div class="response-checklist">
+            <h4>Final review — before you print or share:</h4>
+            <ul>${checklist.map(i => `<li>${i}</li>`).join('')}</ul>
+        </div></div>`;
+
+        area.innerHTML = html;
+    }
+
+    area.classList.add('active');
+    document.getElementById('start-over-wrap').style.display = 'block';
+    area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderChainStep(num, title, promptText, reflection) {
+    const stepId = `chain-step-${num}`;
+    return `
+    <div class="chain-step">
+        <div class="chain-step-header">
+            <span>Step ${num}: ${title}</span>
+            <button class="copy-btn" onclick="copyPrompt(this, '${stepId}')">Copy</button>
+        </div>
+        <div class="chain-step-body">
+            <div class="prompt-text" id="${stepId}" style="background:#1a1a2e;border-radius:8px;padding:1rem;color:#e8e8f0;font-family:'Courier New',monospace;font-size:0.88rem;line-height:1.7;white-space:pre-wrap;word-break:break-word;">${escapeHtml(promptText)}</div>
+            <div class="chain-reflection">
+                <strong>Before moving on — reflect:</strong>
+                ${reflection}
+            </div>
+        </div>
+    </div>`;
+}
+
+// ==========================================
+// COPY
+// ==========================================
+function copyPrompt(btn, elementId) {
+    const el = document.getElementById(elementId);
+    navigator.clipboard.writeText(el.textContent).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// ==========================================
+// START OVER
+// ==========================================
+function startOver() {
+    location.reload();
+}
+
+// ==========================================
+// UTILS
+// ==========================================
+function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
