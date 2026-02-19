@@ -1929,17 +1929,25 @@ function buildMasterPrompt(selectedIds) {
 
     const blocks = entries.map(e => e.block);
 
-    // Preamble: tells the LLM what it's about to receive
     const s = state;
     const ctx = s.ctx;
+
+    // Build preamble — resource is injected ONCE here and nowhere else
     let preamble = `You are helping a teacher differentiate a classroom resource.`;
+
     const ctxLines = [
         ctx.year      ? `Year group: ${ctx.year}` : null,
         ctx.subject   ? `Subject / topic: ${ctx.subject}` : null,
         ctx.intention ? `Learning intention: ${ctx.intention}` : null,
     ].filter(Boolean);
     if (ctxLines.length) preamble += `\n\n${ctxLines.join('\n')}`;
-    preamble += `\n\nBelow are ${blocks.length} differentiation task${blocks.length > 1 ? 's' : ''} to apply to the resource. Complete all of them. Where a task produces multiple versions, label them clearly.`;
+
+    if (ctx.resource) {
+        preamble += `\n\nRESOURCE\n${'─'.repeat(40)}\n${ctx.resource}\n${'─'.repeat(40)}`;
+    }
+
+    const taskCount = blocks.length;
+    preamble += `\n\nYou have ${taskCount} task${taskCount > 1 ? 's' : ''} to complete using the resource above. Complete all of them in the order given. Label each output clearly with the task number and name.`;
 
     return [preamble, ...blocks].join('\n\n---\n\n');
 }
@@ -1960,45 +1968,54 @@ function buildChainPrompts(selectedIds) {
     const qEntries     = entries.filter(e => e.group === 'questions');
     const needsEntries = entries.filter(e => e.group === 'eald' || e.group === 'neuro');
 
-    function buildStep(stepEntries, note) {
+    // resourceNote: true = embed the resource; string = use a handoff note instead
+    function buildStep(stepEntries, resourceNote, stepNote) {
         if (!stepEntries.length) return null;
-        const ctxBlock = `You are helping a teacher differentiate a classroom resource.\n` +
-            [ctx.year ? `Year group: ${ctx.year}` : null,
-             ctx.subject ? `Subject / topic: ${ctx.subject}` : null,
-             ctx.intention ? `Learning intention: ${ctx.intention}` : null]
-            .filter(Boolean).join('\n');
+
+        let ctxBlock = `You are helping a teacher differentiate a classroom resource.\n`;
+        const ctxLines = [
+            ctx.year      ? `Year group: ${ctx.year}` : null,
+            ctx.subject   ? `Subject / topic: ${ctx.subject}` : null,
+            ctx.intention ? `Learning intention: ${ctx.intention}` : null,
+        ].filter(Boolean);
+        if (ctxLines.length) ctxBlock += ctxLines.join('\n');
+
+        if (resourceNote === true && ctx.resource) {
+            ctxBlock += `\n\nRESOURCE\n${'\u2500'.repeat(40)}\n${ctx.resource}\n${'\u2500'.repeat(40)}`;
+        } else if (typeof resourceNote === 'string') {
+            ctxBlock += `\n\n${resourceNote}`;
+        }
+
         const blocks = [ctxBlock, ...stepEntries.map(e => e.block)];
-        if (note) blocks.push(note);
+        if (stepNote) blocks.push(stepNote);
         return blocks.join('\n\n---\n\n');
     }
 
-    // Determine step labels based on what's actually included
     const hasText  = textEntries.length > 0;
     const hasQ     = qEntries.length > 0;
     const hasNeeds = needsEntries.length > 0;
 
-    // If only one section selected, don't artificially split
     const singleSection = [hasText, hasQ, hasNeeds].filter(Boolean).length === 1;
 
     if (singleSection) {
         const all = [...textEntries, ...qEntries, ...needsEntries];
-        const step1 = buildStep(all, null);
+        const step1 = buildStep(all, true, null);
         return { step1, step2: null, step3: null };
     }
 
     const step1Note = hasQ
-        ? 'Complete the text differentiation only at this stage. Do not include questions yet — those come in the next step.'
+        ? 'Complete the text tasks above only. Do not produce questions yet \u2014 those come in the next step.'
         : null;
 
     const step2Note = hasNeeds
-        ? 'Use the differentiated text from Step 1. Complete the question differentiation now. Learning needs adjustments come in the next step.'
+        ? 'Use the differentiated text from Step 1. Complete the question tasks now. Learning needs adjustments come in the next step.'
         : null;
 
-    const step1 = hasText  ? buildStep(textEntries,  step1Note) : null;
-    const step2 = hasQ     ? buildStep(qEntries,     step2Note) : null;
-    const step3 = hasNeeds ? buildStep(needsEntries, null)      : null;
+    // Step 1 gets the full resource. Later steps reference the previous output.
+    const step1 = hasText  ? buildStep(textEntries,  true,  step1Note) : null;
+    const step2 = hasQ     ? buildStep(qEntries,     'Use the differentiated text produced in Step 1 as your resource for this step.', step2Note) : null;
+    const step3 = hasNeeds ? buildStep(needsEntries, 'Apply the following adjustments to the final resource produced in the previous steps.', null) : null;
 
-    // If text-only was selected but we have questions too, rearrange gracefully
     if (!step1 && step2) return { step1: step2, step2: step3, step3: null };
     return { step1, step2, step3 };
 }
