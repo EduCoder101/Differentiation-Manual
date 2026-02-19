@@ -3,263 +3,256 @@
  * ========================================
  * Source-of-truth library for the Prompt Builder.
  *
- * Every prompt here is drawn directly from the Differentiation Manual
- * (step3-content.html, step3-process.html, step5-equalizer.html,
- * step6-scaffolding.html). Do not edit the source text without updating
- * the corresponding manual page.
- *
  * Source key:
  *   C  = step3-content.html
  *   P  = step3-process.html
  *   E  = step5-equalizer.html
  *   S  = step6-scaffolding.html
  *
- * ARCHITECTURE — how prompts are assembled:
- * ─────────────────────────────────────────
- * The resource, year group, subject, and learning intention are injected
- * ONCE into the preamble by buildMasterPrompt() / buildChainPrompts()
- * in prompt-builder.html. They must NOT be repeated inside block templates.
+ * ARCHITECTURE:
+ * ─────────────
+ * The resource is injected ONCE into the preamble by the assembler.
+ * Block templates refer to "the resource above" — they never embed it.
  *
- * Each block template is a self-contained task instruction that refers to
- * "the resource above" rather than re-embedding the resource text.
+ * Q3 now has two audience-specific lists:
+ *   SUPPORT_OPTIONS   — access-focused adjustments for support students
+ *   EXTENSION_OPTIONS — depth-focused adjustments for extension students
  *
- * The direction clause (support / extension / both) is only prepended to
- * blocks where it is semantically meaningful — i.e. blocks that produce
- * multiple versions of the same content. Blocks that produce a single
- * output (glossaries, layout fixes, TTS reformatting, etc.) do not receive
- * a direction clause.
+ * Each block in SOURCE carries an `audience` tag:
+ *   'support' | 'extension' | 'eald' | 'neuro'
  *
- * Context injection placeholders still used inside block templates:
- *   {{year}}        → Q5: Year group
- *   {{subject}}     → Q5: Subject / topic
- *   {{intention}}   → Q5: Learning intention
- *   {{language}}    → EAL/D: Other language field
+ * The assembler uses this to group blocks correctly for chain prompts.
  *
- * Placeholders NO LONGER used inside blocks (injected in preamble only):
- *   {{resource}}    — removed from all block templates
- *
- * Usage:
- *   const block = PB.buildBlock('readability', ctx, direction);
- *   // Returns a task instruction string. Resource is in the preamble.
+ * Context placeholders used in templates:
+ *   {{year}}       → Year group
+ *   {{subject}}    → Subject / topic
+ *   {{intention}}  → Learning intention
+ *   {{language}}   → EAL/D other language field
  */
 
 const PB = (() => {
 
   // ─── CONTEXT INJECTION ────────────────────────────────────────────────────
-  // Replaces placeholder patterns with teacher-supplied context.
-  // Note: {{resource}} patterns are no longer present in block templates —
-  // this function handles year/subject/intention/language only.
 
   function inject(template, ctx, extras) {
-    const lang    = (extras && extras.language) ? extras.language : '[home language]';
-    const year    = ctx.year      || '[year group]';
-    const subject = ctx.subject   || '[subject/topic]';
+    const lang      = (extras && extras.language) ? extras.language : '[home language]';
+    const year      = ctx.year      || '[year group]';
+    const subject   = ctx.subject   || '[subject/topic]';
     const intention = ctx.intention || '[learning intention]';
 
     return template
-      .replace(/\{\{year\}\}/gi, year)
-      .replace(/\[year group\]/gi, year)
-      .replace(/\[Year Level\]/g, year)
-      .replace(/\[grade level\]/gi, year)
-      .replace(/\{\{subject\}\}/gi, subject)
-      .replace(/\[subject\/topic\]/gi, subject)
-      .replace(/\[topic\]/gi, subject)
+      .replace(/\{\{year\}\}/gi,      year)
+      .replace(/\{\{subject\}\}/gi,   subject)
       .replace(/\{\{intention\}\}/gi, intention)
-      .replace(/\[paste LI\]/gi, intention)
-      .replace(/\[paste KUDs\]/gi, intention)
-      .replace(/\[state the essential KUD\]/gi, intention)
-      .replace(/\{\{language\}\}/gi, lang)
-      .replace(/\[language\]/g, lang);
+      .replace(/\{\{language\}\}/gi,  lang);
   }
 
-  // ─── DIRECTION CLAUSE ─────────────────────────────────────────────────────
-  // Used ONLY for blocks that genuinely produce multiple versions.
-  // Returns null for blocks where a direction is not applicable.
+  // ─── OPTION DEFINITIONS ───────────────────────────────────────────────────
+  // Used by the UI to render the two Q3 columns.
+  // Each option maps to a key in SOURCE.
 
-  function directionClause(direction, subject) {
-    if (!direction) return null;
-    if (direction === 'support')   return `This task is for students who need additional support and scaffolding. Reduce barriers to access — do not reduce intellectual demand.`;
-    if (direction === 'extension') return `This task is for students ready for greater depth and challenge. Increase complexity, abstraction, and autonomy — not volume or workload.`;
-    if (direction === 'both')      return `Produce two clearly labelled versions:\n— Support version: additional scaffolding, same intellectual standard\n— Extension version: greater depth and complexity, same learning goal`;
-    return null;
-  }
+  const SUPPORT_OPTIONS = [
+    {
+      id: 'sup-readability',
+      label: 'Simplify readability',
+      desc: 'Adjust vocabulary and sentence structure to reduce language barriers',
+      key: 'supportReadability'
+    },
+    {
+      id: 'sup-essential',
+      label: 'Identify essential passages',
+      desc: 'Shorten to what students truly need — with a highlighting strategy',
+      key: 'supportEssential'
+    },
+    {
+      id: 'sup-digest',
+      label: 'Pre-reading digest',
+      desc: 'Key vocabulary, main ideas and guiding questions before they read',
+      key: 'supportDigest'
+    },
+    {
+      id: 'sup-analogy',
+      label: 'Use analogies to make concepts accessible',
+      desc: 'Concrete analogies that give students a foothold on abstract ideas',
+      key: 'supportAnalogy'
+    },
+    {
+      id: 'sup-visual',
+      label: 'Visual supports and multimodal redesign',
+      desc: 'Icons, colour coding and layout that reduce cognitive load',
+      key: 'supportVisual'
+    },
+    {
+      id: 'sup-chunk',
+      label: 'Chunk instructions into sequential steps',
+      desc: 'One action per step — no bundled or implied expectations',
+      key: 'supportChunk'
+    },
+    {
+      id: 'sup-sentences',
+      label: 'Sentence starters for written responses',
+      desc: 'Access frames that model academic language without replacing thinking',
+      key: 'supportSentences'
+    },
+    {
+      id: 'sup-syntax',
+      label: 'Simplified syntax version',
+      desc: 'Same concepts, shorter sentences, unpacked clauses — for language access',
+      key: 'supportSyntax'
+    },
+    {
+      id: 'sup-memory',
+      label: 'Working memory supports',
+      desc: 'Word banks, partially completed frames, reference sheets',
+      key: 'supportMemory'
+    },
+  ];
 
-  // ─── BLOCK TYPE METADATA ──────────────────────────────────────────────────
-  // Declares whether each block type produces direction-dependent output.
-  // Blocks marked useDirection: false never receive a direction clause,
-  // because they produce a single output regardless of the direction chosen.
-
-  const BLOCK_META = {
-    readability:       { useDirection: true  },
-    conceptComplexity: { useDirection: true  },
-    length:            { useDirection: false },   // always produces one shorter version
-    backgroundKnowledge:{ useDirection: false },  // always produces one digest
-    visualSupports:    { useDirection: false },   // always produces one multimodal version
-    cognitiveDemand:   { useDirection: true  },
-    questionScaffolding:{ useDirection: true  },  // meaningful to vary scaffolding level
-    studentChoice:     { useDirection: false },   // the block itself creates both structured/open versions
-    chunking:          { useDirection: false },   // always produces one chunked version
-    responseMode:      { useDirection: false },   // always produces three response modes
-    ealdGlossary:      { useDirection: false },
-    ealdSubjectVocab:  { useDirection: false },
-    ealdSentenceFrames:{ useDirection: true  },   // can meaningfully vary scaffold level
-    ealdVisualSupports:{ useDirection: false },
-    ealdSyntax:        { useDirection: false },
-    ealdMandarin:      { useDirection: false },
-    ealdOtherLanguage: { useDirection: false },
-    neuroChunked:      { useDirection: false },
-    neuroWorkingMemory:{ useDirection: false },
-    neuroWhiteSpace:   { useDirection: false },
-    neuroExplicitProcess:{ useDirection: false },
-    neuroReducedOutput:{ useDirection: false },
-    neuroTTS:          { useDirection: false },
-    neuroAnchor:       { useDirection: false },
-  };
+  const EXTENSION_OPTIONS = [
+    {
+      id: 'ext-language',
+      label: 'Elevate academic language and nuance',
+      desc: 'Increase precision, discipline-specific vocabulary and conceptual density',
+      key: 'extensionLanguage'
+    },
+    {
+      id: 'ext-bigpicture',
+      label: 'Big picture framing',
+      desc: 'Implications, connections, essential questions and broader significance',
+      key: 'extensionBigPicture'
+    },
+    {
+      id: 'ext-abstract',
+      label: 'Concrete \u2192 abstract version of the text',
+      desc: 'Move from examples to principles, patterns and transferable ideas',
+      key: 'extensionAbstract'
+    },
+    {
+      id: 'ext-organiser',
+      label: 'Analytical graphic organiser',
+      desc: 'A framework for synthesis, comparison or evaluation — not just note-taking',
+      key: 'extensionOrganiser'
+    },
+    {
+      id: 'ext-frames',
+      label: 'Academic language frames',
+      desc: 'Discipline-specific sentence frames that model expert writing',
+      key: 'extensionFrames'
+    },
+    {
+      id: 'ext-demand',
+      label: 'Increase cognitive demand of questions',
+      desc: "Shift questions toward analysis, evaluation and creation (Bloom's)",
+      key: 'extensionDemand'
+    },
+    {
+      id: 'ext-opentask',
+      label: 'Open-ended / student-directed version',
+      desc: 'Goal and criteria provided — students choose their approach and structure',
+      key: 'extensionOpenTask'
+    },
+    {
+      id: 'ext-modes',
+      label: 'Multiple response modes',
+      desc: 'Genuine choice in how students demonstrate understanding',
+      key: 'extensionModes'
+    },
+    {
+      id: 'ext-perspectives',
+      label: 'Add nuance: competing perspectives',
+      desc: 'Introduce complexity, ambiguity or real-world tensions',
+      key: 'extensionPerspectives'
+    },
+  ];
 
   // ─── SOURCE PROMPTS ───────────────────────────────────────────────────────
-  // Templates refer to "the resource above" — they do NOT embed the resource.
-  // Context fields (year, subject, intention) are still injected inline where
-  // the phrasing of the instruction depends on them.
+  // Templates never embed the resource — they reference "the resource above".
 
   const SOURCE = {
 
-    // ── TEXT ADJUSTMENTS ─────────────────────────────────────────────────────
+    // ══ SUPPORT BLOCKS ═══════════════════════════════════════════════════════
 
-    readability: {
-      // Source: C — "Create Tiered Versions of a Text"
-      source: 'step3-content.html — Tiered Texts & Resource Materials',
-      label: 'Adjust readability',
-      template: `Using the resource above, create tiered versions of the text as follows:
-- Support version: Simplified vocabulary and sentence structure for students reading below grade level. Maintain the conceptual integrity — do not "dumb down" the ideas, make them more accessible.
-- Extension version: Increased complexity, academic vocabulary, and additional nuance for advanced readers.
+    supportReadability: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Tiered Texts',
+      label: 'Simplify readability',
+      template: `Audience: Support students — reduce language barriers without reducing intellectual demand.
 
-Ensure all versions convey the same core concepts and maintain similar length (±20%).`
+Using the resource above, rewrite the text with:
+- Simpler vocabulary — replace low-frequency or academic words with more accessible alternatives, but keep key subject terminology (with brief inline definitions where helpful)
+- Shorter, clearer sentence structures — unpack complex sentences, remove embedded clauses
+- The same core concepts and ideas — do not remove or oversimplify the thinking
+
+Maintain similar length (\u00b120%). The goal is access, not simplicity of thought.`
     },
 
-    conceptComplexity: {
-      // Source: E — "Create Concrete and Abstract Versions" + C — "Generate Multiple Analogies"
-      source: 'step5-equalizer.html — Concrete ↔ Abstract + step3-content.html — Analogy Generator',
-      label: 'Adjust concept complexity (concrete ↔ abstract)',
-      template: `Using the resource above, complete the following two steps:
+    supportEssential: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Highlighted Print Materials',
+      label: 'Identify essential passages and produce a shortened version',
+      template: `Audience: Support students — students who benefit from a reduced but complete version of the text.
 
-Step 1 — Create two versions:
-- Concrete version: Focuses on specific, tangible information and examples. Uses "What" questions. Illustrates abstract ideas with concrete real-world examples.
-- Abstract version: Focuses on themes, implications, and underlying principles. Uses "Why" and "what does this mean" questions. Asks students to work with generalisations and transferable ideas.
-
-Both versions must address the same core content but at different levels of abstraction.
-
-Step 2 — For the abstract version, generate 3 analogies that make the key concept more approachable. For each analogy:
-- Explain it in 2–3 sentences, as you'd say it to a student
-- Map the key elements: "In this analogy, [X] represents [Y]"
-- Note where the analogy breaks down, so it doesn't accidentally create a misconception`
-    },
-
-    length: {
-      // Source: C — "Identify Key Passages"
-      source: 'step3-content.html — Highlighted Print Materials',
-      label: 'Identify key passages and produce a shortened version',
-      template: `Using the resource above, help identify what is essential and what can be reduced for students who need a shorter version:
-
-1. Which paragraphs or passages contain the essential information aligned to this learning intention: {{intention}}
-2. Which sections are supplementary — they provide examples or extension but aren't critical for all students
-3. A suggested highlighting or reading strategy (e.g. "Read highlighted sections first, then return to the full text if time permits")
+Using the resource above:
+1. Identify which passages contain the essential information aligned to this learning intention: {{intention}}
+2. Identify which sections are supplementary — useful but not critical for all students
+3. Suggest a highlighting or reading strategy (e.g. "Read highlighted sections first, return to the full text if time permits")
 
 Then produce a shortened version containing only the essential passages, with brief bridging sentences where needed to maintain coherence.`
     },
 
-    backgroundKnowledge: {
-      // Source: C — "Create a Content Digest"
-      source: 'step3-content.html — Digest of Key Ideas',
-      label: 'Create a pre-reading digest',
-      template: `Using the resource above, create a one-page digest that students can use as a reference before and while they read. Include:
-- Essential Question: The big question this content answers
-- Key Vocabulary: 5–8 terms with student-friendly definitions appropriate for {{year}}
-- Main Concepts: The 3–4 core ideas students must grasp
-- Guiding Questions: 4–5 questions to focus reading and activate prior knowledge
+    supportDigest: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Digest of Key Ideas',
+      label: 'Pre-reading digest',
+      template: `Audience: Support students — give them a foothold before they encounter the full resource.
 
-Format it clearly so students can use it as a reference while they read.`
+Using the resource above, create a one-page pre-reading digest. Include:
+- Essential Question: The big question this content answers
+- Key Vocabulary: 5\u20138 terms with student-friendly definitions appropriate for {{year}}
+- Main Concepts: The 3\u20134 core ideas students must grasp
+- Guiding Questions: 4\u20135 questions to activate prior knowledge and focus reading
+
+Format it clearly so students can refer to it while they read.`
     },
 
-    visualSupports: {
-      // Source: C — "Convert to Multimodal Format"
-      source: 'step3-content.html — Neurodiversity-Responsive Content Design',
-      label: 'Add visual supports and multimodal design',
-      template: `Context: The resource above is primarily text-based and needs to be made more accessible for students who process information better with visual supports.
-Objective: Redesign it as a multimodal version using text, simple visuals, and colour coding.
-Instructional nuance: Use colour and visuals purposefully, not decoratively. Each element should support comprehension.
+    supportAnalogy: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Analogy Generator',
+      label: 'Use analogies to make concepts accessible',
+      template: `Audience: Support students — give them concrete analogies that provide a foothold on abstract ideas.
 
-Working from the resource above, please:
-- Keep key instructions and content but make them concise and concrete
-- Suggest simple icons, diagrams, or symbols to represent key steps or concepts — describe each clearly enough that I can create or find them
-- Suggest a colour scheme to help students distinguish between types of information (e.g. instructions vs. examples, sequence, importance)
+Generate 3 analogies that make the key concepts in the resource above more concrete and approachable. For each analogy:
+- Explain it in 2\u20133 sentences, written as you would say it directly to a student
+- Map the key elements: "In this analogy, [X] represents [Y]"
+- Note where the analogy breaks down, so it doesn't accidentally create a misconception
+
+Choose analogies drawn from everyday experiences a {{year}} student is likely to have. Avoid analogies that introduce new abstract ideas.`
+    },
+
+    supportVisual: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Neurodiversity-Responsive Content Design',
+      label: 'Visual supports and multimodal redesign',
+      template: `Audience: Support students — students who process information better with visual cues and reduced text density.
+
+Using the resource above, redesign it as a multimodal version:
+- Suggest simple icons, diagrams, or symbols to represent key steps or concepts — describe each clearly enough that I can create or source them
+- Suggest a colour coding scheme to help students distinguish between types of information (e.g. instructions vs. examples, key terms vs. supporting detail)
+- Recommend layout changes that reduce visual clutter: white space, shorter chunks, clear headings
 
 Provide:
 - Revised text with [VISUAL] placeholders showing where visuals go
-- Description of each suggested visual
-- Colour coding rationale (e.g. "Blue = instructions, Green = examples")`
+- A description of each suggested visual
+- Colour coding rationale (e.g. "Blue = key terms, Green = examples")`
     },
 
-    // ── QUESTION ADJUSTMENTS ─────────────────────────────────────────────────
+    supportChunk: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Neurodiversity-Responsive Content Design',
+      label: 'Chunk instructions into sequential steps',
+      template: `Audience: Support students — students who benefit from explicit, sequential instructions rather than bundled or implied expectations.
 
-    cognitiveDemand: {
-      // Source: P — "Tier by Adjusting Cognitive Demand"
-      source: 'step3-process.html — Tiered Questions by Cognitive Demand',
-      label: 'Adjust cognitive demand of questions',
-      template: `Using the questions / task in the resource above, create versions that adjust the cognitive demand using Bloom's Taxonomy:
-- Support version (Remember/Understand): Students recall, identify, and describe. Questions are concrete and focused on what the text says.
-- Extension version (Evaluate/Create): Students evaluate, argue, synthesise, or create. Questions ask students to go beyond the text — to judge, compare with other ideas, or generate something new.
-
-Ensure all versions require genuine thinking. The support version isn't "easier" — it addresses a different level of cognitive complexity. Do not remove intellectual demand from the support version; reduce abstraction instead.`
-    },
-
-    questionScaffolding: {
-      // Source: S — "Generate Sentence Starters" + S — "Break Down a Complex Task"
-      source: 'step6-scaffolding.html — Sentence Starters & Thinking Stems + Break Down a Complex Task',
-      label: 'Add question scaffolds (sentence starters + task breakdown)',
-      template: `Using the questions / task in the resource above:
-
-Part 1 — Sentence starters:
-Create 8–10 sentence starters that help students respond to these questions. Include starters that help them:
-- Begin their response
-- Add evidence or examples from the text
-- Make connections between ideas
-- Draw conclusions
-
-Use academic but accessible language appropriate for {{year}}.
-
-Part 2 — Task breakdown:
-Break the most complex question or task into 5–8 clear, manageable steps that:
-- Are sequenced logically
-- Each feel achievable on their own
-- Include a brief success criterion for each step
-- Build toward the complete response
-
-Use student-friendly language appropriate for {{year}}.`
-    },
-
-    studentChoice: {
-      // Source: E — "Adjust Level of Structure"
-      source: 'step5-equalizer.html — Structured ↔ Open-Ended',
-      label: 'Create structured and open-ended versions',
-      template: `Using the task / question set in the resource above, create two versions that adjust the level of student autonomy:
-
-Structured version: Provide step-by-step directions, sentence frames, templates, or specific requirements. Students follow a clear path to demonstrate their understanding.
-
-Open-ended version: Provide the goal and success criteria, but let students determine their approach, structure, and process. Students make genuine decisions about how to demonstrate their understanding.
-
-Both versions must result in equivalent evidence of learning against this learning intention: {{intention}}
-Vary the independence, not the intellectual standard.`
-    },
-
-    chunking: {
-      // Source: C — "Rewrite with Chunked Steps and Concrete Language"
-      source: 'step3-content.html — Neurodiversity-Responsive Content Design',
-      label: 'Rewrite questions as chunked, sequential steps',
-      template: `Context: The questions or task instructions in the resource above may be difficult for students who need concrete, sequential information — steps may be bundled together, language may be abstract, or expectations may be implied rather than stated.
-Objective: Rewrite as numbered steps using clear, concrete language.
-Instructional nuance: Replace abstract concepts with concrete examples. Use active verbs. Make implicit steps explicit. One clear action per step.
-
-Working from the resource above, please rewrite the questions / instructions as:
+Using the resource above, rewrite the instructions and/or questions as:
 - Numbered steps (no more than 8 if possible)
 - Concrete, specific language — no metaphors, abstract terms, or implied information
 - Active verbs that tell students exactly what to do
@@ -267,270 +260,458 @@ Working from the resource above, please rewrite the questions / instructions as:
 
 If any step is still complex, break it into sub-steps (e.g. 3a, 3b).
 
-Also note any abstract or implicit language you changed and explain why the original phrasing may have been confusing.`
+Note any abstract or implicit language you changed and briefly explain why the original phrasing may have been a barrier.`
     },
 
-    responseMode: {
-      // Source: written for Prompt Builder — no direct manual equivalent
-      source: 'Prompt Builder — Mode of Response (written for this tool)',
-      label: 'Offer multiple response modes',
-      template: `Using the task / question set in the resource above, redesign the questions to offer students a genuine choice in how they demonstrate their understanding. Provide at least three response mode options:
+    supportSentences: {
+      audience: 'support',
+      source: 'step6-scaffolding.html \u2014 Sentence Starters & Thinking Stems',
+      label: 'Sentence starters for written responses',
+      template: `Audience: Support students — students who need help constructing academic written responses.
 
-1. Written response: Redesign the question so it genuinely requires students to think, not just transcribe.
-2. Visual response: A diagram, annotated image, concept map, flowchart, or other visual — specify exactly what it should show and how it should be labelled.
-3. Oral / structured verbal response: A spoken response, recorded explanation, or structured discussion prompt — specify the format and what the student should cover.
+Using the task or questions in the resource above, create 8\u201310 sentence starters that help students:
+- Begin their response using appropriate academic register
+- Add evidence or examples from the text
+- Explain the significance of evidence ("This shows that...", "This suggests...")
+- Make connections between ideas
+- Draw conclusions
 
-For each mode: write the question or task instruction as the student would receive it.
-Ensure each mode genuinely assesses the same learning intention: {{intention}} — the mode changes, not the cognitive demand.`
+Use language that is academically appropriate for {{year}} but accessible — model the language of the discipline without making it a barrier.
+
+Also provide a brief note for the teacher on which starters are most useful for students who are very early in their written language development.`
     },
 
-    // ── EAL/D ADJUSTMENTS ────────────────────────────────────────────────────
+    supportSyntax: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Tiered Texts (syntax variant)',
+      label: 'Simplified syntax version',
+      template: `Audience: Support students — students who can engage with the ideas but are held back by complex sentence structures and dense academic syntax.
+
+Using the resource above, produce a simplified syntax version that:
+- Uses shorter sentences (aim for an average of 15\u201320 words per sentence)
+- Unpacks embedded clauses into separate sentences
+- Prefers active voice over passive voice
+- Makes logical connections explicit ("Because of this...", "As a result...", "This means that...")
+- Retains all key vocabulary (with brief inline definitions in brackets where helpful)
+- Preserves the original meaning and conceptual depth
+
+After the revised text, briefly note the main structural changes you made.`
+    },
+
+    supportMemory: {
+      audience: 'support',
+      source: 'step3-content.html \u2014 Neurodiversity-Responsive Content Design',
+      label: 'Working memory supports',
+      template: `Audience: Support students — students who struggle to hold multiple pieces of information in mind while completing tasks.
+
+Using the resource above, first identify what this task requires students to hold in working memory simultaneously (e.g. remember the question while reading the text, track multiple steps, recall prior knowledge while generating a response).
+
+Then design 3\u20134 practical supports that reduce working memory load. For each:
+- Describe the tool or strategy (e.g. word bank, partially completed frame, colour-coded reference card)
+- Explain how it reduces cognitive load
+- Write it in a strengths-first way — frame it as a tool for efficiency, not a crutch
+
+Format each support so it is ready to hand to a student.`
+    },
+
+    // ══ EXTENSION BLOCKS ═════════════════════════════════════════════════════
+
+    extensionLanguage: {
+      audience: 'extension',
+      source: 'step3-content.html \u2014 Tiered Texts',
+      label: 'Elevate academic language and nuance',
+      template: `Audience: Extension students — students who can handle increased linguistic and conceptual density.
+
+Using the resource above, rewrite the text with:
+- More precise, discipline-specific academic vocabulary — introduce technical terms with brief context rather than simplifying them away
+- More complex sentence structures where they add meaning — subordinate clauses, hedged claims, nuanced qualifications
+- Increased conceptual density — pack more ideas per sentence where appropriate
+- Greater nuance — acknowledge complexity, exceptions, and the limits of simple explanations
+
+Maintain similar length (\u00b120%). The goal is depth, not just harder words.`
+    },
+
+    extensionBigPicture: {
+      audience: 'extension',
+      source: 'step3-content.html \u2014 Digest of Key Ideas (extension variant)',
+      label: 'Big picture framing',
+      template: `Audience: Extension students — students who benefit from seeing where the content fits in a larger intellectual landscape.
+
+Using the resource above, create a one-page "big picture" framing document. Include:
+- Essential Question: A genuinely open, debatable question this content raises — not one with a single correct answer
+- Connections: 2\u20133 links to broader concepts, other subject areas, or real-world contexts
+- Implications: What does this idea mean beyond the classroom? What would change if it weren't true?
+- Points of complexity: Where do experts disagree, or where does the simple version break down?
+- Going further: 2\u20133 questions a curious student could investigate independently
+
+This is a thinking scaffold, not a reading guide. It should provoke inquiry, not summarise content.`
+    },
+
+    extensionAbstract: {
+      audience: 'extension',
+      source: 'step5-equalizer.html \u2014 Concrete \u2194 Abstract',
+      label: 'Concrete \u2192 abstract version of the text',
+      template: `Audience: Extension students — students who can move beyond examples to principles, patterns and transferable ideas.
+
+Using the resource above, create an abstract version that:
+- Moves from specific examples to underlying principles and generalisations
+- Uses "Why" and "What does this mean?" framing rather than "What" questions
+- Asks students to identify patterns, evaluate ideas, and make connections across contexts
+- Introduces the idea that these concepts have implications beyond the specific examples in the text
+
+Then generate 3 discipline-appropriate analogies that make the abstract principles more intellectually approachable without pulling them back to the concrete. For each:
+- Explain it in 2\u20133 sentences as you'd say it to a student
+- Map the key elements: "In this analogy, [X] represents [Y]"
+- Note where the analogy breaks down`
+    },
+
+    extensionOrganiser: {
+      audience: 'extension',
+      source: 'step5-equalizer.html \u2014 Structured \u2194 Open-Ended',
+      label: 'Analytical graphic organiser',
+      template: `Audience: Extension students — students who can handle analytical thinking, not just note-taking.
+
+Using the resource above, design an analytical graphic organiser that:
+- Requires students to do something with the information — compare, evaluate, synthesise, or argue — not just record it
+- Has a clear structure but leaves intellectual decisions to the student
+- Includes at least one section that requires a student-generated claim or judgement, not just retrieved information
+- Could serve as a planning tool for an extended written or oral response
+
+Provide:
+- The organiser itself, clearly labelled and ready to use
+- A brief teacher note explaining the analytical demand of each section
+- One example entry showing what "good" looks like at the first section only`
+    },
+
+    extensionFrames: {
+      audience: 'extension',
+      source: 'step6-scaffolding.html \u2014 Sentence Starters & Thinking Stems (extension variant)',
+      label: 'Academic language frames',
+      template: `Audience: Extension students — students who are developing expert academic writing in {{subject}}.
+
+Using the task or questions in the resource above, create 8\u201310 discipline-specific sentence frames that model the language of expert writing in this subject area. Include frames that help students:
+- Make a well-qualified claim or argument
+- Integrate and attribute evidence precisely
+- Acknowledge complexity or counter-arguments
+- Evaluate the significance of evidence
+- Draw disciplinary conclusions
+
+These frames should reflect how a knowledgeable person in {{subject}} actually writes — not generic academic language. Avoid frames that could work in any subject.
+
+Include a brief note on the disciplinary language conventions these frames model.`
+    },
+
+    extensionDemand: {
+      audience: 'extension',
+      source: 'step3-process.html \u2014 Tiered Questions by Cognitive Demand',
+      label: 'Increase cognitive demand of questions',
+      template: `Audience: Extension students — students ready for greater depth and challenge.
+
+Using the questions or task in the resource above, rewrite them to increase cognitive demand using Bloom's Taxonomy — targeting Evaluate and Create:
+- Questions should ask students to evaluate, argue, synthesise, or create
+- Questions should require students to go beyond the text — to judge, compare ideas, identify limitations, or generate something new
+- At least one question should have genuine intellectual uncertainty — one the teacher couldn't fully predict the answer to
+
+Ensure these require genuine higher-order thinking, not just harder vocabulary or longer responses. Include a brief note indicating which Bloom's level each question targets.`
+    },
+
+    extensionOpenTask: {
+      audience: 'extension',
+      source: 'step5-equalizer.html \u2014 Structured \u2194 Open-Ended',
+      label: 'Open-ended / student-directed version',
+      template: `Audience: Extension students — students ready for greater autonomy and depth.
+
+Using the task in the resource above, create an open-ended version that:
+- Provides the learning goal and success criteria, but does not specify approach, structure, or process
+- Requires students to make genuine intellectual decisions — not just stylistic ones
+- Offers enough constraint to be achievable, but enough openness to be genuinely student-directed
+- Could result in meaningfully different products from different students, all demonstrating the same understanding
+
+Provide:
+- The open-ended task as the student would receive it
+- Clear success criteria (a description of what genuine understanding looks like — not a checklist)
+- A brief teacher note on how to assess this fairly across different student responses`
+    },
+
+    extensionModes: {
+      audience: 'extension',
+      source: 'Prompt Builder \u2014 Mode of Response (extension variant)',
+      label: 'Multiple response modes',
+      template: `Audience: Extension students — students ready to exercise genuine choice in how they demonstrate understanding.
+
+Using the task in the resource above, redesign it to offer three genuine response mode options. Each option should:
+- Require equivalent depth of thinking — the mode changes, not the cognitive demand
+- Be genuinely different in form, not just superficially varied
+- Give students enough structure to work independently
+
+Provide three options:
+1. Written response — requires analysis or argument, not just description
+2. Visual response — diagram, concept map or annotated image; specify exactly what it must show and how it should be annotated
+3. Oral / recorded response — structured verbal explanation or argument; specify format, length, and what must be covered
+
+For each: write the task instruction as the student would receive it.`
+    },
+
+    extensionPerspectives: {
+      audience: 'extension',
+      source: 'Prompt Builder \u2014 Competing Perspectives',
+      label: 'Add nuance: competing perspectives or real-world complexity',
+      template: `Audience: Extension students — students ready to engage with the complexity and tensions within this content.
+
+Using the resource above, add a layer of nuance by:
+1. Identifying 2\u20133 points where experts disagree, the simple version breaks down, or real-world application is more complex than the text suggests
+2. For each point: briefly explain the tension or debate in intellectually honest but accessible terms
+3. Generating 1\u20132 discussion or inquiry questions for each point that a student could genuinely argue either way
+
+Then write a short "Beyond the text" section (200\u2013300 words) that could be added to the original resource, introducing these tensions to extension students.
+
+The goal is intellectual honesty — showing students that knowledge is contested and complex, not settled and simple.`
+    },
+
+    // ══ EAL/D BLOCKS ═════════════════════════════════════════════════════════
 
     ealdGlossary: {
-      // Source: S — "Create Tier 2/3 Vocabulary List with Definitions"
-      source: 'step6-scaffolding.html — Tier 2/3 Vocabulary List',
-      label: 'Create a key vocabulary glossary (Tier 2/3)',
+      audience: 'eald',
+      source: 'step6-scaffolding.html \u2014 Tier 2/3 Vocabulary List',
+      label: 'Key vocabulary glossary (Tier 2/3)',
       template: `Context: I'm teaching {{subject}} to {{year}} students. My EAL/D students need explicit vocabulary support to access this content.
 Objective: Identify and define the key academic vocabulary students will need.
-Instructional nuance: Focus on Tier 2 (high-utility academic words like "analyse," "synthesise") and Tier 3 (domain-specific terms). Provide student-friendly definitions — avoid circular language.
+Instructional nuance: Focus on Tier 2 (high-utility academic words like "analyse," "synthesise") and Tier 3 (domain-specific terms). Provide student-friendly definitions \u2014 avoid circular language.
 
 Working from the resource above:
-- Identify 8–12 key vocabulary terms (mix of Tier 2 and Tier 3)
+- Identify 8\u201312 key vocabulary terms (mix of Tier 2 and Tier 3)
 - For each term, provide:
-  — A student-friendly definition appropriate for {{year}}
-  — An example sentence showing the word used in context
-  — Whether it is Tier 2 (general academic) or Tier 3 (subject-specific)
+  \u2014 A student-friendly definition appropriate for {{year}}
+  \u2014 An example sentence showing the word used in context
+  \u2014 Whether it is Tier 2 (general academic) or Tier 3 (subject-specific)
 
 Format the output as a table: Term | Definition | Example sentence | Tier`
     },
 
     ealdSubjectVocab: {
-      // Source: S — "Create Tier 2/3 Vocabulary List" (subject-specific variant)
-      source: 'step6-scaffolding.html — Tier 2/3 Vocabulary List (subject-specific)',
+      audience: 'eald',
+      source: 'step6-scaffolding.html \u2014 Tier 2/3 Vocabulary List (subject-specific)',
       label: 'Unpack subject-specific language',
-      template: `Context: I'm teaching {{subject}} to {{year}} students. My EAL/D students need explicit support with the subject-specific language of this discipline — not just vocabulary definitions, but an understanding of how this discipline uses language and what it expects of them.
+      template: `Context: I'm teaching {{subject}} to {{year}} students. My EAL/D students need explicit support with the subject-specific language of this discipline.
 Objective: Surface and explain the subject-specific vocabulary and language patterns in this content.
 Instructional nuance: Each discipline has its own language. In geography, "explain the relationship between..." expects a particular kind of response. In science, "hypothesis" has a precise meaning unlike everyday usage. Make these demands explicit.
 
 Working from the resource above:
-1. Identify 6–10 subject-specific terms that carry precise meaning in {{subject}} — terms that differ from everyday usage or that EAL/D students are unlikely to encounter outside this subject
+1. Identify 6\u201310 subject-specific terms that carry precise meaning in {{subject}}
 2. For each term: provide a student-friendly definition and note how the meaning differs from everyday English where relevant
-3. Identify 3–4 subject-specific language patterns or task verbs in this content (e.g. "justify," "account for," "to what extent") and explain in plain language what each one is asking students to do
+3. Identify 3\u20134 subject-specific language patterns or task verbs (e.g. "justify," "account for") and explain in plain language what each one is asking students to do
 4. Format as a reference sheet students can keep beside the resource`
     },
 
     ealdSentenceFrames: {
-      // Source: S — "Generate Sentence Starters" (EAL/D framing)
-      source: 'step6-scaffolding.html — Sentence Starters & Thinking Stems',
-      label: 'Create EAL/D sentence frames',
-      template: `Using the task / questions in the resource above, create sentence starters and frames specifically designed to support EAL/D students in constructing academic written responses. Include frames that help students:
+      audience: 'eald',
+      source: 'step6-scaffolding.html \u2014 Sentence Starters & Thinking Stems',
+      label: 'EAL/D sentence frames',
+      template: `Using the task or questions in the resource above, create sentence starters and frames specifically designed to support EAL/D students in constructing academic written responses. Include frames that help students:
 - Begin their response using appropriate academic register
 - Introduce evidence or examples from the text
 - Explain the significance of evidence ("This shows that...", "This suggests...")
 - Make connections between ideas
 - Draw conclusions
 
-Provide 10–12 frames in total. Use language that is academically appropriate for {{year}} but accessible to students who are still developing English proficiency. Avoid idiomatic phrases.
+Provide 10\u201312 frames in total. Use language that is academically appropriate for {{year}} but accessible to students who are still developing English proficiency. Avoid idiomatic phrases.
 
 Also provide a brief note for the teacher on which frames are most useful for early-stage vs. developing EAL/D learners.`
     },
 
     ealdVisualSupports: {
-      // Source: S — "Add Visual Supports to Vocabulary"
-      source: 'step6-scaffolding.html — Add Visual Supports to Vocabulary',
-      label: 'Suggest visual supports for vocabulary',
-      template: `Context: The key vocabulary in the resource above would be more accessible if students had visual cues alongside definitions.
-Objective: Suggest simple icons, symbols, or visual representations that would support vocabulary learning for EAL/D students.
-Instructional nuance: Visuals should be simple, unambiguous, and culturally appropriate — memory aids and comprehension supports, not artwork.
+      audience: 'eald',
+      source: 'step6-scaffolding.html \u2014 Add Visual Supports to Vocabulary',
+      label: 'Visual supports for vocabulary (EAL/D)',
+      template: `Context: The key vocabulary in the resource above would be more accessible if EAL/D students had visual cues alongside definitions.
+Objective: Suggest simple icons, symbols, or visual representations that support vocabulary learning.
+Instructional nuance: Visuals should be simple, unambiguous, and culturally appropriate \u2014 memory aids, not artwork.
 
 For the key vocabulary in the resource above, suggest:
-- A simple visual representation for each term (icon, symbol, diagram, or gesture — describe it clearly enough that I can create or source it)
+- A simple visual representation for each term (icon, symbol, diagram, or gesture \u2014 describe it clearly enough to create or source)
 - Why this visual support helps students remember or understand the term
-- How I could practically represent this in the classroom (e.g. printed icon beside the definition, hand gesture, quick sketch on the board)
+- How to practically represent this in the classroom
 
 Prioritise visuals that are simple to draw or find, unambiguous across cultures, and memorable.`
     },
 
     ealdSyntax: {
-      // Source: C — "Create Tiered Versions" with EAL/D framing
-      source: 'step3-content.html — Tiered Texts (EAL/D syntax variant)',
-      label: 'Produce a simplified syntax version',
-      template: `Context: Some EAL/D students can engage with the ideas in the resource above but are held back by complex sentence structures, embedded clauses, and dense academic syntax.
-Objective: Produce a simplified syntax version of the text that reduces linguistic complexity without reducing conceptual demand.
-Instructional nuance: This is not about simplifying the ideas — the concepts should remain intact. Simplify sentence structures: shorten sentences, unpack embedded clauses, prefer active over passive voice, and make implicit logical connections explicit.
+      audience: 'eald',
+      source: 'step3-content.html \u2014 Tiered Texts (EAL/D syntax variant)',
+      label: 'Simplified syntax version (EAL/D)',
+      template: `Context: EAL/D students can engage with the ideas in the resource above but are held back by complex sentence structures and dense academic syntax.
+Objective: Produce a simplified syntax version that reduces linguistic complexity without reducing conceptual demand.
 
-Working from the resource above, produce a simplified syntax version that:
-- Uses shorter sentences (aim for an average of 15–20 words per sentence)
+Working from the resource above, produce a version that:
+- Uses shorter sentences (aim for 15\u201320 words average)
 - Unpacks embedded clauses into separate sentences
 - Prefers active voice over passive voice
 - Makes logical connections explicit ("Because of this...", "As a result...", "This means that...")
 - Retains all key vocabulary (with brief inline definitions in brackets where needed)
 - Preserves the original meaning and conceptual depth
 
-After the revised text, provide a brief note on the main structural changes you made.`
+After the revised text, briefly note the main structural changes made.`
     },
 
     ealdMandarin: {
-      // Source: S — "Create a Bilingual Glossary"
-      source: 'step6-scaffolding.html — Create a Bilingual Glossary',
-      label: 'Create a bilingual English–Mandarin glossary',
+      audience: 'eald',
+      source: 'step6-scaffolding.html \u2014 Create a Bilingual Glossary',
+      label: 'Bilingual English\u2013Mandarin glossary',
       template: `Context: I have EAL/D students whose home language is Mandarin who need vocabulary support to access this content.
-Objective: Generate a bilingual glossary that pairs English academic vocabulary with Mandarin translations and explanations.
-Instructional nuance: This is a scaffold, not a replacement for English instruction. The Mandarin column provides a cognitive anchor so students can focus on concept learning. Include student-friendly definitions in both languages — not just direct word translations, which often miss nuance.
+Objective: Generate a bilingual glossary pairing English academic vocabulary with Mandarin translations and explanations.
+Instructional nuance: This is a scaffold, not a replacement for English instruction. Include student-friendly definitions in both languages \u2014 not just word translations.
 
-Working from the resource above, create a bilingual English–Mandarin glossary with:
+Working from the resource above, create a bilingual English\u2013Mandarin glossary with:
 - Each key term in English with a student-friendly definition appropriate for {{year}}
 - The same term in Mandarin (simplified characters) with an equivalent student-friendly explanation
 - A simple example sentence in English showing the term in context
 
 Format as a two-column table suitable for printing. Keep definitions to one sentence each.
-Important: If a direct translation doesn't capture the meaning well, note this and provide a brief explanation rather than a misleading literal translation.`
+If a direct translation doesn't capture the meaning well, note this and provide a brief explanation rather than a misleading literal translation.`
     },
 
     ealdOtherLanguage: {
-      // Source: S — "Create a Bilingual Glossary" + "Translate Key Task Instructions"
-      source: 'step6-scaffolding.html — Bilingual Glossary + Translate Task Instructions',
-      label: 'Create a bilingual glossary + translated task instructions',
+      audience: 'eald',
+      source: 'step6-scaffolding.html \u2014 Bilingual Glossary + Translate Task Instructions',
+      label: 'Bilingual glossary + translated task instructions',
       template: `Context: I have EAL/D students whose home language is {{language}} who need both vocabulary support and clarity on task instructions.
 Objective: Produce two resources: a bilingual glossary and a translated task instructions sheet.
-Instructional nuance: The home-language resources are cognitive anchors — they help students focus on the learning rather than decoding the language. Include student-friendly definitions, not just direct translations.
+Instructional nuance: Home-language resources are cognitive anchors. Include student-friendly definitions, not just direct translations.
 
 Working from the resource above:
 
-Part 1 — Bilingual Glossary (English / {{language}}):
-- Identify 8–12 key terms from the content
-- For each term: English definition appropriate for {{year}}, {{language}} translation with brief explanation, example sentence in English
+Part 1 \u2014 Bilingual Glossary (English / {{language}}):
+- Identify 8\u201312 key terms
+- For each: English definition for {{year}}, {{language}} translation with brief explanation, example sentence in English
 - Format as a two-column table for printing
-- If a direct translation misses nuance, note this and provide a brief explanation instead
+- Note any translations that miss nuance and provide a brief explanation instead
 
-Part 2 — Translated Task Instructions:
+Part 2 \u2014 Translated Task Instructions:
 - Translate the task instructions into {{language}}, maintaining the same sequence
-- Highlight any English academic phrases likely to cause confusion (e.g. "justify," "analyse," "compare and contrast") and provide both the {{language}} equivalent and a plain-English alternative
+- Highlight any English academic phrases likely to cause confusion and provide both the {{language}} equivalent and a plain-English alternative
 - Format with English on the left and {{language}} on the right`
     },
 
-    // ── NEURODIVERSITY / LEARNING NEEDS ADJUSTMENTS ───────────────────────────
+    // ══ NEURODIVERSITY / LEARNING NEEDS BLOCKS ═══════════════════════════════
 
     neuroChunked: {
-      // Source: C — "Rewrite with Chunked Steps and Concrete Language"
-      source: 'step3-content.html — Neurodiversity-Responsive Content Design',
-      label: 'Rewrite with chunked steps and concrete language',
-      template: `Context: The resource above may contain instructions or content that are difficult for students who need concrete, sequential information — steps may be bundled together, the language may be abstract, or expectations may be implied rather than stated.
+      audience: 'neuro',
+      source: 'step3-content.html \u2014 Neurodiversity-Responsive Content Design',
+      label: 'Chunked instructions (one step at a time)',
+      template: `Context: The resource above may contain instructions or content that are difficult for students who need concrete, sequential information.
 Objective: Rewrite as numbered steps using clear, concrete language.
-Instructional nuance: Replace abstract concepts with concrete examples. Use active verbs. Make implicit steps explicit. One clear action per step.
+Instructional nuance: One clear action per step. Active verbs. No implied information.
 
 Working from the resource above, rewrite the instructions and/or questions as:
 - Numbered steps (no more than 8 if possible)
-- Concrete, specific language — no metaphors, abstract terms, or implied information
+- Concrete, specific language \u2014 no metaphors, abstract terms, or implied information
 - Active verbs that tell students exactly what to do
 - One clear action per step
 
 If any step is still complex, break it into sub-steps (e.g. 3a, 3b).
 
-Note any abstract or implicit language you changed and explain why the original phrasing may have been confusing for students who need explicit instruction.`
+Note any abstract or implicit language you changed and explain why the original phrasing may have been a barrier.`
     },
 
     neuroWorkingMemory: {
-      // Source: C — "Suggest Strength-Based Support for Working Memory"
-      source: 'step3-content.html — Neurodiversity-Responsive Content Design',
-      label: 'Design working memory supports',
+      audience: 'neuro',
+      source: 'step3-content.html \u2014 Neurodiversity-Responsive Content Design',
+      label: 'Reduce working memory load',
       template: `Context: Some students have working memory challenges and struggle to hold multiple pieces of information in mind while completing tasks.
 Objective: Design supports that reduce working memory demands while affirming student strengths.
-Instructional nuance: Frame supports as tools for efficiency, not accommodations for deficiency. Use a strengths-first lens.
+Instructional nuance: Frame supports as tools for efficiency, not accommodations for deficiency.
 
-Working from the resource above:
+Working from the resource above, first identify what this task requires students to hold in working memory simultaneously.
 
-First, identify what this task requires students to hold in working memory simultaneously (e.g. remember the question while reading the text, track multiple steps, recall prior knowledge while generating a response).
-
-Then suggest 3–4 strength-based supports that would reduce working memory demands. For each support:
+Then suggest 3\u20134 strength-based supports. For each:
 - Describe the tool or strategy
 - Explain how it reduces cognitive load
-- Frame it positively (e.g. "This tool helps you work efficiently" — not "This is for students who can't remember")
+- Frame it positively (e.g. "This tool helps you work efficiently")
 
-Suitable tools might include: reference sheets, colour-coded reminders, graphic organisers, partially completed frames, read-aloud cues, or chunked check-in points.`
+Suitable tools: reference sheets, colour-coded reminders, graphic organisers, partially completed frames, read-aloud cues, chunked check-in points.`
     },
 
     neuroWhiteSpace: {
-      // Source: C — "Convert to Multimodal Format" (layout variant)
-      source: 'step3-content.html — Neurodiversity-Responsive Content Design (layout)',
-      label: 'Improve layout and reduce visual clutter',
-      template: `Context: The resource above needs to be redesigned so it is easier to navigate for students who experience visual overwhelm, have difficulty organising information on a page, or benefit from a cleaner layout.
+      audience: 'neuro',
+      source: 'step3-content.html \u2014 Neurodiversity-Responsive Content Design (layout)',
+      label: 'Increased white space and reduced visual clutter',
+      template: `Context: The resource above needs to be easier to navigate for students who experience visual overwhelm or benefit from a cleaner layout.
 Objective: Suggest specific layout adjustments that reduce visual density without changing the content.
-Instructional nuance: Visual clutter increases cognitive load. White space, clear hierarchy, and consistent formatting all reduce the effort required to find and process information.
 
-Working from the resource above, please provide:
-1. A redesigned version of the text with improved layout — more white space between sections, clear visual hierarchy, shorter paragraphs or sections
+Working from the resource above, provide:
+1. A redesigned version with improved layout \u2014 more white space, clear visual hierarchy, shorter sections
 2. Specific formatting recommendations:
-   - Font and size recommendations
+   - Font and size suggestions
    - Suggested line spacing
-   - How to use headings and subheadings to create clear visual structure
+   - How to use headings to create clear structure
    - How to chunk content visually (boxes, dividers, numbering)
-3. Any content that could be moved to a separate reference sheet to reduce the visual load of the main task`
+3. Any content that could move to a separate reference sheet to reduce the visual load of the main task`
     },
 
     neuroExplicitProcess: {
-      // Source: S — "Break Down a Complex Task"
-      source: 'step6-scaffolding.html — Break Down a Complex Task',
-      label: 'Create an explicit process guide',
-      template: `Working from the task in the resource above, create an explicit process guide — a step-by-step procedure that students can follow independently. The guide should:
-- Break the task into 5–8 clear, manageable steps, sequenced logically
-- Include a success criterion for each step so students know when they're done
-- Use concrete, active language — tell students exactly what to do at each step
-- Flag any decision points (where students have to make a choice) and briefly explain how to make that decision
-- End with a self-check list: 4–5 questions the student asks themselves before submitting
+      audience: 'neuro',
+      source: 'step6-scaffolding.html \u2014 Break Down a Complex Task',
+      label: 'Explicit process steps / procedure guide',
+      template: `Working from the task in the resource above, create an explicit process guide \u2014 a step-by-step procedure students can follow independently.
 
-Use student-friendly language appropriate for {{year}}. The goal is that a student who is unsure what to do next can consult this guide and get unstuck without needing teacher input.`
+The guide should:
+- Break the task into 5\u20138 clear, manageable steps, sequenced logically
+- Include a success criterion for each step so students know when they're done
+- Use concrete, active language \u2014 tell students exactly what to do
+- Flag any decision points and briefly explain how to make that decision
+- End with a self-check list: 4\u20135 questions the student asks before submitting
+
+Use student-friendly language appropriate for {{year}}. The goal: a student who is stuck can consult this and get unstuck without needing the teacher.`
     },
 
     neuroReducedOutput: {
-      // Source: written for Prompt Builder — no direct manual equivalent
-      source: 'Prompt Builder — Reduced Output Options (written for this tool)',
-      label: 'Offer alternative output options',
-      template: `Context: Some students are held back not by the thinking required but by the output required — extended written responses can create a barrier that masks genuine understanding.
-Objective: Redesign the task in the resource above to offer output alternatives that reduce the written production demand while maintaining the cognitive demand.
-Instructional nuance: The goal is to assess understanding, not writing stamina. Alternative outputs should require equivalent thinking, expressed differently.
+      audience: 'neuro',
+      source: 'Prompt Builder \u2014 Reduced Output Options',
+      label: 'Reduced written output options',
+      template: `Context: Some students are held back not by the thinking required but by the output required \u2014 extended writing can mask genuine understanding.
+Objective: Redesign the task to offer output alternatives that reduce written production demand while maintaining cognitive demand.
 
-Working from the resource above, redesign the task to offer three output alternatives that each demonstrate the same understanding:
+Working from the resource above, offer three output alternatives:
 
-1. Annotated diagram or visual: Describe exactly what students should create and annotate — what should be labelled, what needs to be shown.
-2. Structured spoken/recorded response: Provide the exact prompt and a clear structure (e.g. "In 3–5 sentences, explain... Start with..., then..., finish with..."). Suitable for verbal recording or live discussion.
-3. Structured dot-point response: A scaffolded written option with clear instructions — how many points, what each point should cover, with sentence starters for each.
+1. Annotated diagram or visual: Describe exactly what students should create and annotate \u2014 what should be labelled, what needs to be shown.
+2. Structured spoken/recorded response: Provide the exact prompt and structure (e.g. "In 3\u20135 sentences, explain... Start with..., then..., finish with...").
+3. Structured dot-point response: Scaffolded written option \u2014 how many points, what each should cover, with sentence starters.
 
-For each option: write it as the student would receive it, clearly enough that they can complete it independently.`
+For each: write it as the student would receive it, clearly enough to complete independently.`
     },
 
     neuroTTS: {
-      // Source: written for Prompt Builder — no direct manual equivalent
-      source: 'Prompt Builder — Text-to-Speech Formatting (written for this tool)',
-      label: 'Reformat for text-to-speech compatibility',
-      template: `Context: Some students use text-to-speech software to access written resources. Formatting that works visually can create confusion when read aloud — tables become unreadable, abbreviations are mispronounced, and text in images is invisible to the software.
-Objective: Reformat the resource above so it works well when read by text-to-speech software, without changing the content.
-Instructional nuance: Text-to-speech reads linearly. It cannot interpret layout, visual hierarchy, or spatial relationships. Structure must be communicated through language, not formatting.
+      audience: 'neuro',
+      source: 'Prompt Builder \u2014 Text-to-Speech Formatting',
+      label: 'Text-to-speech friendly formatting',
+      template: `Context: Some students use text-to-speech software. Formatting that works visually can create confusion when read aloud.
+Objective: Reformat the resource above for text-to-speech compatibility without changing the content.
+Instructional nuance: TTS reads linearly. Structure must be communicated through language, not layout.
 
-Working from the resource above, please:
-1. Rewrite any tables as clearly structured text (e.g. "Term: [term]. Definition: [definition]. Example: [example].")
+Working from the resource above:
+1. Rewrite any tables as clearly structured text (e.g. "Term: [term]. Definition: [definition].")
 2. Spell out all abbreviations in full on first use
-3. Replace any instructions that reference visual layout ("see the diagram below," "as shown on the left") with descriptions of the content itself
-4. Add verbal cues that signal structure (e.g. "This section covers three ideas. The first idea is...", "Now moving to the next question...")
-5. Flag any content currently embedded in images and cannot be read by TTS — suggest how to provide equivalent text-based access
-6. Note any other TTS compatibility issues you identify`
+3. Replace layout references ("see the diagram below") with descriptions of the content
+4. Add verbal cues that signal structure ("This section covers three ideas. The first is...")
+5. Flag any content in images that TTS cannot read \u2014 suggest text-based alternatives
+6. Note any other TTS compatibility issues`
     },
 
     neuroAnchor: {
-      // Source: P — "Design Anchor Activity Menu"
-      source: 'step3-process.html — Anchor Activities',
-      label: 'Design an anchor activity menu',
-      template: `Working from the main task in the resource above, create a menu of anchor activities for students who finish early, so they have something meaningful to move to independently.
+      audience: 'neuro',
+      source: 'step3-process.html \u2014 Anchor Activities',
+      label: 'Anchor activity menu for early finishers',
+      template: `Working from the main task in the resource above, create a menu of anchor activities for students who finish early.
 
 Each activity should:
 - Be self-directed (students can begin and continue without teacher input)
-- Connect meaningfully to the current learning — not busywork
+- Connect meaningfully to the current learning \u2014 not busywork
 - Accommodate a range of readiness levels
-- Be sustainable — usable across multiple lessons in this topic
+- Be sustainable across multiple lessons in this topic
 
-Create 4–5 anchor activities. For each one:
-- Write the student-facing instruction (what the student would read)
-- Explain the learning value (1 sentence — for the teacher)
+Create 4\u20135 anchor activities. For each:
+- Write the student-facing instruction
+- Explain the learning value (1 sentence \u2014 for the teacher)
 - Note the approximate time required`
     }
 
@@ -541,46 +722,35 @@ Create 4–5 anchor activities. For each one:
   /**
    * Build a single prompt block.
    *
-   * @param {string} key       - Prompt key from SOURCE (e.g. 'readability')
-   * @param {object} ctx       - Context: { year, subject, intention, resource }
-   *                             Note: ctx.resource is used in the preamble,
-   *                             NOT injected here.
-   * @param {string} direction - 'support' | 'extension' | 'both'
-   * @param {object} extras    - Additional context: { language }
-   * @returns {string} Task instruction string. No resource text embedded.
+   * @param {string} key      - Key from SOURCE
+   * @param {object} ctx      - { year, subject, intention, resource }
+   *                            Note: resource is injected in preamble only
+   * @param {object} extras   - { language }
+   * @returns {string} Ready-to-use task instruction block
    */
-  function buildBlock(key, ctx, direction, extras) {
+  function buildBlock(key, ctx, extras) {
     const entry = SOURCE[key];
     if (!entry) return `[Prompt block "${key}" not found]`;
 
-    const meta = BLOCK_META[key] || { useDirection: false };
     const assembled = inject(entry.template, ctx, extras);
-
-    // Only prepend a direction clause for blocks where it is meaningful
-    if (meta.useDirection && direction) {
-      const clause = directionClause(direction, ctx.subject);
-      if (clause) {
-        return `TASK: ${entry.label}\nDifferentiation direction: ${clause}\n\n${assembled}`;
-      }
-    }
-
     return `TASK: ${entry.label}\n\n${assembled}`;
   }
 
-  /**
-   * Get the source attribution for a prompt block.
-   */
   function getSource(key) {
     return SOURCE[key] ? SOURCE[key].source : 'Unknown';
   }
 
-  /**
-   * List all available block keys.
-   */
   function listKeys() {
     return Object.keys(SOURCE);
   }
 
-  return { buildBlock, getSource, listKeys, SOURCE };
+  return {
+    buildBlock,
+    getSource,
+    listKeys,
+    SOURCE,
+    SUPPORT_OPTIONS,
+    EXTENSION_OPTIONS
+  };
 
 })();
