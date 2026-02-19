@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0091)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_6.html#q1 -->
+<!-- saved from url=(0091)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_7.html#q1 -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1305,11 +1305,22 @@
                 line-height: 1.3;
             }
             .q3-cb-text span {
+                display: block;
                 font-size: 0.78rem;
                 color: var(--text-light);
                 line-height: 1.35;
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                transition: max-height 0.2s ease, opacity 0.2s ease, margin-top 0.2s ease;
+                margin-top: 0;
             }
-            @media (max-width: 620px) {
+            .q3-checkbox:hover .q3-cb-text span,
+            .q3-checkbox.selected .q3-cb-text span {
+                max-height: 4rem;
+                opacity: 1;
+                margin-top: 0.2rem;
+            }
                 .q3-columns { grid-template-columns: 1fr; }
             }
         </style>
