@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0091)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_7.html#q1 -->
+<!-- saved from url=(0091)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_8.html#q1 -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1050,89 +1050,153 @@
     <div class="question-panel" id="panel-q1a">
         <div class="q-label">Step 1b</div>
         <h2>What kind of resource is it?</h2>
-        <p class="q-hint">Select one. If you have a hybrid resource, run it through twice.</p>
+        <p class="q-hint">Select one. Hover over each option if you're not sure.</p>
 
-        <div class="option-cards">
-            <div class="option-card" data-value="r1-text-questions" onclick="selectOption(this, &#39;q1a&#39;)">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 10h12M4 14h8"></path><circle cx="16" cy="16" r="4"></circle><path d="M14 16h4M16 14v4"></path></svg></div>
-                <div class="card-text">
-                    <strong>Text + questions</strong>
-                    <span>A text students read, followed by questions</span>
+        <style>
+            .resource-type-cards {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-top: 0.75rem;
+            }
+            .rt-card {
+                position: relative;
+                border: 1.5px solid var(--border-color);
+                border-radius: 14px;
+                padding: 1.1rem 1.1rem 1rem;
+                background: white;
+                cursor: pointer;
+                transition: border-color 0.15s, box-shadow 0.15s;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            .rt-card:hover {
+                border-color: var(--primary-color);
+                box-shadow: 0 2px 12px rgba(122,26,56,0.08);
+            }
+            .rt-card.selected {
+                border-color: var(--primary-color);
+                background: rgba(122,26,56,0.03);
+                box-shadow: 0 2px 12px rgba(122,26,56,0.1);
+            }
+            .rt-card-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+                background: rgba(122,26,56,0.07);
+                color: var(--primary-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 0.1rem;
+            }
+            .rt-card.selected .rt-card-icon {
+                background: var(--primary-color);
+                color: white;
+            }
+            .rt-card-body { flex: 1; }
+            .rt-card-body strong {
+                display: block;
+                font-size: 0.92rem;
+                font-weight: 700;
+                color: var(--text-dark);
+                line-height: 1.3;
+                margin-bottom: 0.15rem;
+            }
+            .rt-card-body .rt-example {
+                font-size: 0.78rem;
+                color: var(--text-light);
+                line-height: 1.4;
+                /* hidden by default, shown on hover */
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                transition: max-height 0.2s ease, opacity 0.2s ease, margin-top 0.2s ease;
+                margin-top: 0;
+            }
+            .rt-card:hover .rt-example,
+            .rt-card.selected .rt-example {
+                max-height: 5rem;
+                opacity: 1;
+                margin-top: 0.25rem;
+            }
+            .rt-check {
+                width: 18px;
+                height: 18px;
+                border: 2px solid var(--border-color);
+                border-radius: 50%;
+                flex-shrink: 0;
+                margin-top: 0.15rem;
+                transition: all 0.15s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .rt-card.selected .rt-check {
+                background: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+            .rt-card.selected .rt-check::after {
+                content: '';
+                width: 4px;
+                height: 7px;
+                border-right: 2px solid white;
+                border-bottom: 2px solid white;
+                transform: rotate(45deg) translate(-1px, -1px);
+            }
+            @media (max-width: 560px) {
+                .resource-type-cards { grid-template-columns: 1fr; }
+            }
+        </style>
+
+        <div class="resource-type-cards">
+
+            <div class="rt-card" data-value="r1-text-only" onclick="selectOption(this, &#39;q1a&#39;)">
+                <div class="rt-card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h14M4 14h10M4 18h8"></path></svg>
                 </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card" data-value="r1-text-only" onclick="selectOption(this, &#39;q1a&#39;)">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 10h14M4 14h10M4 18h8"></path></svg></div>
-                <div class="card-text">
+                <div class="rt-card-body">
                     <strong>Text only</strong>
-                    <span>A passage, article, source, or extract — no accompanying questions</span>
+                    <div class="rt-example">A passage, article, source or extract with no accompanying task. Students read it — nothing more is asked of them on this sheet.</div>
                 </div>
-                <div class="check"></div>
+                <div class="rt-check"></div>
             </div>
-            <div class="option-card" data-value="r1-questions-only" onclick="selectOption(this, &#39;q1a&#39;)">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"></path></svg></div>
-                <div class="card-text">
-                    <strong>Questions only</strong>
-                    <span>A set of questions or tasks with no extended reading component</span>
+
+            <div class="rt-card" data-value="r1-text-questions" onclick="selectOption(this, &#39;q1a&#39;)">
+                <div class="rt-card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h12M4 14h8"></path><circle cx="17" cy="17" r="4"></circle><path d="M15.3 17h3.4M17 15.3v3.4"></path></svg>
                 </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></div>
-                <div class="card-text">
-                    <strong>Worksheet / structured task</strong>
-                    <span>Coming soon</span>
+                <div class="rt-card-body">
+                    <strong>Text + questions</strong>
+                    <div class="rt-example">A text followed by discrete comprehension or analytical questions — numbered, sequenced, each expecting a specific response.</div>
                 </div>
-                <div class="check"></div>
+                <div class="rt-check"></div>
             </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg></div>
-                <div class="card-text">
-                    <strong>Explanation or instructional text</strong>
-                    <span>Coming soon</span>
+
+            <div class="rt-card" data-value="r1-text-instructions" onclick="selectOption(this, &#39;q1a&#39;)">
+                <div class="rt-card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 10h12M4 14h8"></path><path d="M17 13l4 4-4 4"></path></svg>
                 </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.35-4.35"></path></svg></div>
-                <div class="card-text">
-                    <strong>Research or inquiry task</strong>
-                    <span>Coming soon</span>
+                <div class="rt-card-body">
+                    <strong>Text + instructions</strong>
+                    <div class="rt-example">A text paired with an open-ended task — write an essay, construct an argument, produce an analysis. The task is a prompt, not a question set.</div>
                 </div>
-                <div class="check"></div>
+                <div class="rt-check"></div>
             </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
-                <div class="card-text">
-                    <strong>Visual resource</strong>
-                    <span>Coming soon</span>
+
+            <div class="rt-card" data-value="r1-task-only" onclick="selectOption(this, &#39;q1a&#39;)">
+                <div class="rt-card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"></path></svg>
                 </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7h4M10 5v4M8 17h4M17 13l3 4M17 17l3-4M5 12h14"></path></svg></div>
-                <div class="card-text">
-                    <strong>Maths problem set or numeracy task</strong>
-                    <span>Coming soon</span>
+                <div class="rt-card-body">
+                    <strong>Questions / instructions only</strong>
+                    <div class="rt-example">A question set, task sheet or set of instructions — no extended reading component. Students are working from prior knowledge or a separate source.</div>
                 </div>
-                <div class="check"></div>
+                <div class="rt-check"></div>
             </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg></div>
-                <div class="card-text">
-                    <strong>Assessment task or rubric</strong>
-                    <span>Coming soon</span>
-                </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></div>
-                <div class="card-text">
-                    <strong>Something else</strong>
-                    <span>Coming soon</span>
-                </div>
-                <div class="check"></div>
-            </div>
+
         </div>
 
         <div class="panel-nav">
@@ -1590,55 +1654,64 @@ const PB = (() => {
       id: 'sup-readability',
       label: 'Simplify readability',
       desc: 'Adjust vocabulary and sentence structure to reduce language barriers',
-      key: 'supportReadability'
+      key: 'supportReadability',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'sup-essential',
       label: 'Identify essential passages',
       desc: 'Shorten to what students truly need — with a highlighting strategy',
-      key: 'supportEssential'
+      key: 'supportEssential',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'sup-digest',
       label: 'Pre-reading digest',
       desc: 'Key vocabulary, main ideas and guiding questions before they read',
-      key: 'supportDigest'
+      key: 'supportDigest',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'sup-analogy',
       label: 'Use analogies to make concepts accessible',
       desc: 'Concrete analogies that give students a foothold on abstract ideas',
-      key: 'supportAnalogy'
+      key: 'supportAnalogy',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'sup-visual',
       label: 'Visual supports and multimodal redesign',
       desc: 'Icons, colour coding and layout that reduce cognitive load',
-      key: 'supportVisual'
+      key: 'supportVisual',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'sup-chunk',
       label: 'Chunk instructions into sequential steps',
       desc: 'One action per step — no bundled or implied expectations',
-      key: 'supportChunk'
+      key: 'supportChunk',
+      show: ['r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
     {
       id: 'sup-sentences',
       label: 'Sentence starters for written responses',
       desc: 'Access frames that model academic language without replacing thinking',
-      key: 'supportSentences'
+      key: 'supportSentences',
+      show: ['r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
     {
       id: 'sup-syntax',
       label: 'Simplified syntax version',
       desc: 'Same concepts, shorter sentences, unpacked clauses — for language access',
-      key: 'supportSyntax'
+      key: 'supportSyntax',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'sup-memory',
       label: 'Working memory supports',
       desc: 'Word banks, partially completed frames, reference sheets',
-      key: 'supportMemory'
+      key: 'supportMemory',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
   ];
 
@@ -1647,55 +1720,64 @@ const PB = (() => {
       id: 'ext-language',
       label: 'Elevate academic language and nuance',
       desc: 'Increase precision, discipline-specific vocabulary and conceptual density',
-      key: 'extensionLanguage'
+      key: 'extensionLanguage',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'ext-bigpicture',
       label: 'Big picture framing',
       desc: 'Implications, connections, essential questions and broader significance',
-      key: 'extensionBigPicture'
+      key: 'extensionBigPicture',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'ext-abstract',
       label: 'Concrete \u2192 abstract version of the text',
       desc: 'Move from examples to principles, patterns and transferable ideas',
-      key: 'extensionAbstract'
+      key: 'extensionAbstract',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
     {
       id: 'ext-organiser',
       label: 'Analytical graphic organiser',
       desc: 'A framework for synthesis, comparison or evaluation — not just note-taking',
-      key: 'extensionOrganiser'
+      key: 'extensionOrganiser',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
     {
       id: 'ext-frames',
       label: 'Academic language frames',
       desc: 'Discipline-specific sentence frames that model expert writing',
-      key: 'extensionFrames'
+      key: 'extensionFrames',
+      show: ['r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
     {
       id: 'ext-demand',
       label: 'Increase cognitive demand of questions',
       desc: "Shift questions toward analysis, evaluation and creation (Bloom's)",
-      key: 'extensionDemand'
+      key: 'extensionDemand',
+      show: ['r1-text-questions', 'r1-task-only']
     },
     {
       id: 'ext-opentask',
       label: 'Open-ended / student-directed version',
       desc: 'Goal and criteria provided — students choose their approach and structure',
-      key: 'extensionOpenTask'
+      key: 'extensionOpenTask',
+      show: ['r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
     {
       id: 'ext-modes',
       label: 'Multiple response modes',
       desc: 'Genuine choice in how students demonstrate understanding',
-      key: 'extensionModes'
+      key: 'extensionModes',
+      show: ['r1-text-questions', 'r1-text-instructions', 'r1-task-only']
     },
     {
       id: 'ext-perspectives',
       label: 'Add nuance: competing perspectives',
       desc: 'Introduce complexity, ambiguity or real-world tensions',
-      key: 'extensionPerspectives'
+      key: 'extensionPerspectives',
+      show: ['r1-text-only', 'r1-text-questions', 'r1-text-instructions']
     },
   ];
 
@@ -2321,28 +2403,43 @@ const PANEL_PROGRESS = {
 // Q3 COLUMN RENDERING
 // ==========================================
 function buildQ3Columns() {
+    const resourceType = state.q1a;
     const supList = document.getElementById('q3-support-list');
     const extList = document.getElementById('q3-extension-list');
     supList.innerHTML = '';
     extList.innerHTML = '';
 
-    PB.SUPPORT_OPTIONS.forEach(opt => {
-        const el = document.createElement('div');
-        el.className = 'q3-checkbox' + (state.q3Support.includes(opt.id) ? ' selected' : '');
-        el.dataset.id = opt.id;
-        el.innerHTML = `<div class="q3-cb-box"></div><div class="q3-cb-text"><strong>${opt.label}</strong><span>${opt.desc}</span></div>`;
-        el.onclick = () => toggleQ3(el, 'support', opt.id);
-        supList.appendChild(el);
+    // Clear any previously selected options that are no longer valid for this resource type
+    state.q3Support   = state.q3Support.filter(id => {
+        const opt = PB.SUPPORT_OPTIONS.find(o => o.id === id);
+        return opt && opt.show.includes(resourceType);
+    });
+    state.q3Extension = state.q3Extension.filter(id => {
+        const opt = PB.EXTENSION_OPTIONS.find(o => o.id === id);
+        return opt && opt.show.includes(resourceType);
     });
 
-    PB.EXTENSION_OPTIONS.forEach(opt => {
-        const el = document.createElement('div');
-        el.className = 'q3-checkbox' + (state.q3Extension.includes(opt.id) ? ' selected' : '');
-        el.dataset.id = opt.id;
-        el.innerHTML = `<div class="q3-cb-box"></div><div class="q3-cb-text"><strong>${opt.label}</strong><span>${opt.desc}</span></div>`;
-        el.onclick = () => toggleQ3(el, 'extension', opt.id);
-        extList.appendChild(el);
-    });
+    PB.SUPPORT_OPTIONS
+        .filter(opt => opt.show.includes(resourceType))
+        .forEach(opt => {
+            const el = document.createElement('div');
+            el.className = 'q3-checkbox' + (state.q3Support.includes(opt.id) ? ' selected' : '');
+            el.dataset.id = opt.id;
+            el.innerHTML = `<div class="q3-cb-box"></div><div class="q3-cb-text"><strong>${opt.label}</strong><span>${opt.desc}</span></div>`;
+            el.onclick = () => toggleQ3(el, 'support', opt.id);
+            supList.appendChild(el);
+        });
+
+    PB.EXTENSION_OPTIONS
+        .filter(opt => opt.show.includes(resourceType))
+        .forEach(opt => {
+            const el = document.createElement('div');
+            el.className = 'q3-checkbox' + (state.q3Extension.includes(opt.id) ? ' selected' : '');
+            el.dataset.id = opt.id;
+            el.innerHTML = `<div class="q3-cb-box"></div><div class="q3-cb-text"><strong>${opt.label}</strong><span>${opt.desc}</span></div>`;
+            el.onclick = () => toggleQ3(el, 'extension', opt.id);
+            extList.appendChild(el);
+        });
 
     applyQ3Dimming();
 }
@@ -2425,8 +2522,9 @@ function highlightRequired(panelId) {
 // ==========================================
 function selectOption(el, key) {
     if (el.classList.contains('disabled-task')) return;
-    const group = el.closest('.option-cards');
-    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    // Works with both .option-cards (legacy) and .resource-type-cards (Q1a)
+    const group = el.closest('.option-cards, .resource-type-cards');
+    if (group) group.querySelectorAll('.option-card, .rt-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
     state[key] = el.dataset.value;
     // When Q2 changes, update Q3 dimming if columns already built
