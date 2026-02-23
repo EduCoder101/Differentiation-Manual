@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!-- saved from url=(0091)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_8.html#q1 -->
+<!-- saved from url=(0092)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_11.html#q1 -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prompt Builder | Differentiation Manual</title>
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-    <link href="./prompt-builder_files/css2" rel="stylesheet">
-    <link rel="stylesheet" href="./prompt-builder_files/styles.css">
+    <link href="file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_files/css2" rel="stylesheet">
+    <link rel="stylesheet" href="file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_files/styles.css">
     <style>
         /* ==========================================
            CSS VARIABLE OVERRIDES (warm palette)
@@ -935,6 +935,102 @@
             color: var(--primary-color);
         }
 
+        /* ── Content / Process cycle diagram ── */
+        .cp-cycle-wrap {
+            text-align: center;
+            margin: 1.2rem 0 1.8rem;
+            padding: 1.2rem 1rem;
+            background: linear-gradient(135deg, rgba(122,26,56,0.04) 0%, rgba(200,134,10,0.04) 100%);
+            border-radius: 14px;
+            border: 1.5px solid var(--border-color);
+        }
+
+        .cp-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 0.75rem;
+        }
+
+        .cp-label {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .cp-content { color: #7A1A38; }
+        .cp-process { color: #C8860A; }
+
+        .cp-ellipse {
+            display: flex;
+            flex-direction: column;
+            width: 160px;
+            gap: 0;
+        }
+
+        .cp-arrow {
+            width: 100%;
+            line-height: 0;
+        }
+
+        .cp-arrow svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cp-cycle-caption {
+            font-size: 0.86rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            white-space: nowrap;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        @media (max-width: 520px) {
+            .cp-cycle-caption { white-space: normal; }
+        }
+
+        /* ── Q1 section labels ── */
+        .q1-section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .q1-section-pill {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .content-pill {
+            background: rgba(122,26,56,0.1);
+            color: var(--primary-color);
+        }
+
+        .process-pill {
+            background: rgba(200,134,10,0.12);
+            color: #9A6A08;
+        }
+
+        .q1-section-desc {
+            font-size: 0.86rem;
+            color: var(--text-light);
+        }
+
         /* Responsive */
         @media (max-width: 560px) {
             .option-cards.cols-2,
@@ -943,6 +1039,7 @@
                 grid-template-columns: 1fr;
             }
             .pb-header h1 { font-size: 2.2rem; }
+            .cp-cycle-svg { width: 160px; height: 74px; }
         }
     </style>
 </head>
@@ -969,78 +1066,86 @@
          ===================== -->
     <div class="question-panel active" id="panel-q1">
         <div class="q-label">Step 1</div>
-        <h2>What kind of task are you working on?</h2>
-        <p class="q-hint">Select one to get started.</p>
+        <h2>What are you working on today?</h2>
+        <p class="q-hint">Differentiation works across two dimensions — choose which one you need.</p>
 
-        <div class="option-cards cols-2">
-            <div class="option-card" data-value="resource" onclick="selectOption(this, &#39;q1&#39;)">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="12" height="16" rx="2"></rect><path d="M8 7h6M8 11h6M8 15h4"></path><path d="M16 3l3 3v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1h11z" stroke="none" fill="none"></path></svg></div>
+        <!-- Content / Process cycle diagram -->
+        <div class="cp-cycle-wrap">
+            <div class="cp-diagram">
+                <span class="cp-label cp-content">CONTENT</span>
+                <div class="cp-ellipse">
+                    <div class="cp-arrow cp-arrow-top">
+                        <!-- top arc: left to right, maroon -->
+                        <svg viewBox="0 0 160 38" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 8 34 Q 80 2 152 34" fill="none" stroke="#7A1A38" stroke-width="2.2" stroke-linecap="round"></path>
+                            <!-- arrowhead at right end, pointing down-right -->
+                            <polyline points="144,26 152,34 142,36" fill="none" stroke="#7A1A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                        </svg>
+                    </div>
+                    <div class="cp-arrow cp-arrow-bottom">
+                        <!-- bottom arc: right to left, gold -->
+                        <svg viewBox="0 0 160 38" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 152 4 Q 80 36 8 4" fill="none" stroke="#C8860A" stroke-width="2.2" stroke-linecap="round"></path>
+                            <!-- arrowhead at left end, pointing up-left -->
+                            <polyline points="16,12 8,4 18,2" fill="none" stroke="#C8860A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <span class="cp-label cp-process">PROCESS</span>
+            </div>
+            <p class="cp-cycle-caption">Content shapes what students engage with. Process shapes how they engage with it. Both inform each other.</p>
+        </div>
+
+        <!-- CONTENT section -->
+        <div class="q1-section-label">
+            <span class="q1-section-pill content-pill">Content</span>
+            <span class="q1-section-desc">Working on a student-facing resource</span>
+        </div>
+        <div class="option-cards cols-2" style="margin-bottom: 1.5rem;">
+            <div class="option-card" data-value="resource" onclick="selectOption(this, &#39;q1&#39;); state.q1flow=&#39;content&#39;;">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="12" height="16" rx="2"></rect><path d="M8 7h6M8 11h6M8 15h4"></path></svg></div>
                 <div class="card-text">
                     <strong>Differentiate a Resource</strong>
-                    <span>Adapt a text, worksheet, task or visual</span>
+                    <span>Adapt a text, worksheet, task or visual for different learners</span>
                 </div>
                 <div class="check"></div>
             </div>
             <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-6"></path></svg></div>
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg></div>
                 <div class="card-text">
                     <strong>Differentiate a Lesson</strong>
-                    <span>Coming soon</span>
+                    <span>Coming soon — adapt a lesson plan for a range of learners</span>
                 </div>
                 <div class="check"></div>
             </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4l3 3"></path></svg></div>
+        </div>
+
+        <!-- PROCESS section -->
+        <div class="q1-section-label">
+            <span class="q1-section-pill process-pill">Process</span>
+            <span class="q1-section-desc">Working on how students engage with learning</span>
+        </div>
+        <div class="option-cards cols-2">
+            <div class="option-card" data-value="strategies" onclick="selectOption(this, &#39;q1&#39;); state.q1flow=&#39;process&#39;;">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path><path d="M18 14l2 2 4-4" stroke-width="1.5"></path></svg></div>
                 <div class="card-text">
-                    <strong>Ideate Support Strategies</strong>
-                    <span>Coming soon</span>
-                </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></div>
-                <div class="card-text">
-                    <strong>Ideate Extension Strategies</strong>
-                    <span>Coming soon</span>
-                </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"></path></svg></div>
-                <div class="card-text">
-                    <strong>Plan a Lesson Sequence</strong>
-                    <span>Coming soon</span>
+                    <strong>Ideate Differentiation Strategies</strong>
+                    <span>Get specific, actionable strategies for how to structure learning differently</span>
                 </div>
                 <div class="check"></div>
             </div>
             <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
                 <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6l10-4 10 4v12l-10 4L2 18z"></path><path d="M12 2v20M2 6l10 4 10-4"></path></svg></div>
                 <div class="card-text">
-                    <strong>Plan a Unit</strong>
-                    <span>Coming soon</span>
-                </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg></div>
-                <div class="card-text">
-                    <strong>Create Assessment</strong>
-                    <span>Coming soon</span>
-                </div>
-                <div class="check"></div>
-            </div>
-            <div class="option-card disabled-task" style="opacity:0.4;cursor:not-allowed;" title="Coming soon">
-                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></div>
-                <div class="card-text">
-                    <strong>Set Up Classroom Systems</strong>
-                    <span>Coming soon</span>
+                    <strong>Differentiate a Unit</strong>
+                    <span>Coming soon — vary the range of teaching and learning strategies across a unit</span>
                 </div>
                 <div class="check"></div>
             </div>
         </div>
 
         <div class="panel-nav">
-            <button class="btn-next" onclick="goToPanel(&#39;q1a&#39;)">Next →</button>
+            <button class="btn-next" onclick="goToQ1Next()">Next →</button>
         </div>
     </div>
 
@@ -1202,6 +1307,117 @@
         <div class="panel-nav">
             <button class="btn-back" onclick="goToPanel(&#39;q1&#39;)">← Back</button>
             <button class="btn-next" onclick="goToPanel(&#39;q2&#39;)">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         PROCESS FLOW: Q1b — AUDIENCE
+         ===================== -->
+    <div class="question-panel" id="panel-proc-q1b">
+        <div class="q-label">Step 2 — Strategies</div>
+        <h2>Who are you designing strategies for?</h2>
+        <p class="q-hint">This shapes which strategies we surface for you.</p>
+
+        <div class="option-cards">
+            <div class="option-card" data-value="support" onclick="selectOption(this, &#39;procAudience&#39;)">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 14l7 7 7-7"></path></svg></div>
+                <div class="card-text">
+                    <strong>Students who need more support</strong>
+                    <span>Strategies for access, scaffolding, reducing barriers in the learning process</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="extension" onclick="selectOption(this, &#39;procAudience&#39;)">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4M5 10l7-7 7 7"></path></svg></div>
+                <div class="card-text">
+                    <strong>Students who need more extension</strong>
+                    <span>Strategies for deeper engagement, greater autonomy, genuine challenge</span>
+                </div>
+                <div class="check"></div>
+            </div>
+            <div class="option-card" data-value="both" onclick="selectOption(this, &#39;procAudience&#39;)">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 8l7-7 7 7M5 16l7 7 7-7"></path></svg></div>
+                <div class="card-text">
+                    <strong>Both — I need strategies for the full range</strong>
+                    <span>Surface strategies for support and extension students</span>
+                </div>
+                <div class="check"></div>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel(&#39;q1&#39;)">← Back</button>
+            <button class="btn-next" onclick="goToPanel(&#39;proc-q2&#39;)">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         PROCESS FLOW: Q2 — CONTEXT
+         ===================== -->
+    <div class="question-panel" id="panel-proc-q2">
+        <div class="q-label">Step 3 — Strategies</div>
+        <h2>Tell us about your teaching context</h2>
+        <p class="q-hint">The more specific you are, the more actionable the strategies.</p>
+
+        <div class="context-fields">
+            <div class="field-group">
+                <label for="proc-year">Year group</label>
+                <input type="text" id="proc-year" placeholder="e.g. Year 9">
+            </div>
+            <div class="field-group">
+                <label for="proc-subject">Subject / topic</label>
+                <input type="text" id="proc-subject" placeholder="e.g. English — Persuasive Writing">
+            </div>
+            <div class="field-group">
+                <label for="proc-situation">What's the learning situation?</label>
+                <textarea id="proc-situation" placeholder="Describe what you&#39;re doing — e.g. &#39;Students are doing a Socratic seminar on a source text&#39; or &#39;We&#39;re mid-way through a research project and some students are stuck&#39;" style="min-height:90px;"></textarea>
+                <p class="field-hint">Be as specific as you can. The AI will use this to tailor its strategies.</p>
+            </div>
+            <div class="field-group">
+                <label for="proc-resource">Upload a resource (optional)</label>
+                <textarea id="proc-resource" placeholder="Paste the task, worksheet, or lesson plan here if you have one — or leave blank if you&#39;re working from scratch." style="min-height:80px;"></textarea>
+                <p class="field-hint">If you paste your resource, the strategies will reference it specifically rather than speaking generally.</p>
+                <div style="margin-top:0.75rem;">
+                    <input type="file" id="proc-file-upload" accept=".txt,.pdf,.doc,.docx" style="display:none;" onchange="handleProcFileUpload(this)">
+                    <button type="button" onclick="document.getElementById(&#39;proc-file-upload&#39;).click()" style="background:none;border:1.5px solid var(--border-color);color:var(--text-light);padding:0.4rem 1rem;border-radius:8px;font-family:var(--font-heading);font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor=&#39;var(--primary-color)&#39;;this.style.color=&#39;var(--primary-color)&#39;" onmouseout="this.style.borderColor=&#39;var(--border-color)&#39;;this.style.color=&#39;var(--text-light)&#39;">Upload a file (.txt, .pdf, .docx)</button>
+                    <span id="proc-upload-status" style="font-size:0.83rem;color:var(--text-light);margin-left:0.75rem;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel(&#39;proc-q1b&#39;)">← Back</button>
+            <button class="btn-next" onclick="goToPanel(&#39;proc-q3&#39;)">Next →</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         PROCESS FLOW: Q3 — STRATEGY LEVERS
+         ===================== -->
+    <div class="question-panel" id="panel-proc-q3">
+        <div class="q-label">Step 4 — Strategies</div>
+        <h2>What kind of strategies do you need?</h2>
+        <p class="q-hint">Select all that apply. Each generates a specific, research-grounded set of strategies.</p>
+
+        <div id="proc-q3-support-section">
+            <div class="q1-section-label" style="margin-bottom:0.75rem;">
+                <span class="q1-section-pill content-pill" style="background:rgba(122,26,56,0.1);color:var(--primary-color);">Support strategies</span>
+            </div>
+            <div class="checkbox-cards" id="proc-support-levers"></div>
+        </div>
+
+        <div id="proc-q3-extension-section" style="margin-top:1.5rem;">
+            <div class="q1-section-label" style="margin-bottom:0.75rem;">
+                <span class="q1-section-pill process-pill" style="background:rgba(200,134,10,0.1);color:#9A6A08;">Extension strategies</span>
+            </div>
+            <div class="checkbox-cards" id="proc-extension-levers"></div>
+        </div>
+
+        <div class="validation-msg" id="val-proc-q3" style="margin-top:1rem;">Please select at least one strategy type to continue.</div>
+
+        <div class="panel-nav">
+            <button class="btn-back" onclick="goToPanel(&#39;proc-q2&#39;)">← Back</button>
+            <button class="btn-next" onclick="validateProcQ3()">Build my strategies →</button>
         </div>
     </div>
 
@@ -2333,6 +2549,361 @@ Create 4\u20135 anchor activities. For each:
 
   };
 
+  // ─── PROCESS OPTIONS ──────────────────────────────────────────────────────
+  // These drive the Q3 lever selector in the Process flow.
+  // Each maps to a key in PROCESS_SOURCE.
+
+  const PROCESS_OPTIONS = [
+
+    // ── SUPPORT ──
+    {
+      id: 'proc-sup-questioning',
+      audience: 'support',
+      label: 'Tiered questioning strategies',
+      desc: 'How to frame questions in class that give support students a genuine entry point',
+      key: 'procSupQuestioning'
+    },
+    {
+      id: 'proc-sup-grouping',
+      audience: 'support',
+      label: 'Grouping and collaboration structures',
+      desc: 'How to organise group work so support students contribute meaningfully',
+      key: 'procSupGrouping'
+    },
+    {
+      id: 'proc-sup-scaffoldfade',
+      audience: 'support',
+      label: 'Scaffolding with a fade plan',
+      desc: 'Temporary in-class supports that build toward independence',
+      key: 'procSupScaffoldFade'
+    },
+    {
+      id: 'proc-sup-pacing',
+      audience: 'support',
+      label: 'Pacing and task management',
+      desc: 'How to structure time so support students can complete meaningful work',
+      key: 'procSupPacing'
+    },
+    {
+      id: 'proc-sup-environment',
+      audience: 'support',
+      label: 'Learning environment adjustments',
+      desc: 'Physical and social classroom conditions that reduce barriers',
+      key: 'procSupEnvironment'
+    },
+
+    // ── EXTENSION ──
+    {
+      id: 'proc-ext-questioning',
+      audience: 'extension',
+      label: 'Higher-order questioning strategies',
+      desc: 'How to push extension students toward genuine intellectual challenge in discussion',
+      key: 'procExtQuestioning'
+    },
+    {
+      id: 'proc-ext-anchor',
+      audience: 'extension',
+      label: 'Anchor and extension tasks',
+      desc: 'Meaningful self-directed tasks for students who finish early or need deeper challenge',
+      key: 'procExtAnchor'
+    },
+    {
+      id: 'proc-ext-independence',
+      audience: 'extension',
+      label: 'Building independence and self-direction',
+      desc: 'How to gradually release control so extension students lead their own learning',
+      key: 'procExtIndependence'
+    },
+    {
+      id: 'proc-ext-grouping',
+      audience: 'extension',
+      label: 'Flexible grouping for depth',
+      desc: 'How to use grouping to push extension students into genuine intellectual collaboration',
+      key: 'procExtGrouping'
+    },
+    {
+      id: 'proc-ext-compacting',
+      audience: 'extension',
+      label: 'Curriculum compacting',
+      desc: 'How to identify and eliminate unnecessary repetition for students who have mastered content',
+      key: 'procExtCompacting'
+    },
+  ];
+
+  // ─── PROCESS SOURCE BLOCKS ────────────────────────────────────────────────
+  // These blocks produce teacher-facing strategy advice, not student materials.
+  // They reference "the context above" and "the teaching situation described".
+  // Context placeholders: {{year}}, {{subject}}, {{situation}}
+
+  const PROCESS_SOURCE = {
+
+    // ══ SUPPORT PROCESS BLOCKS ════════════════════════════════════════════════
+
+    procSupQuestioning: {
+      audience: 'support',
+      source: 'step4-align.html — Readiness-Based Differentiation; step6-scaffolding.html — Scaffolding Principles',
+      label: 'Tiered questioning strategies',
+      template: `TASK: Tiered questioning strategies for support students
+
+You are designing a questioning strategy for support students in the context described above.
+
+Instructional principle: Every student should be able to participate in classroom discussion — but the type of question that gives each student a genuine entry point will differ. Support students need questions that start from what they already know and build toward the concept, rather than questions that presuppose understanding they haven't yet developed.
+
+Please provide:
+
+1. A set of 5–6 tiered questions specifically for this teaching context, sequenced from accessible entry point to growing challenge. For each question:
+   — Write the question exactly as you would say it to a student
+   — Note what prior knowledge or understanding it activates
+   — Explain how it builds toward the learning intention
+
+2. A cold-calling strategy: how to invite support students into discussion in a way that is genuine (not tokenistic) and gives them time to form a response. Include specific language you would use.
+
+3. A pair/share structure the teacher could use before whole-class discussion, so support students arrive at discussion with a prepared thought rather than improvising on the spot.
+
+Make all strategies specific to {{subject}} at {{year}} level. Avoid generic advice.`
+    },
+
+    procSupGrouping: {
+      audience: 'support',
+      source: 'step4-align.html — Readiness-Based Differentiation; step3-process.html — Flexible Grouping',
+      label: 'Grouping and collaboration structures',
+      template: `TASK: Grouping structures that support without stigmatising
+
+You are designing a collaboration structure for support students in the context described above.
+
+Instructional principle: Grouping must be flexible and purposeful — not a permanent label. Support students benefit from structured collaboration that gives them a clear role, reduces the cognitive overhead of managing the social dynamic, and ensures they are contributing to genuine thinking rather than copying or being sidelined.
+
+Please provide:
+
+1. Two specific grouping structures suited to this teaching context. For each:
+   — Describe the structure clearly (how groups form, how many, what roles)
+   — Explain what it does for support students specifically
+   — Give the teacher the exact instructions they would give to the class
+   — Note any management considerations
+
+2. A role structure for group work: 3–4 specific roles that support students can occupy that give them genuine agency without requiring them to lead prematurely. For each role, write the student-facing job description.
+
+3. A brief note on how to handle the moment when a support student is falling behind their group — what does the teacher do, and what does the student do?
+
+All advice should be specific to {{subject}} at {{year}} level and the teaching situation described.`
+    },
+
+    procSupScaffoldFade: {
+      audience: 'support',
+      source: 'step6-scaffolding.html — Scaffolding Principles; step6-scaffolding.html — Fade a Graphic Organizer',
+      label: 'Scaffolding with a fade plan',
+      template: `TASK: In-class scaffolding with a plan to fade
+
+You are designing in-class scaffolding for support students in the context described above.
+
+Instructional principle: Scaffolds are temporary bridges, not permanent ramps. Every scaffold should have a built-in plan for removal — otherwise it becomes a ceiling rather than a support. The goal is student independence, not permanent dependence on teacher or tool.
+
+Please provide:
+
+1. Three specific in-class scaffolds suited to this teaching context. For each:
+   — Describe the scaffold precisely (what it looks like, what the student does with it)
+   — Explain what specific barrier it addresses
+   — Write a fade plan: Stage 1 (full scaffold), Stage 2 (partial scaffold), Stage 3 (student self-manages)
+   — State the signal or evidence that tells the teacher a student is ready to move to the next stage
+
+2. A "first five minutes" strategy: what does the teacher do at the start of this lesson/task to set support students up before independent work begins?
+
+3. A self-monitoring prompt for support students: 2–3 questions they can ask themselves mid-task to assess whether they need to use a scaffold or are ready to work without it.
+
+All scaffolds should be specific to {{subject}} at {{year}} level.`
+    },
+
+    procSupPacing: {
+      audience: 'support',
+      source: 'step5-equalizer.html — Slow ↔ Fast Continuum',
+      label: 'Pacing and task management',
+      template: `TASK: Pacing and task management for support students
+
+You are designing a pacing approach for support students in the context described above.
+
+Instructional principle: The goal is not to slow down the learning, but to ensure support students spend their time on the parts of the task that matter most. This may mean compressing or removing lower-priority elements so students reach the essential thinking, rather than getting stuck on preliminary steps.
+
+Please provide:
+
+1. A task priority map: given the teaching context described, identify which parts of the task or lesson are essential (all students must engage with these), which are supplementary (useful but not critical), and which support students should deprioritise or skip if time is short.
+
+2. A pacing plan for support students: how the teacher structures the time, with approximate allocations. Include specific checkpoints where the teacher checks in.
+
+3. Two strategies for the moment when a support student is clearly going to run out of time. What does the teacher do? What is the student directed to do? Write these as concrete moves, not principles.
+
+4. An "exit with dignity" structure: how to ensure support students finish the lesson having genuinely engaged with the essential thinking, even if they haven't completed everything.
+
+All advice should be specific to {{subject}} at {{year}} level.`
+    },
+
+    procSupEnvironment: {
+      audience: 'support',
+      source: 'step3-environment.html — Differentiate the Environment',
+      label: 'Learning environment adjustments',
+      template: `TASK: Learning environment adjustments for support students
+
+You are advising on classroom environment design for support students in the context described above.
+
+Instructional principle: The physical and social environment sends constant messages to students about who belongs, who is capable, and what learning looks like. For support students, a well-designed environment reduces cognitive load, increases psychological safety, and makes the implicit expectations of school explicit.
+
+Please provide:
+
+1. Three specific physical environment adjustments suited to this teaching context. For each:
+   — Describe the change precisely
+   — Explain what barrier it addresses for support students
+   — Note what the teacher needs to do to implement it
+
+2. Two social/emotional environment strategies: how the teacher can build the conditions where support students feel safe to attempt, fail, and try again. Include specific language or rituals the teacher could use.
+
+3. A seating/positioning recommendation for this specific teaching context: where support students should sit, and why. Include what the teacher should be able to see and access from where they position themselves.
+
+4. One thing to avoid: a common classroom environment decision that inadvertently signals to support students that they are different or less capable.
+
+All advice should be specific to {{subject}} at {{year}} level.`
+    },
+
+    // ══ EXTENSION PROCESS BLOCKS ══════════════════════════════════════════════
+
+    procExtQuestioning: {
+      audience: 'extension',
+      source: 'step5-equalizer.html — Transformational; step4-align.html — Readiness-Based Differentiation',
+      label: 'Higher-order questioning for extension students',
+      template: `TASK: Higher-order questioning strategies for extension students
+
+You are designing a questioning strategy for extension students in the context described above.
+
+Instructional principle: Extension students often answer standard questions too quickly, with insufficient grappling. The goal is not harder questions — it is questions that require genuine intellectual work: synthesis, evaluation, ambiguity, and the honest acknowledgement that they don't yet have the answer.
+
+Please provide:
+
+1. A set of 5–6 higher-order questions for extension students in this teaching context, moving from analysis toward genuine uncertainty. For each question:
+   — Write the question exactly as you would pose it
+   — Explain what kind of thinking it requires (not just Bloom's label — describe the actual intellectual move)
+   — Note what a good response would look like, and what "sounding smart but not thinking hard" looks like
+
+2. A Socratic questioning strategy: how to take an extension student's confident-sounding first answer and push them to the edge of their thinking. Give the teacher 4–5 specific follow-up moves with example language.
+
+3. A debate or perspective-taking structure suited to this context, where extension students must argue for positions they may not personally hold. Write the task instruction exactly as the teacher would give it.
+
+All strategies should be specific to {{subject}} at {{year}} level.`
+    },
+
+    procExtAnchor: {
+      audience: 'extension',
+      source: 'step3-process.html — Anchor Activities; step5-equalizer.html — Great Leap',
+      label: 'Anchor and extension tasks',
+      template: `TASK: Anchor and extension tasks for students who need more challenge
+
+You are designing anchor and extension tasks for extension students in the context described above.
+
+Instructional principle: Anchor tasks are not busywork — they are substantive, self-directed learning that extension students can pick up and put down independently. They must connect genuinely to the current learning, require real thinking, and not simply be "more of the same."
+
+Please provide:
+
+1. Three anchor tasks for this teaching context. For each:
+   — Write the student-facing instruction exactly as the student would receive it
+   — Explain the learning value (one sentence, for the teacher)
+   — Note approximately how long it would sustain an extension student
+   — Indicate whether it is a "great leap" task (transfer to a different context) or a depth task (going further into this content)
+
+2. One genuinely open-ended inquiry prompt that extension students could pursue across multiple lessons — not just this one. It should connect to the core content but allow for genuine student-directed investigation.
+
+3. A brief protocol for how the teacher introduces anchor tasks to the class without creating a two-tier atmosphere. Write the exact language the teacher could use.
+
+All tasks should be specific to {{subject}} at {{year}} level.`
+    },
+
+    procExtIndependence: {
+      audience: 'extension',
+      source: 'step5-equalizer.html — Dependent ↔ Independent Continuum; step4-align.html — Interest-Based Differentiation',
+      label: 'Building independence and self-direction',
+      template: `TASK: Strategies for building independence in extension students
+
+You are designing a gradual release of independence for extension students in the context described above.
+
+Instructional principle: The Equaliser's Dependent ↔ Independent continuum has four stages: Skill Building → Structured Independence → Shared Independence → Self-Guided Independence. Extension students should be moving toward the right — but independence must be earned through demonstrated readiness, not assumed. The goal is genuine autonomy, not just working alone.
+
+Please provide:
+
+1. A readiness assessment: given this teaching context, how does the teacher determine which extension students are ready for greater independence? List 3–4 specific observable indicators.
+
+2. A staged release plan for this context, using the four stages above. For each stage:
+   — Describe what the student is doing
+   — Describe what the teacher is doing
+   — Give the specific trigger that moves a student to the next stage
+
+3. A student self-management protocol: a simple structure extension students can use to manage their own learning time, set their own checkpoints, and know when to seek teacher input. Write it as the student would receive it.
+
+4. A "re-entry plan" for when an extension student who has been given independence gets stuck or goes off-track — what does the teacher do, and what does the student do?
+
+All strategies should be specific to {{subject}} at {{year}} level.`
+    },
+
+    procExtGrouping: {
+      audience: 'extension',
+      source: 'step4-align.html — Interest-Based Differentiation; step3-process.html — Flexible Grouping',
+      label: 'Flexible grouping for depth',
+      template: `TASK: Grouping structures that push extension students toward depth
+
+You are designing a grouping strategy for extension students in the context described above.
+
+Instructional principle: Extension students often do their best thinking in carefully structured collaboration — not because they need the help, but because genuine intellectual challenge requires more than one mind. The goal is groups that push everyone's thinking further, not groups that allow extension students to coast on their existing understanding.
+
+Please provide:
+
+1. Two specific grouping structures for extension students in this context. For each:
+   — Describe the structure (how groups form, size, roles)
+   — Explain what intellectual challenge it creates — why can't one person do this alone?
+   — Give the teacher the exact task instruction for the group
+   — Note what "success" looks like and what "coasting" looks like
+
+2. A mixed-readiness grouping strategy: how to design a task where extension students and other students work together productively, without extension students simply doing the work for others or dominating the conversation. Include a specific role structure.
+
+3. A discussion protocol extension students can use to push each other's thinking — not just share answers. Write the protocol as the students would receive it.
+
+All strategies should be specific to {{subject}} at {{year}} level.`
+    },
+
+    procExtCompacting: {
+      audience: 'extension',
+      source: 'step4-align.html — Readiness-Based Differentiation; step5-equalizer.html — Foundational ↔ Transformational',
+      label: 'Curriculum compacting',
+      template: `TASK: Curriculum compacting for extension students
+
+You are designing a curriculum compacting approach for extension students in the context described above.
+
+Instructional principle: Curriculum compacting means buying time for deeper or different work by eliminating unnecessary repetition for students who have already demonstrated mastery. It is not about moving faster through the same content — it is about replacing what has been mastered with something more worthy of the student's time.
+
+Please provide:
+
+1. A pre-assessment strategy for this teaching context: how does the teacher quickly determine which students already have mastery of the prerequisite content? Give a specific pre-assessment method (not a full test — something that takes 5–10 minutes) and describe what evidence of mastery looks like.
+
+2. A compacting plan: given this teaching context, which elements of the planned learning could be skipped or dramatically abbreviated for students who demonstrate mastery? Be specific — name the activities, tasks, or teaching sequences, and note what they are replaced with.
+
+3. A "replacement curriculum" for this context: what do extension students do with the time that compacting creates? Provide 2–3 specific options that are connected to the core content but demand genuinely higher-level engagement.
+
+4. A brief protocol for how the teacher manages compacting logistically — without it feeling like a reward or punishment, and without creating a class where different students are permanently on different tracks.
+
+All advice should be specific to {{subject}} at {{year}} level.`
+    },
+
+  };
+
+  // ─── PROCESS BLOCK BUILDER ────────────────────────────────────────────────
+
+  function buildProcessBlock(key, ctx, audience) {
+    const entry = PROCESS_SOURCE[key];
+    if (!entry) return `[Process block "${key}" not found]`;
+    const year    = ctx.year      || '[year group]';
+    const subject = ctx.subject   || '[subject/topic]';
+    const situation = ctx.situation || '[teaching context]';
+    const assembled = entry.template
+      .replace(/\{\{year\}\}/gi, year)
+      .replace(/\{\{subject\}\}/gi, subject)
+      .replace(/\{\{situation\}\}/gi, situation);
+    return assembled;
+  }
+
   // ─── PUBLIC API ───────────────────────────────────────────────────────────
 
   /**
@@ -2366,7 +2937,9 @@ Create 4\u20135 anchor activities. For each:
     listKeys,
     SOURCE,
     SUPPORT_OPTIONS,
-    EXTENSION_OPTIONS
+    EXTENSION_OPTIONS,
+    PROCESS_OPTIONS,
+    buildProcessBlock
   };
 
 })();
@@ -2378,25 +2951,33 @@ Create 4\u20135 anchor activities. For each:
 // ==========================================
 const state = {
     q1: null,
+    q1flow: 'content',       // 'content' | 'process'
     q1a: null,
-    q2: null,            // 'support' | 'extension' | 'both'
-    q3Support: [],       // selected support option IDs (from SUPPORT_OPTIONS)
-    q3Extension: [],     // selected extension option IDs (from EXTENSION_OPTIONS)
+    q2: null,                // 'support' | 'extension' | 'both'
+    q3Support: [],
+    q3Extension: [],
     q4: [],
     ealdOtherLang: '',
     ctx: { year: '', subject: '', intention: '', resource: '' },
     outputMode: 'build',
     delivery: 'master',
-    curateSelected: []
+    curateSelected: [],
+    // Process flow state
+    procAudience: null,      // 'support' | 'extension' | 'both'
+    procCtx: { year: '', subject: '', situation: '', resource: '' },
+    procLevers: []           // selected process lever IDs
 };
 
-const PANELS = ['q1', 'q1a', 'q2', 'q3', 'q4', 'q5', 'output'];
+const PANELS = ['q1', 'q1a', 'q2', 'q3', 'q4', 'q5', 'output',
+                 'proc-q1b', 'proc-q2', 'proc-q3'];
 const PANEL_LABELS = {
     q1: 'Step 1 of 6', q1a: 'Step 1b of 6', q2: 'Step 2 of 6',
-    q3: 'Step 3 of 6', q4: 'Step 4 of 6', q5: 'Step 5 of 6', output: 'Step 6 of 6'
+    q3: 'Step 3 of 6', q4: 'Step 4 of 6', q5: 'Step 5 of 6', output: 'Step 6 of 6',
+    'proc-q1b': 'Step 2 of 4', 'proc-q2': 'Step 3 of 4', 'proc-q3': 'Step 4 of 4'
 };
 const PANEL_PROGRESS = {
-    q1: 5, q1a: 18, q2: 33, q3: 50, q4: 67, q5: 83, output: 100
+    q1: 5, q1a: 18, q2: 33, q3: 50, q4: 67, q5: 83, output: 100,
+    'proc-q1b': 33, 'proc-q2': 58, 'proc-q3': 83
 };
 
 // ==========================================
@@ -2473,15 +3054,30 @@ function applyQ3Dimming() {
 // ==========================================
 let _suppressPopstate = false;
 
+// ==========================================
+// Q1 NEXT — routes to content or process flow
+// ==========================================
+function goToQ1Next() {
+    if (!state.q1) { highlightRequired('panel-q1'); return; }
+    if (state.q1flow === 'process') {
+        goToPanel('proc-q1b');
+    } else {
+        goToPanel('q1a');
+    }
+}
+
 function goToPanel(id, pushHistory) {
+    // Content flow guards
     if (id === 'q1a' && !state.q1)  { highlightRequired('panel-q1');  return; }
     if (id === 'q2'  && !state.q1a) { highlightRequired('panel-q1a'); return; }
     if (id === 'q3'  && !state.q2)  { highlightRequired('panel-q2');  return; }
 
-    // On entering Q3, build the columns (they depend on SUPPORT_OPTIONS/EXTENSION_OPTIONS from PB)
-    if (id === 'q3') {
-        buildQ3Columns();
-    }
+    // Process flow guards
+    if (id === 'proc-q2'  && !state.procAudience) { highlightRequired('panel-proc-q1b'); return; }
+    if (id === 'proc-q3') { buildProcQ3Levers(); }
+
+    // On entering content Q3, build columns
+    if (id === 'q3') buildQ3Columns();
 
     document.querySelectorAll('.question-panel').forEach(p => p.classList.remove('active'));
     const panel = document.getElementById('panel-' + id);
@@ -2493,10 +3089,175 @@ function goToPanel(id, pushHistory) {
     document.getElementById('progressFill').style.width = (PANEL_PROGRESS[id] || 0) + '%';
     document.getElementById('progressLabel').textContent = PANEL_LABELS[id] || '';
 
-    // Push a history entry so browser back/forward works
     if (pushHistory !== false) {
         history.pushState({ panel: id }, '', '#' + id);
     }
+}
+
+// ==========================================
+// PROCESS FLOW — LEVER RENDERING
+// ==========================================
+function buildProcQ3Levers() {
+    const audience = state.procAudience;
+
+    const supSection  = document.getElementById('proc-q3-support-section');
+    const extSection  = document.getElementById('proc-q3-extension-section');
+    const supList     = document.getElementById('proc-support-levers');
+    const extList     = document.getElementById('proc-extension-levers');
+
+    // Show/hide sections based on audience
+    supSection.style.display = (audience === 'extension') ? 'none' : 'block';
+    extSection.style.display = (audience === 'support')   ? 'none' : 'block';
+
+    // Clear previous selections that no longer apply
+    state.procLevers = state.procLevers.filter(id => {
+        const opt = PB.PROCESS_OPTIONS.find(o => o.id === id);
+        if (!opt) return false;
+        if (opt.audience === 'support'   && audience === 'extension') return false;
+        if (opt.audience === 'extension' && audience === 'support')   return false;
+        return true;
+    });
+
+    function renderLevers(container, options) {
+        container.innerHTML = '';
+        options.forEach(opt => {
+            const el = document.createElement('div');
+            el.className = 'checkbox-card' + (state.procLevers.includes(opt.id) ? ' selected' : '');
+            el.dataset.id = opt.id;
+            el.innerHTML = `<div class="cb-box"></div><div class="cb-label"><strong style="display:block;font-size:0.97rem;color:var(--text-dark);font-weight:600;">${opt.label}</strong><span style="font-size:0.84rem;color:var(--text-light);line-height:1.4;">${opt.desc}</span></div>`;
+            el.onclick = () => toggleProcLever(el, opt.id);
+            container.appendChild(el);
+        });
+    }
+
+    const supOpts = PB.PROCESS_OPTIONS.filter(o => o.audience === 'support');
+    const extOpts = PB.PROCESS_OPTIONS.filter(o => o.audience === 'extension');
+    renderLevers(supList, supOpts);
+    renderLevers(extList, extOpts);
+}
+
+function toggleProcLever(el, id) {
+    el.classList.toggle('selected');
+    const idx = state.procLevers.indexOf(id);
+    if (idx === -1) state.procLevers.push(id);
+    else state.procLevers.splice(idx, 1);
+}
+
+function validateProcQ3() {
+    const val = document.getElementById('val-proc-q3');
+    if (state.procLevers.length === 0) {
+        val.classList.add('show');
+        setTimeout(() => val.classList.remove('show'), 3000);
+        return;
+    }
+    generateProcessPrompt();
+}
+
+// ==========================================
+// PROCESS CONTEXT COLLECTION
+// ==========================================
+function collectProcContext() {
+    state.procCtx.year      = (document.getElementById('proc-year')      || {}).value?.trim() || '';
+    state.procCtx.subject   = (document.getElementById('proc-subject')   || {}).value?.trim() || '';
+    state.procCtx.situation = (document.getElementById('proc-situation') || {}).value?.trim() || '';
+    state.procCtx.resource  = (document.getElementById('proc-resource')  || {}).value?.trim() || '';
+}
+
+function handleProcFileUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const status = document.getElementById('proc-upload-status');
+    if (file.type === 'text/plain') {
+        const reader = new FileReader();
+        reader.onload = e => {
+            document.getElementById('proc-resource').value = e.target.result;
+            status.textContent = `✓ ${file.name} loaded`;
+        };
+        reader.readAsText(file);
+    } else {
+        status.textContent = `${file.name} uploaded — paste text manually for best results.`;
+    }
+}
+
+// ==========================================
+// PROCESS PROMPT ASSEMBLY
+// ==========================================
+function buildProcessPrompt() {
+    collectProcContext();
+    const ctx = state.procCtx;
+    const audience = state.procAudience;
+
+    const audienceLabel = audience === 'support'   ? 'students who need more support'
+                        : audience === 'extension' ? 'students who need more extension'
+                        : 'both support and extension students';
+
+    let preamble = `You are helping a teacher develop specific, actionable differentiation strategies for the learning process — not modifying a resource, but designing how students will engage with learning differently.\n\nAudience: ${audienceLabel}`;
+
+    const ctxLines = [
+        ctx.year      ? `Year group: ${ctx.year}` : null,
+        ctx.subject   ? `Subject / topic: ${ctx.subject}` : null,
+        ctx.situation ? `Teaching context: ${ctx.situation}` : null,
+    ].filter(Boolean);
+    if (ctxLines.length) preamble += `\n\n${ctxLines.join('\n')}`;
+
+    if (ctx.resource) {
+        preamble += `\n\nRESOURCE / TASK CONTEXT\n${'─'.repeat(40)}\n${ctx.resource}\n${'─'.repeat(40)}`;
+    }
+
+    const blocks = state.procLevers.map(id => {
+        const opt = PB.PROCESS_OPTIONS.find(o => o.id === id);
+        if (!opt) return null;
+        return PB.buildProcessBlock(opt.key, ctx, audience);
+    }).filter(Boolean);
+
+    if (blocks.length === 0) return '[No strategy levers selected.]';
+
+    preamble += `\n\nYou have ${blocks.length} task${blocks.length > 1 ? 's' : ''} to complete. Address each in order, clearly labelled.`;
+
+    return [preamble, ...blocks].join('\n\n---\n\n');
+}
+
+function generateProcessPrompt() {
+    const promptText = buildProcessPrompt();
+
+    // Find or create the output area — reuse the output panel
+    document.querySelectorAll('.question-panel').forEach(p => p.classList.remove('active'));
+    const outputPanel = document.getElementById('panel-output');
+    outputPanel.classList.add('active');
+    outputPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('progressLabel').textContent = 'Complete';
+
+    const area = document.getElementById('prompt-output-area');
+    area.innerHTML = `
+        <div style="margin-top:2rem;padding-top:1.5rem;border-top:2px solid var(--border-color);">
+            <h3 style="font-family:var(--font-heading);font-size:1.1rem;color:var(--text-dark);margin-bottom:0.4rem;">Your strategy prompt is ready</h3>
+            <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:1rem;">Copy and paste into Claude, Gemini, or ChatGPT. Review the strategies it generates and select the ones that fit your context.</p>
+            <div class="prompt-box">
+                <div class="prompt-header">
+                    <span class="prompt-title">Process Differentiation Strategies</span>
+                    <button class="copy-btn" onclick="copyPrompt(this, 'proc-prompt-text')">Copy prompt</button>
+                </div>
+                <div class="prompt-text" id="proc-prompt-text">${escapeHtml(promptText)}</div>
+            </div>
+            <div class="response-checklist">
+                <h4>Before you use these strategies — check:</h4>
+                <ul>
+                    <li>Read each strategy as if you are the student it's designed for. Does it genuinely open a door, or does it just add activity?</li>
+                    <li>Check that support strategies scaffold without removing intellectual demand — the thinking should still belong to the student.</li>
+                    <li>Check that extension strategies increase depth and autonomy, not just volume or pace.</li>
+                    <li>Once you have your strategies, head back to <strong>Differentiate a Resource</strong> to adapt your teaching materials to match.</li>
+                </ul>
+            </div>
+        </div>`;
+
+    area.classList.add('active');
+    document.getElementById('start-over-wrap').style.display = 'block';
+
+    // Also show the output panel's own nav elements minimally
+    const outputPanelNav = outputPanel.querySelector('.panel-nav');
+    if (outputPanelNav) outputPanelNav.style.display = 'none';
 }
 
 // Handle browser back/forward
@@ -2522,12 +3283,12 @@ function highlightRequired(panelId) {
 // ==========================================
 function selectOption(el, key) {
     if (el.classList.contains('disabled-task')) return;
-    // Works with both .option-cards (legacy) and .resource-type-cards (Q1a)
+    // Scope deselection to the closest card container
     const group = el.closest('.option-cards, .resource-type-cards');
     if (group) group.querySelectorAll('.option-card, .rt-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
     state[key] = el.dataset.value;
-    // When Q2 changes, update Q3 dimming if columns already built
+    // When content Q2 changes, update Q3 dimming if columns already built
     if (key === 'q2') applyQ3Dimming();
 }
 
