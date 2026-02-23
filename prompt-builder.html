@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0092)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_14.html#q1 -->
+<!-- saved from url=(0092)file:///C:/Users/pell/OneDrive%20-%20Roseville%20College/Downloads/prompt-builder_15.html#q1 -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1102,7 +1102,7 @@
             <span class="q1-section-desc">Working on a student-facing resource</span>
         </div>
         <div class="option-cards cols-2" style="margin-bottom: 1.5rem;">
-            <div class="option-card" data-value="resource" onclick="selectOption(this, &#39;q1&#39;); state.q1flow=&#39;content&#39;;">
+            <div class="option-card selected" data-value="resource" onclick="selectOption(this, &#39;q1&#39;); state.q1flow=&#39;content&#39;;">
                 <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="12" height="16" rx="2"></rect><path d="M8 7h6M8 11h6M8 15h4"></path></svg></div>
                 <div class="card-text">
                     <strong>Differentiate a Resource</strong>
@@ -3283,9 +3283,9 @@ function highlightRequired(panelId) {
 // ==========================================
 function selectOption(el, key) {
     if (el.classList.contains('disabled-task')) return;
-    // Scope deselection to the closest card container
-    const group = el.closest('.option-cards, .resource-type-cards');
-    if (group) group.querySelectorAll('.option-card, .rt-card').forEach(c => c.classList.remove('selected'));
+    // Scope deselection to the whole panel so sibling card groups are also cleared
+    const panel = el.closest('.question-panel') || el.closest('.option-cards, .resource-type-cards');
+    if (panel) panel.querySelectorAll('.option-card, .rt-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
     state[key] = el.dataset.value;
     // When content Q2 changes, update Q3 dimming if columns already built
